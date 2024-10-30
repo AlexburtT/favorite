@@ -9,7 +9,7 @@
 
 ## Ветки проекта
 
-- [ ] [Create new branch](https://gitlab.slurm.io/edu/frontend_developer/-/tree/frontend_developer_s072188) - Домашнее задание 3.3 (Практическое задание по вёрстке) - lesson_3.3
+- [X] [Create new branch](https://gitlab.slurm.io/edu/frontend_developer/-/tree/frontend_developer_s072188) - Домашнее задание 3.3 (Практическое задание по вёрстке) - lesson_3.3
 
 ## Инструменты и окружение
 
