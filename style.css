@@ -33,17 +33,23 @@ html {
 }
 
 body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	
 	font-family: "Rubik", sans-serif;	
 	font-size: 16px;
 	line-height: 1.5;
     height: 100dvh;
-    background-color: var(--dark);
+    background-color: var(--grey);
 	background-image: url("/images/league.png");
 	background-size: cover;
 	background-repeat: no-repeat;
     backdrop-filter: brightness(20%) blur(5px);
 }
 
+/* ШАПКА */
 .header {
 	max-width: 1095px;
     margin: 0 auto;
@@ -57,7 +63,6 @@ body {
     position: sticky;
     z-index: 2;
 }
-
 
 .logo_conteiner {
     display: flex;
@@ -121,3 +126,34 @@ body {
 	border-radius: 16px;
 }
 
+/* МЭЙН */
+.main {
+	max-width: 1095px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	gap: 20px;
+	padding: 20px;
+	padding: 40px 65px;
+}
+
+
+/* ФУТЕР */
+.arrow-up {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 42px;
+	height: 42px;
+	background-color: var(--dark);
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.arrow-icon {
+	fill: var(--white);
+}
