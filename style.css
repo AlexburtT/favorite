@@ -24,110 +24,102 @@
     box-sizing: border-box;
 	text-decoration: none;
 	border: none;
+	font-family: "Rubik", sans-serif;
+	line-height: 1.5;
 	outline: none;
-	scroll-behavior: smooth;    
+	scroll-behavior: smooth; 
+	overflow-x: hidden;   
 }
 
 html {
 	font-size: 62.5%;	
-	color: var(--dark);
-	overflow-x: hidden;
-	font-family: "Rubik", sans-serif;	
-	font-size: 16px;
-	line-height: 1.5; 	
+	color: var(--dark);	 		 
 }
 
 body {
 	display: grid;
 	grid-template-rows: auto 1fr auto;	
+	justify-items: center;
 	height: 100dvh;    
 	background-image: url("/images/league.png");
 	background-size: cover;
-	background-repeat: no-repeat;
-	background-color: var(--grey-light);    
+	background-repeat: no-repeat;  	
 }
 
 /* ШАПКА */
 .header {
-	width: 1095px;
-    margin: 0 auto;
+	width: 110rem;    
     display: flex;
-	flex-direction: column;
-    align-items: start;
-	gap: 20px;
-	padding: 20px;
+	flex-direction: column;    
+	gap: 2rem;	
 	background-color: var(--dark);
-	padding: 40px 65px;
-    position: sticky;
-    z-index: 2;
+	padding: 4rem 6.5rem;
+    position: sticky;    
 }
 
+/* ЛОГОТИП */
 .logo_conteiner {
     display: flex;
     align-items: center;    
-    gap: 10px;
+    gap: 1rem;
 }
 
 .logo_img { 
     display: flex;
-    align-items: center;
-    justify-content: center;   
-	width: 31px;
-    height: 31px;	
+    align-items: center; 
+	width: 3.12rem;
+    height: 3.12rem;	
     background-color: var(--white);
     border-radius: 50%;
-    padding: 3px;
+    padding: 0.5rem;
 }
 
-.logo_title {
-    margin: 0;
-    font-size: 24px;
+.logo_title {    
+    font-size: 2.4rem;
     font-weight: 500;
     color: var(--white);
     text-transform: uppercase;
 }
 
+/* ПОИСК и КНОПКИ */
 .search-line {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
-	gap: 10px;
-	height: 42px;
+	gap: 1rem;
+	height: 4.2rem;
 }
 
 .search {
 	background-color: var(--white);
-	border-radius: 16px;
-	padding: 7px 20px 7px 64px;
-	font-family: inherit;
-	font-size: 18px;
-	color: var(--grey-light);
-	width: 469px;
+	border-radius: 1.6rem;
+	padding: 0.7rem 2rem 0.7rem 6.4rem;	
+	font-size: 1.8rem;	
+	width: 46.9rem;
 	background-image: url(/images/search.svg);
 	background-repeat: no-repeat;
-	background-position: 25px center;
-	background-size: 19px;
+	background-position: 2.5rem center;
+	background-size: 1.9rem;
 }
 
-.button {
-	width: max-content;
-	font-weight: bold;
-	font-size: 18px;
-	font-family: inherit;
+.button {	
+	font-weight: 700;
+	font-size: 1.8rem;
+	border-radius: 1.6rem;	
 	border: none;
+	cursor: pointer;
 }
 
 .button-yellow {
 	background-color: var(--accent);
 	color: var(--white);
-	padding: 5px 40px;
-	border-radius: 16px;
+	padding: 0.5rem 4rem;
+	
 }
 
 /* МЭЙН */
 .main {
-	width: 1095px;
-	margin: 0 auto;
+	width: 110rem;
 	display: flex;
 	flex-direction: column;
 	align-items: start;
@@ -142,32 +134,37 @@ body {
 
 /* ФУТЕР */
 .footer {
-	width: 1095px;
-	margin: 0 auto;
+	width: 110rem;
 	display: flex;	
 	align-items: center;
 	justify-content: space-between;
-	gap: 20px;
-	padding: 40px 65px;
+	gap: 2rem;
+	padding: 4rem 6.5rem;
 	background-color: var(--grey-light);
 	color: var(--color-text_footer);
+
+	.logo_title {
+		color: var(--dark);
+	}
+
+	.copy {
+		font-size: 1.8rem;
+	}
 }
 
-.footer .logo_title {
-	color: var(--dark);
-}
-
-.arrow-up {
-	width: 42px;
-	height: 42px;
+.button-arrow_up {
+	width: 4.2rem;
+	height: 4.2rem;
 	background-color: var(--dark);
 	border-radius: 50%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+
+	path {
+		stroke: var(--white);
+	}
 }
 
-.arrow-icon {
-	fill: var(--white);
-}
+
