@@ -9,6 +9,7 @@
     --white: #FDFDFD;
 	--color-text_footer: #1D1D1F;
 	--color-icon-search: #51545B;
+	--color-like: #FF4949;
 
 
     font-synthesis: none;
@@ -27,8 +28,7 @@
 	font-family: "Rubik", sans-serif;
 	line-height: 1.5;
 	outline: none;
-	scroll-behavior: smooth; 
-	overflow-x: hidden;   
+	scroll-behavior: smooth; 	
 }
 
 html {
@@ -103,6 +103,7 @@ body {
 }
 
 .button {	
+	padding: 0.5rem 4rem;
 	font-weight: 700;
 	font-size: 1.8rem;
 	border-radius: 1.6rem;	
@@ -113,22 +114,102 @@ body {
 .button-yellow {
 	background-color: var(--accent);
 	color: var(--white);
-	padding: 0.5rem 4rem;
-	
+		
 }
 
 /* МЭЙН */
 .main {
 	width: 110rem;
 	display: flex;
-	flex-direction: column;
-	align-items: start;
-	gap: 20px;
-	padding: 40px 65px;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 4rem 6.5rem;
 	background-color: var(--grey-light);
-	overflow-y: scroll;
-	overflow-x: hidden;
-	scrollbar-width: none;
+}
+
+/* КАРТОЧКИ */
+.card {
+	width: 47rem;
+	height: 44rem;
+	font-size: 1.8rem;
+	line-height: 2.8rem;
+	background-color: var(--white);
+	border-radius: 1rem;
+	display: flex;
+	flex-direction: column;
+	padding: 2.4rem;
+
+	.card_title {
+		font-size: 2.4rem;
+		font-weight: 500;		
+	}
+
+	p {
+		color: var(--grey);
+	}
+}
+
+.card_img {
+	width: 41.8rem;
+	height: 21.3rem;
+	object-fit: cover;
+	border-radius: 1.6rem;	
+	margin-bottom: 2rem;
+	object-position: 0 1px;
+
+	&.interstellar {
+		object-position: 0 -24rem;
+	}
+}
+
+.card-buttons {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	font-weight: 700;
+	line-height: 3.2rem;
+	margin-top: 2rem;
+}
+
+.button-like {
+	width: 4.6rem;
+	height: 4.6rem;
+	background-color: var(--white);
+	border: 2px solid var(--dark);
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+
+	.button-like__icon {
+		fill: var(--color-like);
+		stroke: var(--color-like);
+	}
+}
+
+.view {
+	width: 33.1rem;
+	height: 4.6rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 3rem;
+	background-color: var(--dark);
+	color: var(--white);
+}
+
+.no-view {
+	width: 33.1rem;
+	height: 4.6rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 3rem;
+	background-color: var(--white);
+	color: var(--dark);
+	border: 2px solid var(--dark);
 }
 
 
@@ -152,9 +233,10 @@ body {
 	}
 }
 
+/* КНОПКА ВВЕРХ */
 .button-arrow_up {
-	width: 4.2rem;
-	height: 4.2rem;
+	width: 4.6rem;
+	height: 4.6rem;
 	background-color: var(--dark);
 	border-radius: 50%;
 	display: flex;
