@@ -3,11 +3,13 @@
 :root {
     color-scheme: light dark;
     --dark: #34343E;
-	--grey: #EDEDED;
-	--grey-light: #7A7D84;
+	--grey-light: #EDEDED;
+	--grey: #7A7D84;
     --accent: #FBA808;
     --white: #FDFDFD;
 	--color-text_footer: #1D1D1F;
+	--color-icon-search: #51545B;
+
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -27,13 +29,12 @@
 }
 
 html {
-	font-size: 62.5%;
-	background-color: var(--grey-light);
+	font-size: 62.5%;	
 	color: var(--dark);
 	overflow-x: hidden;
 	font-family: "Rubik", sans-serif;	
 	font-size: 16px;
-	line-height: 1.5;    
+	line-height: 1.5; 	
 }
 
 body {
@@ -43,12 +44,12 @@ body {
 	background-image: url("/images/league.png");
 	background-size: cover;
 	background-repeat: no-repeat;
-    /* filter: opacity(0.8); */
+	background-color: var(--grey-light);    
 }
 
 /* ШАПКА */
 .header {
-	max-width: 1095px;
+	width: 1095px;
     margin: 0 auto;
     display: flex;
 	flex-direction: column;
@@ -125,22 +126,38 @@ body {
 
 /* МЭЙН */
 .main {
-	max-width: 1095px;
+	width: 1095px;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
 	align-items: start;
 	gap: 20px;
-	padding: 20px;
 	padding: 40px 65px;
+	background-color: var(--grey-light);
+	overflow-y: scroll;
+	overflow-x: hidden;
+	scrollbar-width: none;
 }
 
 
 /* ФУТЕР */
+.footer {
+	width: 1095px;
+	margin: 0 auto;
+	display: flex;	
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	padding: 40px 65px;
+	background-color: var(--grey-light);
+	color: var(--color-text_footer);
+}
+
+.footer .logo_title {
+	color: var(--dark);
+}
+
 .arrow-up {
-	position: fixed;
-	bottom: 20px;
-	right: 20px;
 	width: 42px;
 	height: 42px;
 	background-color: var(--dark);
