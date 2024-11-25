@@ -113,7 +113,7 @@ body {
 	color: var(--grey-light);
 }
 
-.button {	
+.btn {	
 	padding: 0.5rem 4rem;
 	font-weight: 700;
 	font-size: 1.8rem;
@@ -124,13 +124,13 @@ body {
 	cursor: pointer;
 }
 
-.header__button--add, 
-.header__button--what {	
+.header__btn--add, 
+.header__btn--what {	
 	transition: all .5s ease-in-out;	
 }
 
-.header__button--add:hover,
-.header__button--what:hover {
+.header__btn--add:hover,
+.header__btn--what:hover {
 	background-color: var(--white);
 	color: var(--dark);
 }
@@ -180,7 +180,7 @@ body {
 	}
 }
 
-.card__buttons {
+.card__btns {
 	height: 4.6rem;
 	display: flex;
 	justify-content: space-between;
@@ -191,7 +191,7 @@ body {
 	margin-top: 2rem;
 }
 
-.button__like {
+.btn__like {
 	width: 4.6rem;
 	height: 4.6rem;
 	background-color: var(--white);
@@ -209,7 +209,7 @@ body {
 	}
 }
 
-.button__like:hover {
+.btn__like:hover {
 	background-color: var(--accent);
 	border: none;
 
@@ -219,7 +219,7 @@ body {
 	}
 }
 
-.button__card {
+.btn__card {
 	width: 33.1rem;
 	height: 4.6rem;
 	display: flex;
@@ -275,7 +275,7 @@ body {
 }
 
 /* КНОПКА ВВЕРХ */
-.button__arrow--up {
+.btn__arrow--up {
 	width: 4.6rem;
 	height: 4.6rem;
 	background-color: var(--dark);
@@ -292,7 +292,7 @@ body {
 	}
 }
 
-.button__arrow--up:hover {
+.btn__arrow--up:hover {
 	background-color: var(--accent);
 
 	path {
