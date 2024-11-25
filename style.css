@@ -228,7 +228,7 @@ body {
 		color: var(--dark);
 	}
 
-	.copy {
+	.footer-copy {
 		font-size: 1.8rem;
 	}
 }
@@ -243,10 +243,18 @@ body {
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+	box-shadow: 0 0.2rem 0.5rem var(--dark);
+	transition: all .5s ease-in-out;
 
 	path {
 		stroke: var(--white);
 	}
 }
 
+.button-arrow_up:hover {
+	background-color: var(--accent);
 
+	path {
+		stroke: var(--dark);
+	}
+}
