@@ -58,13 +58,13 @@ body {
 }
 
 /* ЛОГОТИП */
-.logo_conteiner {
+.logo__conteiner {
     display: flex;
     align-items: center;    
     gap: 1rem;
 }
 
-.logo_img { 
+.logo__img { 
     display: flex;
     align-items: center; 
 	width: 3.12rem;
@@ -74,7 +74,7 @@ body {
     padding: 0.5rem;
 }
 
-.logo_title {    
+.logo__title {    
     font-size: 2.4rem;
     font-weight: 500;
     color: var(--white);
@@ -82,7 +82,7 @@ body {
 }
 
 /* ПОИСК и КНОПКИ */
-.search-line {
+.search__line {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -117,18 +117,20 @@ body {
 	padding: 0.5rem 4rem;
 	font-weight: 700;
 	font-size: 1.8rem;
+	background-color: var(--accent);
+	color: var(--white);	
 	border-radius: 1.6rem;	
 	border: none;
 	cursor: pointer;
 }
 
-.button-yellow {
-	background-color: var(--accent);
-	color: var(--white);	
+.header__button--add, 
+.header__button--what {	
 	transition: all .5s ease-in-out;	
 }
 
-.button-yellow:hover {
+.header__button--add:hover,
+.header__button--what:hover {
 	background-color: var(--white);
 	color: var(--dark);
 }
@@ -155,7 +157,7 @@ body {
 	flex-direction: column;
 	padding: 2.4rem;
 
-	.card_title {
+	.card__title {
 		font-size: 2.4rem;
 		font-weight: 500;		
 	}
@@ -165,7 +167,7 @@ body {
 	}
 }
 
-.card_img {
+.card__img {
 	width: 41.8rem;
 	height: 21.3rem;
 	object-fit: cover;
@@ -178,7 +180,7 @@ body {
 	}
 }
 
-.card-buttons {
+.card__buttons {
 	height: 4.6rem;
 	display: flex;
 	justify-content: space-between;
@@ -189,7 +191,7 @@ body {
 	margin-top: 2rem;
 }
 
-.button-like {
+.button__like {
 	width: 4.6rem;
 	height: 4.6rem;
 	background-color: var(--white);
@@ -207,7 +209,7 @@ body {
 	}
 }
 
-.button-like:hover {
+.button__like:hover {
 	background-color: var(--accent);
 	border: none;
 
@@ -217,7 +219,7 @@ body {
 	}
 }
 
-.button-card {
+.button__card {
 	width: 33.1rem;
 	height: 4.6rem;
 	display: flex;
@@ -263,17 +265,17 @@ body {
 	background-color: var(--grey-light);
 	color: var(--color-text_footer);
 
-	.logo_title {
+	.logo__title {
 		color: var(--dark);
 	}
 
-	.footer-copy {
+	.footer__copy {
 		font-size: 1.8rem;
 	}
 }
 
 /* КНОПКА ВВЕРХ */
-.button-arrow_up {
+.button__arrow--up {
 	width: 4.6rem;
 	height: 4.6rem;
 	background-color: var(--dark);
@@ -290,7 +292,7 @@ body {
 	}
 }
 
-.button-arrow_up:hover {
+.button__arrow--up:hover {
 	background-color: var(--accent);
 
 	path {
