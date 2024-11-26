@@ -66,3 +66,15 @@ function asciiToString(codes) {
 }
 
 console.log(asciiToString(codes));
+
+// Реализовать метод toString, который при приведении объекта к строке возвращает JSON строку, вместо [object Object]
+
+let userObj = {
+    name: "John",
+    lastNameObj: "Doe",
+    toString() {
+        return JSON.stringify(this);
+    }
+};
+
+console.log(String(userObj));
