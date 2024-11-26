@@ -104,7 +104,6 @@ console.log(average(numbers));
 
 // transformTo("123", "number") // 123
 // transformTo(345, "string") // "345"
-
 function transformTo(value, type) {
     switch (type) {
         case "number":
@@ -121,3 +120,31 @@ function transformTo(value, type) {
 console.log(transformTo("123", "number")); // 123
 console.log(transformTo(345, "string")); // "345"
 console.log(transformTo(true, "boolean")); // true
+
+let userNameGh = "Don";
+
+function log() {
+    userNameGh = "Bob";
+    console.log(userNameGh);
+}
+
+userNameGh = "Cew";
+
+log();
+
+// Задача состоит в том, чтобы избавиться от параметра у метода getValues. То есть я хочу вызывать просто метод user.getValues() и не передавать никаких параметров. Чтобы решить эту задачу вам нужно исправлять код только функции values
+
+function values() {
+  for (let key in this) {
+    console.log(key)
+  }
+}
+
+function UserValues(name, age) {
+  this.name = name;
+  this.age = age;
+  this.getValues = values;
+}
+
+let userV = new UserValues("Sam", 15);
+userV.getValues();
