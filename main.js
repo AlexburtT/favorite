@@ -88,3 +88,36 @@ function average(numbers) {
 }
 
 console.log(average(numbers));
+
+// Напишите функцию преобразования одного типа в другой. Параметры, которые принимает функция:
+
+// То, что нужно преобразовать
+
+// В какой тип нужно попытаться преобразовать
+
+// Возможные значения параметра
+
+// number
+// string
+// boolean
+// Пример использования:
+
+// transformTo("123", "number") // 123
+// transformTo(345, "string") // "345"
+
+function transformTo(value, type) {
+    switch (type) {
+        case "number":
+            return Number(value);
+        case "string":
+            return String(value);
+        case "boolean":
+            return Boolean(value);
+        default:
+            throw new Error(`Неизвестнгый тип: ${type}`);
+    }
+};
+
+console.log(transformTo("123", "number")); // 123
+console.log(transformTo(345, "string")); // "345"
+console.log(transformTo(true, "boolean")); // true
