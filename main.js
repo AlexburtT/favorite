@@ -56,3 +56,13 @@ let user = new User("Слёрмик", "Южно-мостный");
 
 console.log(user.getFullName()); // "Слёрмик Южно-мостный"
 console.log(user.getInitials()); // "С.Ю."
+
+// Функция, которая из списка ASCII кодов возвращает собранную строку. 
+
+let codes = [ 74, 97, 118, 97, 83, 99, 114, 105, 112, 116 ];
+
+function asciiToString(codes) {
+    return String.fromCharCode(...codes);
+}
+
+console.log(asciiToString(codes));
