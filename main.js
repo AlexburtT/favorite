@@ -78,3 +78,13 @@ let userObj = {
 };
 
 console.log(String(userObj));
+
+// Напишите функцию, которая сичтает среднее арифметическое из списка чисел. 
+
+let numbers = [1, 2, 3, 4, 5, 6];
+
+function average(numbers) {
+    return numbers.reduce((a, b) => a + b, 0) / numbers.length;
+}
+
+console.log(average(numbers));
