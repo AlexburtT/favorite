@@ -58,3 +58,22 @@ let dialog = new Dialog("dialog-id", "class-to-show-dialog");
 addButton.addEventListener("click", () => {
   dialog.open();
 });
+
+# Практическое задание. Создание.
+Задание: на лекции вы сделал кнопку "Сохранить", по аналогии создайте кнопку «Отменить», чтобы по нажатию на нее диалог закрывался и форма очищалась.
+
+У диалога создания закладки о фильме есть возможность закрыть его по нажатию кнопки «Отмена». У класса Dialog есть метод close.
+
+Шаги к реализации:
+
+1. Найти кнопку «Отмена» по id
+2. Подписаться на событие click
+3. Когда произойдет клик по кнопке вызывать метод close у диалога. После чего диалог должен закрыться.
+
+### Перед просмотром лекции и выполнением домашней работы, прочтите эти статьи:
+
+* https://frontender.info/const-immutability/
+* https://medium.com/nuances-of-programming/* 10-программистских-терминов-на-понятном-языке-8c2cb31fcda4
+* https://habr.com/ru/post/215117/
+* https://tproger.ru/articles/osnovy-rest-teorija-i-praktika/
+* https://developer.mozilla.org/ru/docs/Web/HTTP/Overview
