@@ -6,7 +6,8 @@
 	--grey-light: #EDEDED;
 	--grey: #7A7D84;
     --accent: #FBA808;
-    --white: #FDFDFD;
+    --white-grey: #FDFDFD;
+	--white: #FFFFFF;
 	--color-text_footer: #1D1D1F;
 	--color-icon-search: #51545B;
 	--color-like: #FF4949;
@@ -46,6 +47,17 @@ body {
 	background-repeat: no-repeat;  	
 }
 
+.input {
+	background-color: var(--white);
+	border: 2px solid var(--dark);
+	border-radius: 1.6rem;
+	padding: 0.7rem 2rem 0.7rem 2.4rem;	
+	color: var(--dark);
+	font-size: 1.8rem;	
+	width: 100%;	
+	transition: all .5s ease-in-out;
+}
+
 /* ШАПКА */
 .header {
 	width: 110rem;    
@@ -69,7 +81,7 @@ body {
     align-items: center; 
 	width: 3.12rem;
     height: 3.12rem;	
-    background-color: var(--white);
+    background-color: var(--white-grey);
     border-radius: 50%;
     padding: 0.5rem;
 }
@@ -77,7 +89,7 @@ body {
 .logo__title {    
     font-size: 2.4rem;
     font-weight: 500;
-    color: var(--white);
+    color: var(--white-grey);
     text-transform: uppercase;
 }
 
@@ -90,21 +102,18 @@ body {
 	height: 4.2rem;
 }
 
-.search {
-	background-color: var(--white);
-	border-radius: 1.6rem;
-	padding: 0.7rem 2rem 0.7rem 6.4rem;	
-	color: var(--dark);
-	font-size: 1.8rem;	
+.input--search {
+	background-color: var(--white-grey);	
+	padding-left: 6.4rem;	
+	border: none;		
 	width: 46.9rem;
 	background-image: url(/images/search.svg);
 	background-repeat: no-repeat;
 	background-position: 2.5rem center;
-	background-size: 1.9rem;
-	transition: all .5s ease-in-out;
+	background-size: 1.9rem;	
 }
 
-.search:focus {
+.input--search:focus {
 	border: 2px solid var(--accent);
 	outline: none;
 }
@@ -118,7 +127,7 @@ body {
 	font-weight: 700;
 	font-size: 1.8rem;
 	background-color: var(--accent);
-	color: var(--white);	
+	color: var(--white-grey);	
 	border-radius: 1.6rem;	
 	border: none;
 	cursor: pointer;
@@ -131,18 +140,17 @@ body {
 
 .header__btn--add:hover,
 .header__btn--what:hover {
-	background-color: var(--white);
+	background-color: var(--white-grey);
 	color: var(--dark);
 }
 
 /* DIALOG MODAL */
 .dialog {
-	width: calc(100% - 12rem);
-	background-color: var(--white);
+	width: 53.9rem;
+	background-color: var(--white-grey);
 	color: var(--dark);
 	margin: 10rem auto;
-	padding: 2rem;
-	max-width: 60rem;
+	padding: 6.1rem;	
 	border-radius: 1.6rem;
 }
 
@@ -150,6 +158,44 @@ body {
     background-color: rgb(0 0 0 / 0.6);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
+}
+
+.dialog__content {
+	display: flex;
+	flex-direction: column;
+	gap: 3.3rem;		
+}
+
+.dialog__title {
+	font-size: 3.6rem;
+	font-weight: 500;
+	text-align: center;
+}
+
+.dialog__label {
+	font-size: 1.8rem;
+	font-weight: 400;
+}
+
+.dialog__input--poster {	
+	padding-left: 6.4rem;		
+	background-image: url(/images/clip_file.svg);
+	background-repeat: no-repeat;
+	background-position: 2.5rem center;
+	background-size: 1.9rem;	
+}
+
+.btn-dialog--conteiner {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	gap: 3.1rem;
+	margin-top: 6.3rem;
+}
+
+.dialog__btn {
+	width: 100%;
+	height: 6rem;
 }
 
 /* МЭЙН */
@@ -168,7 +214,7 @@ body {
 	height: 44rem;
 	font-size: 1.8rem;
 	line-height: 2.8rem;
-	background-color: var(--white);
+	background-color: var(--white-grey);
 	border-radius: 1rem;
 	display: flex;
 	flex-direction: column;
@@ -211,7 +257,7 @@ body {
 .btn__like {
 	width: 4.6rem;
 	height: 4.6rem;
-	background-color: var(--white);
+	background-color: var(--white-grey);
 	border: 2px solid var(--dark);
 	border-radius: 50%;
 	display: flex;
@@ -247,25 +293,25 @@ body {
 
 .view {	
 	background-color: var(--dark);
-	color: var(--white);
+	color: var(--white-grey);
 	transition: all .5s ease-in-out;
 }
 
 .view:hover {
 	color: var(--dark);
-	background-color: var(--white);
+	background-color: var(--white-grey);
 	border: 2px solid var(--dark);
 }
 
 .no-view {	
-	background-color: var(--white);
+	background-color: var(--white-grey);
 	color: var(--dark);
 	border: 2px solid var(--dark);
 	transition: all .5s ease-in-out;
 }
 
 .no-view:hover {
-	color: var(--white);
+	color: var(--white-grey);
 	background-color: var(--dark);
 	border: none;
 }
@@ -305,7 +351,7 @@ body {
 	transition: all .5s ease-in-out;
 
 	path {
-		stroke: var(--white);
+		stroke: var(--white-grey);
 	}
 }
 

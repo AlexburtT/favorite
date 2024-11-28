@@ -105,7 +105,7 @@
       <div class="search__line">
         <input
           type="text"
-          class="search"
+          class="input input--search"
           placeholder="Type something here..."
         />
         <button id="add-button" class="btn header__btn--add">Добавить</button>
@@ -113,10 +113,37 @@
       </div>
     </header>
     <dialog id="dialog-id" class="dialog">
-      <div class="dialog__content">
-        <h2 class="dialog__title">Что посмотреть?</h2>
-        <button class="dialog__btn">Добавить</button>
-      </div>
+      <form class="dialog__content">
+        <h2 class="dialog__title">Создание закладки</h2>
+        <label>
+          <span class="dialog__label">Название</span>
+          <input
+            type="text"
+            class="input dialog__input"
+            placeholder="Введите название фильма"
+          />
+        </label>
+        <label>
+          <span class="dialog__label">Год выпуска</span>
+          <input
+            type="text"
+            class="input dialog__input"
+            placeholder="Введите год выпуска"
+          />
+        </label>
+        <label>
+          <span class="dialog__label">Постер</span>
+          <input
+            type="text"
+            class="input dialog__input dialog__input--poster"
+            placeholder="Добавьте ссылку на постер или файл"
+          />
+        </label>
+        <div class="btn-dialog--conteiner">
+          <button class="btn dialog__btn">Отменить</button>
+          <button class="btn dialog__btn">Сохранить</button>
+        </div>        
+      </form>
     </dialog>
     <main class="main">
       <article class="card">
