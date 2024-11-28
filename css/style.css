@@ -19,7 +19,7 @@
     -webkit-text-size-adjust: 100%;
 }
 
-* {
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -133,6 +133,23 @@ body {
 .header__btn--what:hover {
 	background-color: var(--white);
 	color: var(--dark);
+}
+
+/* DIALOG MODAL */
+.dialog {
+	width: calc(100% - 12rem);
+	background-color: var(--white);
+	color: var(--dark);
+	margin: 10rem auto;
+	padding: 2rem;
+	max-width: 60rem;
+	border-radius: 1.6rem;
+}
+
+.dialog::backdrop {
+    background-color: rgb(0 0 0 / 0.6);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 }
 
 /* МЭЙН */

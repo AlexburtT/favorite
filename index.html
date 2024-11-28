@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
     <link
       rel="icon"
       href="/images/favicon_light.svg"
@@ -17,7 +17,7 @@
       type="image/svg+xml"
       media="(prefers-color-scheme: dark)"
     />
-    <script src="/main.js" defer></script>
+    <script src="/js/main.js" defer></script>
     <title>Фаворит</title>
   </head>
   <body>
@@ -108,10 +108,16 @@
           class="search"
           placeholder="Type something here..."
         />
-        <button class="btn header__btn--add">Добавить</button>
-        <button class="btn header__btn--what">Что посмотреть?</button>
+        <button id="add-button" class="btn header__btn--add">Добавить</button>
+        <button id="what-button" class="btn header__btn--what">Что посмотреть?</button>
       </div>
     </header>
+    <dialog id="dialog-id" class="dialog">
+      <div class="dialog__content">
+        <h2 class="dialog__title">Что посмотреть?</h2>
+        <button class="dialog__btn">Добавить</button>
+      </div>
+    </dialog>
     <main class="main">
       <article class="card">
         <img src="/images/kill_bill.png" alt="Убить Билла" class="card__img" />
