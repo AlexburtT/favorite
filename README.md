@@ -23,7 +23,7 @@ element.addEventListener(
     + remove удалить
 
 ### Полезные ссылки
-* [Document] (https://developer.mozilla.org/ru/docs/Web/API/Document)
-* [getElementById] (https://developer.mozilla.org/ru/docs/Web/API/Document/getElementById)
-* [addEventListener] (https://developer.mozilla.org/ru/docs/Web/API/EventTarget/addEventListener)
-* [classList] (https://developer.mozilla.org/ru/docs/Web/API/Element/classList)
+* [Document](https://developer.mozilla.org/ru/docs/Web/API/Document)
+* [getElementById](https://developer.mozilla.org/ru/docs/Web/API/Document/getElementById)
+* [addEventListener](https://developer.mozilla.org/ru/docs/Web/API/EventTarget/addEventListener)
+* [classList](https://developer.mozilla.org/ru/docs/Web/API/Element/classList)
