@@ -1,4 +1,4 @@
-import { ApiService } from "./apiService";
+import { ApiService } from "./apiService.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const dialog = document.getElementById("dialog-id");
@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+const apiService = new ApiService();
 
 // Реализуйте класс Reader со следующими свойствами:
 // ФИО
