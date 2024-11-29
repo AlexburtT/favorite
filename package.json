@@ -5,12 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:server": "json-server --watch ./db.json"
+    "start:json-server": "json-server --watch ./db.json",
+    "start:app-server": "node server.mjs",
+    "dev": "concurrently \"npm:start:*\""
   },
   "keywords": [],
-  "author": "",
+  "author": "Алексей Тюменцев",
   "license": "ISC",
   "dependencies": {
+    "concurrently": "^9.1.0",
     "json-server": "^1.0.0-beta.3"
   }
 }
