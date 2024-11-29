@@ -20,10 +20,12 @@ class ApiService {
     }
     createFilm(filmRecord) {
         this.db[this.lastId] = filmRecord;
-        return {
+        const result = {
             ...filmRecord,
-            id: this.lastId++
+            id: this.lastId
         }
+        this.lastId++;
+        return result
     }
 };
 
@@ -50,3 +52,27 @@ class ApiService {
 
 // reader.returnBook(2); // Сэм вернул(а) книги. Кол-во: 2
 // reader.returnBook("Мастер и Маргарита"); // Сэм вернул(а) книгу под названием «Мастер и Маргарита»
+
+class Reader {
+    constructor(fio, number, faculty, date, phone) {
+        this.fio = fio;
+        this.number = number;
+        this.faculty = faculty;
+        this.date = date;
+        this.phone = phone;
+    }
+    takeBook(number) {
+        console.log(`${this.fio} взял(а) книги. Кол-во: ${number}`);
+    }
+    returnBook(number) {
+        console.log(`${this.fio} вернул(а) книги. Кол-во: ${number}`);
+    }
+};
+
+let reader = new Reader("Сэм", 123, "Фронтенд", new Date(2032, 1, 4), "+79453441232");
+
+reader.takeBook(2); // Сэм взял(а) книги. Кол-во: 2
+reader.takeBook("Мастер и Маргарита"); // Сэм взял(а) книгу под названием «Мастер и Маргарита»
+
+reader.returnBook(2); // Сэм вернул(а) книги. Кол-во: 2
+reader.returnBook("Мастер и Маргарита"); // Сэм вернул(а) книгу под названием «Мастер и Маргарита»
