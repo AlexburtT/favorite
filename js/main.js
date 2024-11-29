@@ -1,3 +1,5 @@
+import { ApiService } from "./apiService";
+
 document.addEventListener("DOMContentLoaded", () => {
     const dialog = document.getElementById("dialog-id");
     const addBtn = document.getElementById("add-button");
@@ -13,21 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-class ApiService {
-    constructor() {
-        this.db = {}
-        this.lastId = 1;
-    }
-    createFilm(filmRecord) {
-        this.db[this.lastId] = filmRecord;
-        const result = {
-            ...filmRecord,
-            id: this.lastId
-        }
-        this.lastId++;
-        return result
-    }
-};
 
 // Реализуйте класс Reader со следующими свойствами:
 // ФИО
