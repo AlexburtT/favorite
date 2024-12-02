@@ -22,6 +22,7 @@ const server = createServer((req, res) => {
         ".jpg": "image/jpeg",
         ".gif": "image/gif",
         ".wav": "audio/wav",
+        ".svg": "image/svg+xml",
     }[ext] || "application/octet-stream";
 
     fs.readFile(filePath, (err, data) => {
