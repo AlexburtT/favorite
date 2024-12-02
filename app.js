@@ -1,5 +1,5 @@
-import cardFilm from "./js/cardFilm.js";
-import Dialog from "./js/dialog.js";
+// import cardFilm from "./src/js/cardFilm.js";
+import Dialog from "./src/js/dialog.js";
 
 console.log("Hello with Server");
 
@@ -10,5 +10,5 @@ btn.addEventListener("click", () => {
     dialog.open();
 });
 
-cardFilm();
+// cardFilm();
 

@@ -43,7 +43,7 @@ body {
   grid-template-rows: auto 1fr auto;
   justify-items: center;
   height: 100dvh;
-  background: url("/images/league.png") center no-repeat;
+  background: url("/src/images/league.png") center no-repeat;
   background-size: cover;
 }
 
@@ -112,6 +112,7 @@ body {
 }
 
 .input--search {
+  background-color: #4e4e59;
     padding-left: 6.4rem;
     border: none;
     width: 46.9rem;
@@ -193,7 +194,7 @@ body {
 
 .dialog__input--poster {
   padding-left: 6.4rem;
-  background: url(/images/clip_file.svg) no-repeat;
+  background: url("/src/images/clip_file.svg") no-repeat;
   background-position: 2.5rem center;
   background-size: 1.9rem;
 }
