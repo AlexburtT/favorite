@@ -43,7 +43,7 @@ body {
   grid-template-rows: auto 1fr auto;
   justify-items: center;
   height: 100dvh;
-  background: url("/src/images/league.png") center no-repeat;
+  background: url("/public/league.png") center no-repeat;
   background-size: cover;
 }
 
@@ -194,7 +194,7 @@ body {
 
 .dialog__input--poster {
   padding-left: 6.4rem;
-  background: url("/src/images/clip_file.svg") no-repeat;
+  background: url("/public/clip_file.svg") no-repeat;
   background-position: 2.5rem center;
   background-size: 1.9rem;
 }
@@ -352,7 +352,7 @@ body {
 }
 
 /* КНОПКА ВВЕРХ */
-.btn__arrow--up {
+.btn__scroll-top {
   width: 4.6rem;
   height: 4.6rem;
   background-color: var(--dark);
@@ -369,7 +369,7 @@ body {
   }
 }
 
-.btn__arrow--up:hover {
+.btn__scroll-top:hover {
   background-color: var(--accent);
 
   path {

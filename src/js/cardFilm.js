@@ -1,6 +1,6 @@
 const cardFilm = (film) =>
     `<article class="card">
-        <img src="${film.poster}" alt="Убить Билла" class="card__img" />
+        <img src="${film.poster}" alt="${film.name}" class="card__img" />
         <p class="card__description--year">${film.releaseYear}</p>
         <h1 class="card__title">${film.name}</h1>
         <p class="card__descriptions">${film.genres}</p>
