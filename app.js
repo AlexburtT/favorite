@@ -1,4 +1,5 @@
 // import cardFilm from "./src/js/cardFilm.js";
+import dateYearFooter from "./src/js/dateYearFooter.js";
 import Dialog from "./src/js/dialog.js";
 
 const btn = document.querySelector("#add-button");
@@ -9,4 +10,5 @@ btn.addEventListener("click", () => {
 });
 
 // cardFilm();
+
 
