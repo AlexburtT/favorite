@@ -1,4 +1,5 @@
-import cardFilm from "./src/js/cardFilm.js";
+import renderFilmCard from "./src/js/cardFilm.js";
+import MovieRecords from "./src/js/classMovieRecords.js";
 import dateYearFooter from "./src/js/dateYearFooter.js";
 import Dialog from "./src/js/dialog.js";
 import scrollTop from "./src/js/scrollTop.js";
@@ -10,8 +11,9 @@ btn.addEventListener("click", () => {
     dialog.open();
 });
 
-cardFilm();
 
-scrollTop();
+
+
+
 
 

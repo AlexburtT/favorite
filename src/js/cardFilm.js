@@ -1,5 +1,6 @@
-const cardFilm = (film) =>
-    `<article class="card">
+import MovieRecords from "./classMovieRecords.js";
+const renderFilmCard = (film) =>
+  `<article class="card">
         <img src="${film.poster}" alt="${film.name}" class="card__img" />
         <p class="card__description--year">${film.releaseYear}</p>
         <h1 class="card__title">${film.name}</h1>
@@ -28,36 +29,18 @@ const cardFilm = (film) =>
       </article>
     `;
 
-// Асинхронная функция для получения данных о фильмах
-async function getFilms() {
-    try {
-        const response = await fetch("http://localhost:3000/films", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        
-        if (!response.ok) {
-            throw new Error(`Network response was not ok (${response.status})`);
-        }
-        
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
-    }
-}
 
-// Получение и рендеринг карточек фильмов
-getFilms()
-    .then((films) => {
-        films.forEach((film) => {
-            document.querySelector('main').insertAdjacentHTML('beforeend', cardFilm(film));
-        });
-    })
-    .catch((error) => {
-        console.error('Error while rendering cards:', error);
+(async function displayFilms() {
+  try {
+    const films = await MovieRecords.findAll();
+    const mainContainer = document.querySelector('main');
+
+    films.forEach((film) => {
+      mainContainer.insertAdjacentHTML('beforeend', renderFilmCard(film));
     });
+  } catch (error) {
+    console.error('Error while rendering cards:', error);
+  }
+})();
 
-export default cardFilm;
+export default renderFilmCard;

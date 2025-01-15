@@ -43,7 +43,7 @@ body {
   grid-template-rows: auto 1fr auto;
   justify-items: center;
   height: 100dvh;
-  background: url("/public/league.png") center no-repeat;
+  background: url("/league.png") center no-repeat;
   background-size: cover;
 }
 
@@ -194,7 +194,7 @@ body {
 
 .dialog__input--poster {
   padding-left: 6.4rem;
-  background: url("/public/clip_file.svg") no-repeat;
+  background: url("/clip_file.svg") no-repeat;
   background-position: 2.5rem center;
   background-size: 1.9rem;
 }
