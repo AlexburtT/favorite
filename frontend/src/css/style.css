@@ -175,7 +175,7 @@ body {
   backdrop-filter: blur(10px);
 }
 
-.dialog__content {
+.dialog__form {
   display: flex;
   flex-direction: column;
   gap: 3.3rem;

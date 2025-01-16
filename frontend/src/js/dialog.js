@@ -1,7 +1,7 @@
 class Dialog {
     constructor(dialogId) {
         this.dialogElement = document.getElementById(dialogId);
-        this.formElement = this.dialogElement.querySelector('.dialog__content');
+        this.formElement = this.dialogElement.querySelector('.dialog__form');
         this.buttons = Array.from(this.dialogElement.querySelectorAll('.dialog__btn'));
         this.submitted = false;
         

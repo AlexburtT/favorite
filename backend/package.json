@@ -1,0 +1,15 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "server db-json-server",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "author": "A.A. Tyumentsev",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "1.0.0-beta.3"
+  }
+}
