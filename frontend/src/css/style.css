@@ -148,25 +148,49 @@ body {
   cursor: pointer;
 }
 
-.header__btn--add,
-.header__btn--what {
+.header__btn {
   transition: all 0.5s ease-in-out;
 }
 
-.header__btn--add:hover,
-.header__btn--what:hover {
+.header__btn:hover {
   background-color: var(--white);
   color: var(--dark);
 }
 
 /* DIALOG MODAL */
 .dialog {
+  position: relative;
   width: 53.9rem;
   background-color: var(--white);
   color: var(--dark);
   margin: 10rem auto;
   padding: 6.1rem;
   border-radius: 1.6rem;
+
+  transition: display 0.5s allow-discrete, overlay 0.5s allow-discrete;
+
+  animation: close 0.5s forwards;
+  &[open] {
+    animation: open 0.5s forwards;
+  }
+}
+
+@keyframes open {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes close {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .dialog::backdrop {
@@ -175,19 +199,35 @@ body {
   backdrop-filter: blur(10px);
 }
 
+.dialog__close {
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  background: none;
+  border: none;
+  font-size: 3.4rem;
+  color: var(--dark);
+  cursor: pointer;
+  transition: color 0.5s ease;
+}
+
+.dialog__close:hover {
+  color: var(--accent); /* Изменение цвета при наведении */
+}
+
 .dialog__form {
   display: flex;
   flex-direction: column;
   gap: 3.3rem;
 }
 
-.dialog__title {
+.dialog__form--title {
   font-size: 3.6rem;
   font-weight: 500;
   text-align: center;
 }
 
-.dialog__label {
+.dialog__form--label {
   font-size: 1.8rem;
   font-weight: 400;
 }
@@ -199,7 +239,7 @@ body {
   background-size: 1.9rem;
 }
 
-.btn-dialog--conteiner {
+.dialog__form--conteiner--btn {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -207,7 +247,7 @@ body {
   margin-top: 6.3rem;
 }
 
-.dialog__btn {
+.dialog__form--btn {
   width: 100%;
   height: 6rem;
 }

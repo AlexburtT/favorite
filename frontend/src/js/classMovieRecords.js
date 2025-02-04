@@ -9,7 +9,7 @@ class MovieRecords {
         this.favorite = favorite;
     }
 
-    static API_URL = 'http://localhost:3000/films';
+    static API_URL = 'http://localhost:3000/movies';
 
     static async fetchFromApi(endpoint = '', options = {}) {
         const url = endpoint ? `${this.API_URL}/${endpoint}` : this.API_URL;
@@ -27,33 +27,33 @@ class MovieRecords {
 
     static async findAll() {
         const data = await this.fetchFromApi();
-        return data.map((film) => new MovieRecords(film));
+        return data.map((movie) => new MovieRecords(movie));
     }
 
     static async findById(id) {
-        const film = await this.fetchFromApi(id);
-        return new MovieRecords(film);
+        const movie = await this.fetchFromApi(id);
+        return new MovieRecords(movie);
     }
 
-    static async createFilm(newFilmData) {
-        const film = await this.fetchFromApi('', {
+    static async createMovie(newMovieData) {
+        const movie = await this.fetchFromApi('', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newFilmData),
+            body: JSON.stringify(newMovieData),
         });
-        return new MovieRecords(film);
+        return new MovieRecords(movie);
     }
 
-    static async updateFilm(id, updatedFields) {
-        const updatedFilm = await this.fetchFromApi(id, {
+    static async updateMovie(id, updatedFields) {
+        const updatedMovie = await this.fetchFromApi(id, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedFields),
         });
-        return new MovieRecords(updatedFilm);
+        return new MovieRecords(updatedMovie);
     }
 
-    static async deleteFilm(id) {
+    static async deleteMovie(id) {
         await this.fetchFromApi(id, { method: 'DELETE' });
         return { success: true };
     }

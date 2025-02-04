@@ -1,10 +1,10 @@
 import MovieRecords from "./classMovieRecords.js";
-const renderFilmCard = (film) =>
+const renderCardMovie = (movie) =>
   `<article class="card">
-        <img src="${film.poster}" alt="${film.name}" class="card__img" />
-        <p class="card__description--year">${film.releaseYear}</p>
-        <h1 class="card__title">${film.name}</h1>
-        <p class="card__descriptions">${film.genres}</p>
+        <img src="${movie.poster}" alt="${movie.name}" class="card__img" />
+        <p class="card__description--year">${movie.releaseYear}</p>
+        <h1 class="card__title">${movie.name}</h1>
+        <p class="card__descriptions">${movie.genres}</p>
         <div class="card__btns">
           <button class="btn__like">
             <svg
@@ -30,17 +30,18 @@ const renderFilmCard = (film) =>
     `;
 
 
-(async function displayFilms() {
+(async function displayMovies() {
   try {
-    const films = await MovieRecords.findAll();
+    const movies = await MovieRecords.findAll();
+    console.log(movies);
     const mainContainer = document.querySelector('main');
 
-    films.forEach((film) => {
-      mainContainer.insertAdjacentHTML('beforeend', renderFilmCard(film));
+    movies.forEach((movie) => {
+      mainContainer.insertAdjacentHTML('beforeend', renderCardMovie(movie));
     });
   } catch (error) {
     console.error('Error while rendering cards:', error);
   }
 })();
 
-export default renderFilmCard;
+export default renderCardMovie;
