@@ -1,18 +1,17 @@
 export default class Dialog {
-    constructor({id = "dialog-id", formInstance}) {
-        this.formInstance = formInstance;
-        this.id = id;        
-        this.dialog = document.getElementById(this.id) || null;
+    constructor({formInstance, title = 'Форма пустая'}) {
+        this.formInstance = formInstance;               
+        this.title = title;
+        this.dialog = null;
     }
 
     createDialog() {
         if(!this.dialog) {
-            this.dialog = document.createElement('dialog');
-            this.dialog.id = this.id;
+            this.dialog = document.createElement('dialog');            
             this.dialog.classList.add('dialog');
     
             let content = `      
-            <h2 class="dialog__title">ФОРМА ПУСТАЯ</h2> 
+            <h2 class="dialog__form--title">${this.title}</h2> 
             <button class="dialog__close">&times;</button>       
         `;
     
@@ -46,10 +45,11 @@ export default class Dialog {
     close() {
         if(this.dialog) {
             this.dialog.close();
+            setTimeout(() => {
+                if (this.dialog.parentNode) {
+                    this.dialog.remove();
+                }
+            }, 100);
         }        
-    }
-
-    isOpen() {
-        return this.dialog && this.dialog.open;
     }
 }

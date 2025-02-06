@@ -1,27 +1,34 @@
 export default class InputField {
-    constructor(name, labelText, type, placeholder, className) {
+    constructor(name, labelText, type, placeholder, classModifier) {
         this.name = name;
         this.labelText = labelText;        
         this.type = type;
-        this.placeholder = placeholder;
-        this.className = className;
+        this.placeholder = placeholder;        
+        this.classModifier = classModifier;
+        this.inputElement = null;
     }  
+
+    getInputElement() {
+        return this.inputElement;
+    }
     
     render() {
-        const label = document.createElement('label');
+        const labelInputConteiner = document.createElement('label');
         const span = document.createElement('span');
-        span.classList.add('dialog__label');
         span.textContent = this.labelText;
+        span.classList.add('dialog__form--label');
+        labelInputConteiner.appendChild(span);              
 
         const input = document.createElement('input');
         input.name = this.name;
         input.type = this.type;
         input.placeholder = this.placeholder;
-        input.classList.add(this.className);
+        input.className = `input ${this.classModifier}`;     
+        
+        labelInputConteiner.appendChild(input);
 
-        label.appendChild(span);
-        label.appendChild(input);
-        return label;
+        this.inputElement = labelInputConteiner;
+        return labelInputConteiner;
     }
 }
 
