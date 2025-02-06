@@ -33,6 +33,7 @@ export default class Dialog {
                         cancelButton.addEventListener('click', (event) => {
                             event.preventDefault();
                             this.close();
+                            this.resetForm();
                         });
                     }
 
@@ -49,14 +50,23 @@ export default class Dialog {
             document.body.appendChild(this.dialog);
 
             // Общие обработчики событий
-            this.dialog.querySelector('.dialog__close').addEventListener('click', () => this.close());
+            this.dialog.querySelector('.dialog__close').addEventListener('click', () => {
+                this.close();
+                this.resetForm();
+            });
+
             this.dialog.addEventListener('click', (event) => {
                 if (event.target === this.dialog) {
                     this.close();
+                    this.resetForm();
                 }
             });
+            
             this.dialog.addEventListener('keydown', (event) => {
-                if (event.key === 'Escape') this.close();
+                if (event.key === 'Escape') {
+                    this.close();
+                    this.resetForm();
+                }
             });
 
             this.dialog.addEventListener('close', () => {
@@ -85,9 +95,17 @@ export default class Dialog {
             const formData = new FormData(this.formInstance.getFormElement());
             console.log('Данные формы:', Object.fromEntries(formData.entries()));
             this.close();
+            this.resetForm();
+        } else {
+            console.error('Форма не найдена.');
+        }
+    }
+
+    resetForm() {
+        if (this.formInstance && this.formInstance.getFormElement()) {
+            this.formInstance.getFormElement().reset();
         } else {
             console.error('Форма не найдена.');
         }
     }
 }
-   
