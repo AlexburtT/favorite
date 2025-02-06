@@ -1,55 +1,93 @@
 export default class Dialog {
-    constructor({formInstance, title = 'Форма пустая'}) {
-        this.formInstance = formInstance;               
+    constructor({ formInstance, title = 'Форма пустая', additionalClasses = [] }) {
+        this.formInstance = formInstance;
         this.title = title;
         this.dialog = null;
+        this.additionalClasses = additionalClasses;
     }
 
     createDialog() {
-        if(!this.dialog) {
-            this.dialog = document.createElement('dialog');            
-            this.dialog.classList.add('dialog');
-    
-            let content = `      
-            <h2 class="dialog__form--title">${this.title}</h2> 
-            <button class="dialog__close">&times;</button>       
-        `;
-    
+        if (!this.dialog) {
+            if (!document.createElement('dialog').showModal) {
+                console.error('Ваш браузер не поддерживает тег <dialog>.');
+                return;
+            }
+
+            this.dialog = document.createElement('dialog');
+            this.dialog.classList.add('dialog', ...this.additionalClasses);
+
+            const content = `
+                <h2 class="dialog__form--title">${this.title}</h2>
+                <button class="dialog__close">&times;</button>
+            `;
             this.dialog.innerHTML = content;
 
-            if(this.formInstance) {
-                this.formElement = this.formInstance.getFormElement();
-                this.dialog.appendChild(this.formElement);
+            if (this.formInstance) {
+                const formElement = this.formInstance.getFormElement();
+                if (formElement) {
+                    this.dialog.appendChild(formElement);
+
+                    // Обработчики для кнопок
+                    const cancelButton = formElement.querySelector('.dialog__form--btn--cancel');
+                    if (cancelButton) {
+                        cancelButton.addEventListener('click', (event) => {
+                            event.preventDefault();
+                            this.close();
+                        });
+                    }
+
+                    const saveButton = formElement.querySelector('.dialog__form--btn--save');
+                    if (saveButton) {
+                        saveButton.addEventListener('click', (event) => {
+                            event.preventDefault();
+                            this.handleSave();
+                        });
+                    }
+                }
             }
+
             document.body.appendChild(this.dialog);
-    
-            this.dialog.querySelector(".dialog__close").addEventListener("click", () => this.close());
 
-            this.dialog.addEventListener("click", (event) => {
+            // Общие обработчики событий
+            this.dialog.querySelector('.dialog__close').addEventListener('click', () => this.close());
+            this.dialog.addEventListener('click', (event) => {
                 if (event.target === this.dialog) {
-                     this.close();
-                }                   
+                    this.close();
+                }
+            });
+            this.dialog.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') this.close();
             });
 
-            this.dialog.addEventListener("keydown", (event) => {
-                if (event.key === "Escape") this.close();
+            this.dialog.addEventListener('close', () => {
+                if (this.dialog.parentNode) {
+                    this.dialog.remove();
+                }
             });
-        }       
+        }
     }
 
     open() {
         this.createDialog();
-        this.dialog.showModal();
+        if (this.dialog) {
+            this.dialog.showModal();
+        }
     }
 
     close() {
-        if(this.dialog) {
+        if (this.dialog) {
             this.dialog.close();
-            setTimeout(() => {
-                if (this.dialog.parentNode) {
-                    this.dialog.remove();
-                }
-            }, 100);
-        }        
+        }
+    }
+
+    handleSave() {
+        if (this.formInstance && this.formInstance.getFormElement()) {
+            const formData = new FormData(this.formInstance.getFormElement());
+            console.log('Данные формы:', Object.fromEntries(formData.entries()));
+            this.close();
+        } else {
+            console.error('Форма не найдена.');
+        }
     }
 }
+   

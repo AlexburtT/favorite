@@ -1,7 +1,7 @@
 import dateYearFooter from "./src/js/dateYearFooter.js";
 import Dialog from "./src/js/components/dialogs/classDialog.js";
 import FormElement from "./src/js/components/forms/classForms.js";
-import InputField from "./src/js/components/inputs/inputClass.js";
+
 
 document.addEventListener('DOMContentLoaded', () => {
   
@@ -38,16 +38,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 ];
 
-  const formInstance = new FormElement('dialog__form', '', inputsArray);
+const buttonsArray = [
+  {
+    text: 'Отменить',
+    type: 'button',
+    classModifier: 'dialog__form--btn--cancel dialog__form--btn'
+  },
+  {
+    text: 'Сохранить',
+    type: 'button',
+    classModifier: 'dialog__form--btn--save dialog__form--btn'
+  }
+];
+
+  const formInstance = new FormElement('dialog__form', '', inputsArray, buttonsArray, { method: 'POST', action: '/submit'});
   formInstance.createFormElement(); 
 
   const addBtn = document.getElementById('add-btn');
   const whatBtn = document.getElementById('what-btn');
+
+  if (!addBtn || !whatBtn) {
+    console.error('Не удалось найти кнопки');
+    return;
+  }
     
   addBtn.addEventListener('click', () => {
     const dialog = new Dialog({       
       formInstance,
-      title: 'Создание закладки'    
+      title: 'Создание закладки',
+      additionalClasses: ['class-to-show-dialog']    
     });
 
     console.log('Кнопка "Добавить" была нажата');     
@@ -57,10 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
   whatBtn.addEventListener('click', () => {
     const dialog = new Dialog({       
       formInstance,
-      title: 'Пока Пока'
+      title: 'Пока Пока',
+      additionalClasses: ['class-to-show-dialog']
     })
     console.log('Кнопка "Что посмотреть?" была нажата');
     dialog.open();
   });
-
 });
