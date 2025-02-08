@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:json-server": "cd ../backend && json-server --watch ./db.json",
-    "start:app-server": "vite",
-    "dev": "concurrently \"npm:start:*\"",
+    "dev": "vite",
     "build": "vite build"
   },
   "keywords": [],

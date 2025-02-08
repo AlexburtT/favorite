@@ -1,9 +1,24 @@
+import eventBus from "../../uttils/EventBus";
+
 export default class Dialog {
     constructor({ formInstance, title = 'Форма пустая', additionalClasses = [] }) {
         this.formInstance = formInstance;
         this.title = title;
         this.dialog = null;
         this.additionalClasses = additionalClasses;
+
+        // Подписываемся на события через EventBus
+        this.subscribeToEvents();
+    }
+
+    subscribeToEvents() {
+        eventBus.on('dialog:close', () => this.close());
+        eventBus.on('form:save', (data) => this.handleSave(data)); 
+    }
+
+    unsubscribeFromEvents() {
+        eventBus.off('dialog:close', this.close.bind(this));
+        eventBus.off('form:save', this.handleSave.bind(this));
     }
 
     createDialog() {
@@ -26,86 +41,62 @@ export default class Dialog {
                 const formElement = this.formInstance.getFormElement();
                 if (formElement) {
                     this.dialog.appendChild(formElement);
-
-                    // Обработчики для кнопок
-                    const cancelButton = formElement.querySelector('.dialog__form--btn--cancel');
-                    if (cancelButton) {
-                        cancelButton.addEventListener('click', (event) => {
-                            event.preventDefault();
-                            this.close();
-                            this.resetForm();
-                        });
-                    }
-
-                    const saveButton = formElement.querySelector('.dialog__form--btn--save');
-                    if (saveButton) {
-                        saveButton.addEventListener('click', (event) => {
-                            event.preventDefault();
-                            this.handleSave();
-                        });
-                    }
                 }
             }
 
             document.body.appendChild(this.dialog);
 
-            // Общие обработчики событий
+            // Обработчики событий для диалога
             this.dialog.querySelector('.dialog__close').addEventListener('click', () => {
-                this.close();
-                this.resetForm();
+                eventBus.publish('dialog:close'); 
+                console.log("Кнопка закрытия диалога нажата.");
             });
-
             this.dialog.addEventListener('click', (event) => {
                 if (event.target === this.dialog) {
-                    this.close();
-                    this.resetForm();
+                    eventBus.publish('dialog:close'); 
+                    console.info('Диалог закрыт по клику вне диалога.');
                 }
             });
-            
             this.dialog.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape') {
-                    this.close();
-                    this.resetForm();
-                }
-            });
-
-            this.dialog.addEventListener('close', () => {
-                if (this.dialog.parentNode) {
-                    this.dialog.remove();
+                    eventBus.publish('dialog:close'); 
+                    console.info('Диалог закрыт по нажатию клавиши Escape.');
                 }
             });
         }
     }
 
     open() {
-        this.createDialog();
-        if (this.dialog) {
-            this.dialog.showModal();
+        if (!this.dialog) {
+            this.createDialog(); 
         }
+        this.dialog.showModal(); 
     }
 
     close() {
         if (this.dialog) {
             this.dialog.close();
+            this.formInstance.resetForm();
         }
     }
 
-    handleSave() {
-        if (this.formInstance && this.formInstance.getFormElement()) {
+    handleSave(data) {
+        const { formId } = data;
+        if (this.formInstance && this.formInstance.getFormElement()?.id === formId) {
             const formData = new FormData(this.formInstance.getFormElement());
             console.log('Данные формы:', Object.fromEntries(formData.entries()));
-            this.close();
-            this.resetForm();
+
+            // Отправка данных на сервер
+            this.sendFormData(formData);
+
+            // Закрываем диалог после сохранения
+            eventBus.publish('dialog:close');
         } else {
-            console.error('Форма не найдена.');
+            console.error(`Форма с ID "${formId}" не найдена.`);
         }
     }
 
-    resetForm() {
-        if (this.formInstance && this.formInstance.getFormElement()) {
-            this.formInstance.getFormElement().reset();
-        } else {
-            console.error('Форма не найдена.');
-        }
+    sendFormData(formData) {
+        console.log('Отправка данных на сервер:', Object.fromEntries(formData.entries()));
     }
 }

@@ -1,0 +1,17 @@
+{
+    "name": "favorite",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {        
+        "start:backend": "cd backend && npx json-server --watch db.json",
+        "start:frontend": "cd frontend && npx vite",
+        "dev": "concurrently \"npm:start:*\""
+    },
+    "author": "A.A. Tyumentsev",
+    "license": "ISC",
+    "dependencies": {},
+    "devDependencies": {
+        "concurrently": "9.1.0"
+    }
+}

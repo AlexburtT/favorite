@@ -63,6 +63,12 @@ body {
   outline: none;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* ШАПКА */
 .header {
   width: 110rem;
@@ -239,7 +245,7 @@ body {
   background-size: 1.9rem;
 }
 
-.dialog__form--conteiner--btn {
+.dialog__form--container--btn {
   width: 100%;
   display: flex;
   justify-content: space-between;
