@@ -2,6 +2,7 @@ import jsonServer from 'json-server';
 import multer from 'multer';
 import path from 'path';
 import express from 'express';
+import fs from 'fs';
 import { nanoid } from 'nanoid';
 import { fileURLToPath } from 'url';
 
@@ -19,7 +20,11 @@ const middleware = jsonServer.defaults({
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, 'posters'));
+        const postersDir = path.join(__dirname, 'posters');
+        if (!fs.existsSync(postersDir)) {
+            fs.mkdirSync(postersDir);
+        }
+        cb(null, postersDir);
     },
     filename: (req, file, cb) => {
         const id = nanoid();
@@ -36,6 +41,9 @@ server.use(middleware);
 server.use('/posters', express.static(path.join(__dirname, 'posters')));
 
 server.post('/posters', upload.single('poster'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).jsonp({ error: 'Файл не найден' });
+    }
     res.jsonp({
         path: `/posters/${req.file.filename}`
     });
