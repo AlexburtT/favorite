@@ -2,17 +2,18 @@
   "name": "server",
   "version": "1.0.0",
   "description": "server db-json-server",
-  "main": "server.js",
+  "main": "main.js",
+  "type": "module",
   "scripts": {
     "test": "test",
-    "start": "node server.js",
-    "dev": "json-server --watch ./db.json"
+    "start": "node main.js",
+    "dev": "node main.js"
   },
   "author": "A.A. Tyumentsev",
   "license": "ISC",
   "dependencies": {
     "express": "4.21.2",
-    "json-server": "1.0.0-beta.3",
+    "json-server": "0.17.4",
     "multer": "1.4.5-lts.1",
     "nanoid": "5.0.9"
   }
