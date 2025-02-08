@@ -84,7 +84,7 @@ export default class Dialog {
         const { formId } = data;
         if (this.formInstance && this.formInstance.getFormElement()?.id === formId) {
             const formData = new FormData(this.formInstance.getFormElement());
-            console.log('Данные формы:', Object.fromEntries(formData.entries()));
+            console.dir(Object.fromEntries(formData.entries()));
 
             // Отправка данных на сервер
             this.sendFormData(formData);
@@ -97,6 +97,17 @@ export default class Dialog {
     }
 
     sendFormData(formData) {
-        console.log('Отправка данных на сервер:', Object.fromEntries(formData.entries()));
+        // Реализация отправки данных на сервер
+        fetch('/submit', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Данные успешно отправлены на сервер:', data);
+        })
+        .catch(error => {
+            console.error('Ошибка при отправке данных на сервер:', error);
+        });
     }
 }

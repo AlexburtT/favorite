@@ -1,5 +1,5 @@
 class MovieRecords {
-    constructor({ name, releaseYear, poster = '', genres = [], viewed = false, description = '', favorite = false }) {
+    constructor({ name, releaseYear, poster = [], genres = [], viewed = false, description = '', favorite = false }) {
         this.name = name;
         this.releaseYear = releaseYear;
         this.poster = poster;
