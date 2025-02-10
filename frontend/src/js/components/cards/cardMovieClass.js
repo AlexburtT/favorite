@@ -10,10 +10,10 @@ class CardMovieElement {
             card.dataset.id = this.movie.id;
 
             const imgMovie = document.createElement('img');
-            imgMovie.src = this.movie.poster;
+            imgMovie.src = this.movie.poster || 'http://localhost:3000/posters/no_product_img.png';
             imgMovie.alt = this.movie.name;
             imgMovie.className = 'card__img';
-            card.appendChild(img);
+            card.appendChild(imgMovie);
 
             const titleMovie = document.createElement('h1');
             titleMovie.className = 'card__title';

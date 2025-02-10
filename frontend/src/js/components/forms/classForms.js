@@ -1,5 +1,5 @@
 import InputField from "../inputs/inputClass";
-import ButtonClass from "../buttons/buttonClass";
+import ButtonElement from "../buttons/buttonClass";
 import eventBus from "../../uttils/EventBus";
 
 export default class FormElement {
@@ -62,8 +62,8 @@ export default class FormElement {
             buttonContainer.className = 'dialog__form--container--btn';
 
             for (const button of this.buttons) {
-                const buttonElement = new ButtonClass(button.text, button.type, button.classModifier, button.attributes).render();
-                buttonContainer.appendChild(buttonElement);
+                const btnElement = new ButtonElement(button.text, button.type, button.classModifier, button.attributes).render();
+                buttonContainer.appendChild(btnElement);
             }
 
             form.appendChild(buttonContainer);

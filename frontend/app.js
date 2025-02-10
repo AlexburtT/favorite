@@ -1,7 +1,6 @@
 import dateYearFooter from "./src/js/dateYearFooter.js";
 import Dialog from "./src/js/components/dialogs/classDialog.js";
 import FormElement from "./src/js/components/forms/classForms.js";
-import renderCardMovie from "./src/js/renderCardMovie.js";
 import scrollTop from "./src/js/scrollTop.js";
 import { inputsArray } from "./src/js/constants/inputsArray.js";
 import { buttonsArray } from "./src/js/constants/buttonsArray.js";
@@ -9,6 +8,7 @@ import { buttonsArray } from "./src/js/constants/buttonsArray.js";
 document.addEventListener('DOMContentLoaded', async () => {
 
   dateYearFooter;
+  scrollTop;
   inputsArray;
   buttonsArray;
 
@@ -29,9 +29,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   } else {
     console.error('Элемент #add-btn не найден.');
-  }
-
-  renderCardMovie;
-
-  scrollTop;
+  }  
 });
