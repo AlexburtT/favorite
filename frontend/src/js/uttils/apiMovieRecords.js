@@ -1,7 +1,16 @@
 import { BASE_API_URL } from '../constants/apiUrlConstant.js';
 
 class MovieRecords {
-    constructor({ id, name, releaseYear, poster = [], genres = [], viewed = false, description = '', favorite = false }) {
+    constructor({ 
+        id, 
+        name, 
+        releaseYear, 
+        poster = [], 
+        genres = [], 
+        viewed = false, 
+        description = '', 
+        favorite = false 
+    }) {
         this.id = id; // Добавляем ID фильма
         this.name = name;
         this.releaseYear = releaseYear;
@@ -57,6 +66,10 @@ class MovieRecords {
      * @returns {Promise<MovieRecords>} - Созданный фильм
      */
     static async createMovie(newMovieData) {
+        if (!Array.isArray(newMovieData.poster)) {
+            newMovieData.poster = [newMovieData.poster];
+        }
+
         const movie = await this.fetchFromApi('', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -72,6 +85,10 @@ class MovieRecords {
      * @returns {Promise<MovieRecords>} - Обновленный фильм
      */
     static async updateMovie(id, updatedFields) {
+        if (updatedFields.poster && !Array.isArray(updatedFields.poster)) {
+            updatedFields.poster = [updatedFields.poster];
+        }
+
         const updatedMovie = await this.fetchFromApi(id, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },

@@ -1,4 +1,4 @@
-export default class InputField {
+class InputField {
     constructor(name, labelText, type = 'text', placeholder = '', classModifier = '', attributes = {}) {
 
         if (!name || !labelText || !type) {
@@ -41,3 +41,4 @@ export default class InputField {
     }
 }
 
+export default InputField;

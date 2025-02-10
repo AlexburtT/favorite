@@ -1,6 +1,6 @@
 import eventBus from "../../uttils/EventBus";
 
-export default class Dialog {
+class Dialog {
     constructor({ formInstance, title = 'Форма пустая', additionalClasses = [] }) {
         this.formInstance = formInstance;
         this.title = title;
@@ -111,3 +111,5 @@ export default class Dialog {
         });
     }
 }
+
+export default Dialog;

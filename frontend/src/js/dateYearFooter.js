@@ -1,5 +1,3 @@
-// ts-check
-
 const dateYearFooter = new Date().getFullYear();
 
 document.querySelector('.footer__year').textContent = dateYearFooter;

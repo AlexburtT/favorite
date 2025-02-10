@@ -2,7 +2,7 @@ import InputField from "../inputs/inputClass";
 import ButtonElement from "../buttons/buttonClass";
 import eventBus from "../../uttils/EventBus";
 
-export default class FormElement {
+class FormElement {
     constructor(id, name = '', inputs = [], buttons = [], formAttributes = {}) {
         if (!id) {
             throw new Error('ID формы должен быть указан.');
@@ -121,3 +121,5 @@ export default class FormElement {
         }
     }
 }
+
+export default FormElement;
