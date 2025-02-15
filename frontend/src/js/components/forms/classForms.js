@@ -1,125 +1,73 @@
-import InputField from "../inputs/inputClass";
-import ButtonElement from "../buttons/buttonClass";
-import eventBus from "../../uttils/EventBus";
+import Input from "@/js/components/inputs/classInput.js";
+import Button from "@/js/components/buttons/buttonClass.js";
 
-class FormElement {
-    constructor(id, name = '', inputs = [], buttons = [], formAttributes = {}) {
-        if (!id) {
-            throw new Error('ID формы должен быть указан.');
-        }
 
-        this.id = id;
-        this.name = name;
-        this.inputs = inputs;
-        this.buttons = buttons;
-        this.formAttributes = formAttributes;
-        this.formElement = null;
+class Form {
+    #id;
+    #name;
+    #inputs;
+    #buttons;
+    #atributes;
+    #element;
 
-        this.validateInputs();
-        this.validateButtons();
+    /**
+     * @param {string} id - ID формы (обязательный параметр).
+     * @param {string} [name=''] - Имя формы.
+     * @param {Array<Object>} [inputs=[]] - Массив параметров для создания полей ввода.
+     * @param {Array<Object>} [buttons=[]] - Массив параметров для создания кнопок.
+     * @param {Object} [attributes={}] - Дополнительные атрибуты для <form>.
+     */
+    constructor({
+        id = '',
+        name = '',
+        inputs = [],
+        buttons = [],
+        attributes = {}
+    }) {
+        this.#validateParams(id);
+        this.#id = id;
+        this.#name = name;
+        this.#inputs = inputs.map((inputProps) => new Input(inputProps));
+        this.#buttons = buttons.map((buttonProps) => new Button(buttonProps));
+        this.#atributes = attributes;
+        this.#element = this.#createForm();
     }
 
-    validateInputs() {
-        if (!Array.isArray(this.inputs)) {
-            throw new Error('Inputs должен быть массивом!');
+    #validateParams(id) {
+        if (!id && typeof id !== 'string') {
+            throw new Error('ID формы должен быть непустой строкой');
         }
-        for (const input of this.inputs) {
-            if (typeof input !== 'object' || !input.name || !input.labelText || !input.type) {
-                throw new Error('Некорректная структура данных для inputs.');
-            }
-        }
-    }
+    }    
 
-    validateButtons() {
-        if (!Array.isArray(this.buttons)) {
-            throw new Error('Buttons должен быть массивом!');
-        }
-        for (const button of this.buttons) {
-            if (typeof button !== 'object' || !button.text || !button.type) {
-                throw new Error('Некорректная структура данных для buttons.');
-            }
-        }
-    }
+    #createForm() {
+        const form = document.createElement('form');        
+        form.id = this.#id;
+       
+        form.name = this.#name;
+        form.className = 'dialog__form';
+        Object.entries(this.#atributes).forEach(([key, value]) => {
+            form.setAttribute(key, value);
+        });
 
-    createFormElement() {
-        if (!this.formElement) {
-            const form = document.createElement('form');
-            form.id = this.id;
-            form.name = this.name;
-            form.className = 'dialog__form';
-            Object.entries(this.formAttributes).forEach(([key, value]) => {
-                form.setAttribute(key, value);
-            });
-
-            // Добавляем поля ввода
-            for (const input of this.inputs) {
-                const inputField = new InputField(input.name, input.labelText, input.type, input.placeholder, input.classModifier, input.attributes).render();
-                form.appendChild(inputField);
-            }
-
-            // Добавляем контейнер для кнопок
-            const buttonContainer = document.createElement('div');
-            buttonContainer.className = 'dialog__form--container--btn';
-
-            for (const button of this.buttons) {
-                const btnElement = new ButtonElement(button.text, button.type, button.classModifier, button.attributes).render();
-                buttonContainer.appendChild(btnElement);
-            }
-
-            form.appendChild(buttonContainer);
-            this.formElement = form;
-
-            // Добавляем обработчики событий для кнопок
-            this.addEventListeners(this.formElement);;
+        for (const input of this.#inputs) {
+            form.appendChild(input.getElement());
         }
 
-        return this.formElement;
-    }
+        // Добавляем контейнер для кнопок
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'dialog__form--container--btn';
 
-    addEventListeners(formElement) {
-        const cancelButton = formElement.querySelector('.dialog__form--btn--cancel');
-        if (cancelButton) {
-            cancelButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                eventBus.publish('dialog:close'); 
-                console.info('Диалог закрыт по нажатию кнопки "Отмена".');                
-            });
+        for (const button of this.#buttons) {
+            buttonContainer.appendChild(button.getElement());
         }
 
-        const saveButton = formElement.querySelector('.dialog__form--btn--save');
-        if (saveButton) {
-            saveButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                eventBus.publish('form:save', { formId: formElement.id }); 
-                console.info('Данные сохранены. Диалог закрыт по нажатию кнопки "Сохранить".');
-            });
-        }
-    }
+        form.appendChild(buttonContainer);
+        return form;
+    } 
 
-    getFormElement() {
-        return this.formElement;
-    }
-
-    resetForm() {
-        if (this.formElement) {
-            this.formElement.reset(); 
-        } else {
-            console.warn('Форма не существует. Пересоздание формы...');            
-        }
-    }
-
-    populateForm(data) {
-        if (this.formElement) {
-            for (const [name, value] of Object.entries(data)) {
-                const input = this.formElement.querySelector(`[name="${name}"]`);
-                if (input) {
-                    input.value = value; 
-                }
-            }
-        } else {
-            console.error('Форма еще не создана.');
-        }
+    getElement() {
+        return this.#element;
     }
 }
 
-export default FormElement;
+export default Form;

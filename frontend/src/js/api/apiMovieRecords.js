@@ -1,17 +1,29 @@
 import { BASE_API_URL } from '../constants/apiUrlConstant.js';
 
 class MovieRecords {
-    constructor({ 
-        id, 
-        name, 
-        releaseYear, 
-        poster = [], 
-        genres = [], 
-        viewed = false, 
-        description = '', 
-        favorite = false 
+
+    /**
+     * Конструктор для создания объекта записи фильма
+     * @param {number} id - Уникальный идентификатор фильма
+     * @param {string} name - Название фильма
+     * @param {number} releaseYear - Год выпуска фильма
+     * @param {Array<string>} poster - Массив ссылок на постеры фильма
+     * @param {Array<string>} genres - Массив жанров фильма
+     * @param {boolean} viewed - Флаг, указывающий, просмотрен ли фильм
+     * @param {string} description - Описание фильма
+     * @param {boolean} favorite - Флаг, указывающий, является ли фильм избранным
+     */
+    constructor({
+        id,
+        name,
+        releaseYear,
+        poster = [],
+        genres = [],
+        viewed = false,
+        description = '',
+        favorite = false
     }) {
-        this.id = id; // Добавляем ID фильма
+        this.id = id; 
         this.name = name;
         this.releaseYear = releaseYear;
         this.poster = poster;
@@ -47,7 +59,9 @@ class MovieRecords {
      */
     static async findAll() {
         const data = await this.fetchFromApi();
-        return data.map((movie) => new MovieRecords(movie));
+        return data.map((movie) => {
+            return new MovieRecords(movie);
+        });
     }
 
     /**
@@ -66,6 +80,15 @@ class MovieRecords {
      * @returns {Promise<MovieRecords>} - Созданный фильм
      */
     static async createMovie(newMovieData) {
+        if (typeof newMovieData.genres === 'string') {
+            newMovieData.genres = newMovieData.genres.split(',').map((genre) => genre.trim());
+        }
+
+        newMovieData.viewed = newMovieData.viewed ?? false;
+        newMovieData.favorite = newMovieData.favorite ?? false;
+
+        console.log('Это то что отправляется на сервер', newMovieData);
+
         if (!Array.isArray(newMovieData.poster)) {
             newMovieData.poster = [newMovieData.poster];
         }
@@ -75,6 +98,7 @@ class MovieRecords {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newMovieData),
         });
+
         return new MovieRecords(movie);
     }
 
@@ -94,6 +118,7 @@ class MovieRecords {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedFields),
         });
+
         return new MovieRecords(updatedMovie);
     }
 
@@ -127,11 +152,43 @@ class MovieRecords {
             }
 
             const result = await response.json();
-            return result.path; // Возвращаем путь к загруженному постеру
+            return `${BASE_API_URL}${result.path}`; // Возвращаем путь к загруженному постеру
         } catch (error) {
             console.error('Ошибка при загрузке постера:', error);
             throw error;
         }
+    }
+
+    /**
+ * Обрабатывает данные из формы и создает новый фильм.
+ * @param {FormData} formData - Данные формы.
+ * @returns {Promise<void>} - Асинхронная обработка.
+ */
+    static async handleFormSave(formData) {
+        // Проверяем, есть ли файл для загрузки
+        const file = formData.get('poster');
+        if (file && file.size > 0) {
+            try {
+                const posterPath = await this.uploadPoster(file); // Загружаем файл постера
+                formData.set('poster', posterPath); // Устанавливаем путь к загруженному файлу
+            } catch (error) {
+                console.error('Ошибка при загрузке постера:', error);
+                return; // Прерываем выполнение при ошибке
+            }
+        } else {
+            formData.set('poster', ''); // Если файла нет, устанавливаем пустую строку
+        }
+
+        // Преобразуем FormData в объект
+        const movieData = {}; 
+        for (const [key, value] of formData.entries()) {
+            movieData[key] = value;
+        }
+
+        const createdMovie = await this.createMovie(movieData);
+        console.log('Созданный фильм:', createdMovie);
+
+        return createdMovie;
     }
 }
 

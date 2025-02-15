@@ -7,12 +7,12 @@ scrollTop.addEventListener('click', () => {
     });
 });
 
-// window.addEventListener('scroll', () => {
-//     if (window.scrollY > 500) {
-//         scrollTop.style.display = 'block';
-//     } else {
-//         scrollTop.style.display = 'none';
-//     }
-// });
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+        scrollTop.style.display = 'block';
+    } else {
+        scrollTop.style.display = 'none';
+    }
+});
 
 export default scrollTop;
