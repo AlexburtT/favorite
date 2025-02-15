@@ -331,6 +331,10 @@ input[type="number"]::-webkit-inner-spin-button {
   svg {
     stroke: var(--dark);
     transition: all 0.1s ease-in-out;
+
+    path {
+      stroke: var(--dark);
+    }
   }
 }
 
