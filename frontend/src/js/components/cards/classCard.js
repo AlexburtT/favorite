@@ -1,4 +1,5 @@
 import Button from "../buttons/buttonClass";
+import DescriptionMovie from "./descriptionMovie";
 import GenreMovie from "./genreMovie";
 import MovieImage from "./imgPoster";
 import TitleMovie from "./titleMovie";
@@ -29,8 +30,11 @@ class Card {
         const genre = new GenreMovie(this.#movie).getElement();
         card.appendChild(genre);
 
+        const description = new DescriptionMovie(this.#movie).getElement();
+        card.appendChild(description);
+
         const buttonsContainer = document.createElement('div');
-        buttonsContainer.className = 'card__btns';
+        buttonsContainer.className = 'card__btns--container';
 
         const likeButtonsProps = {
             type: 'button',
@@ -39,11 +43,12 @@ class Card {
         };
 
         const likeButton = new Button(likeButtonsProps).getElement();
+        likeButton.classList.remove('btn');
 
         const viewButtonProps = {
             title: 'Не просмотрено',
             type: 'button',
-            className: 'btn btn__card no-view',
+            className: 'btn__card no-view',
         }
 
         const viewButton = new Button(viewButtonProps).getElement();

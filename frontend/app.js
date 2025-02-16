@@ -1,6 +1,6 @@
-import dateYearFooter from "./src/js/dateYearFooter.js";
+import { dateYearFooter } from "./src/js/dateYearFooter.js";
 import Dialog from "./src/js/components/dialogs/classDialog.js";
-import scrollTop from "./src/js/scrollTop.js";
+import { scrollTop } from "./src/js/scrollTop.js";
 import { inputsArray, buttonsArray } from "./src/js/constants/arrayConstantInputButton.js";
 import Form from "./src/js/components/forms/classForms.js";
 import DialogController from "./src/js/controllers/classDialogController.js";
@@ -11,8 +11,8 @@ import MovieRecords from "./src/js/api/apiMovieRecords.js";
 document.addEventListener('DOMContentLoaded', async () => {
 
   try {
-    dateYearFooter;
-    scrollTop;
+    dateYearFooter();
+    scrollTop();
 
   const form = new Form({
     id: 'dialog__form',

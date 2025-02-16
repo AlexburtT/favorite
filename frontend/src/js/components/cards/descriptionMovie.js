@@ -1,12 +1,12 @@
-class GenreMovie {
+class DescriptionMovie {
     #movie;
     #element;
 
     constructor(movie) {
         this.#movie = movie;
         this.#element = document.createElement('p');
-        this.#element.className = 'card__text card__text--genre';
-        this.#element.textContent = this.#movie.genres.join(', ');
+        this.#element.className = 'card__text card__text--description';
+        this.#element.textContent = this.#movie.description;
     }
 
     getElement() {
@@ -14,4 +14,4 @@ class GenreMovie {
     }
 }
 
-export default GenreMovie;
+export default DescriptionMovie;
