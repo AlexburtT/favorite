@@ -84,6 +84,10 @@ class MovieRecords {
             newMovieData.genres = newMovieData.genres.split(',').map((genre) => genre.trim());
         }
 
+        if (typeof newMovieData.releaseYear === 'string') {
+            newMovieData.releaseYear = parseInt(newMovieData.releaseYear, 10);
+        }
+
         newMovieData.viewed = newMovieData.viewed ?? false;
         newMovieData.favorite = newMovieData.favorite ?? false;       
 
