@@ -1,4 +1,5 @@
 import MovieRecords from "../api/apiMovieRecords";
+import Card from "../components/cards/classCard";
 
 class DialogController {
     #dialogElement;
@@ -42,6 +43,10 @@ class DialogController {
                     const formData = new FormData(this.#formElement);
                     const createMovie = await MovieRecords.handleFormSave(formData);
                     console.log('Фильм успешно создан:', formData.get('name'));
+
+                    const card = new Card(createMovie).getElement();
+                    document.getElementById('movies-list').appendChild(card);
+                    
                     this.#formElement.reset();
                     this.closeDialog();
                 } catch (error) {
