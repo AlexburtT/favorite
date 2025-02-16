@@ -317,6 +317,7 @@ input[type="number"]::-webkit-inner-spin-button {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   margin-bottom: 3rem;
 }
 
@@ -331,7 +332,7 @@ input[type="number"]::-webkit-inner-spin-button {
   /* margin-top: 5rem; */
 }
 
-.btn__like {
+.btn__like--not {
   width: 4.6rem;
   height: 4.6rem;
   background-color: var(--white);
@@ -341,25 +342,50 @@ input[type="number"]::-webkit-inner-spin-button {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
-  svg {
-    stroke: var(--dark);
-    transition: all 0.1s ease-in-out;
+  svg {    
+    transition: all 0.3s ease-in-out;
 
     path {
+      transition: all 0.3s ease-in-out;
       stroke: var(--dark);
     }
   }
 }
 
-.btn__like:hover {
+.btn__like--not:hover {
   background-color: var(--accent);
   border: none;
 
   svg {
     fill: var(--color-like);
-    stroke: var(--color-like);
+    
+    path {
+      stroke: var(--color-like);
+    }
+  }
+}
+
+.btn__like--active {
+  width: 4.6rem;
+  height: 4.6rem;
+  background-color: var(--white);  
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  
+
+  svg {    
+    width: 3.7rem;
+    height: 3.7rem;
+    fill: var(--color-like);
+
+    path {      
+      stroke: var(--color-like);
+    }
   }
 }
 

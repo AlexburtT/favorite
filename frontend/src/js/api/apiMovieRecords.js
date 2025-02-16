@@ -85,9 +85,7 @@ class MovieRecords {
         }
 
         newMovieData.viewed = newMovieData.viewed ?? false;
-        newMovieData.favorite = newMovieData.favorite ?? false;
-
-        console.log('Это то что отправляется на сервер', newMovieData);
+        newMovieData.favorite = newMovieData.favorite ?? false;       
 
         if (!Array.isArray(newMovieData.poster)) {
             newMovieData.poster = [newMovieData.poster];
