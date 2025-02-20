@@ -5,7 +5,7 @@ class DescriptionMovie {
     constructor(movie) {
         this.#movie = movie;
         this.#element = document.createElement('p');
-        this.#element.className = 'card__text card__text--description';
+        this.#element.className = 'card__text card__text--description is-line-clamp';
         this.#element.textContent = this.#movie.description;
     }
 

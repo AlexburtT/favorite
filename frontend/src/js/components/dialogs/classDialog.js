@@ -6,14 +6,14 @@ class Dialog {
     #element;
 
     /**
-     * @param {string} [title='Форма не передана!'] - Заголовок диалога.
+     * @param {string} [title='Элемент не передан!'] - Заголовок диалога.
      * @param {string} [className=''] - Дополнительные CSS-классы для диалога.
      * @param {Object} [attributes={}] - Дополнительные атрибуты для <dialog>.
      * @param {Object|null} [contentInstance=null] - Экземпляр контента (например, форма).
      */
 
     constructor({
-        title = 'Форма не передана!',
+        title = 'Элемент не передан!',
         className = '',
         contentInstance = null,
         attributes = {}
@@ -38,7 +38,7 @@ class Dialog {
         dialog.className = `dialog ${this.#className}`;
 
         const title = document.createElement('h2');
-        title.className = 'dialog__form--title';
+        title.className = 'dialog__title';
         title.textContent = this.#title;
 
         const closeButton = document.createElement('button');

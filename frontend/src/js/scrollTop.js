@@ -1,6 +1,10 @@
 export const scrollTop = () => {
     const scrollTop = document.querySelector('.btn__scroll-top');
 
+    if (!scrollTop) return;
+
+    scrollTop.style.display = 'none';
+
     scrollTop.addEventListener('click', () => {
         window.scrollTo({
             top: 0,
