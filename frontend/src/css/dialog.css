@@ -1,0 +1,91 @@
+.dialog {
+	position: relative;
+	width: 53.9rem;
+	background-color: var(--white);
+	color: var(--dark);
+	margin: 10rem auto;
+	padding: 6.1rem;
+	border-radius: 1.6rem;
+
+	transition:
+		display 0.3s allow-discrete,
+		overlay 0.3s allow-discrete;
+
+	animation: close 0.3s forwards;
+	&[open] {
+		animation: open 0.3s forwards;
+	}
+}
+
+@keyframes open {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes close {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+.dialog::backdrop {
+	background-color: rgb(0 0 0 / 0.6);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+}
+
+.dialog__close {
+	position: absolute;
+	top: 0;
+	right: 2rem;
+	background: none;
+	border: none;
+	font-size: 3.4rem;
+	color: var(--dark);
+	cursor: pointer;
+	transition: color 0.5s ease;
+}
+
+.dialog__close:hover {
+	color: var(--accent); /* Изменение цвета при наведении */
+}
+
+.dialog__form {
+	margin-top: 2rem;
+	display: flex;
+	flex-direction: column;
+	gap: 2.5rem;
+}
+
+.dialog__title {
+	font-size: 3.6rem;
+	font-weight: 500;
+	text-align: center;
+}
+
+.dialog__input--poster {
+	padding-left: 6.4rem;
+	background: url("/clip_file.svg") no-repeat;
+	background-position: 2.5rem center;
+	background-size: 1.9rem;
+}
+
+.dialog__form--container--btn {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	gap: 3.1rem;
+	margin-top: 3rem;
+}
+
+.dialog__form--btn {
+	width: 100%;
+	height: 6rem;
+}

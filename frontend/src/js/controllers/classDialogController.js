@@ -2,137 +2,146 @@ import MovieRecords from "../api/apiServer";
 import Card from "../components/cards/classCard";
 
 class DialogController {
-    #element;
-    #contentInstance;
+	#element;
+	#contentInstance;
 
-    /**
-     * @param {Object} params - Параметры для создания контроллера диалога.
-     * @param {HTMLDialogElement} element - Элемент диалогового окна.
-     * @param {HTMLElement|null} contentInstance - Контент внутри диалога (форма или карточка).
-     */
-    constructor(element, contentInstance = null) {
-        if (!(element instanceof HTMLDialogElement)) {
-            throw new Error('Переданный элемент должен быть экземпляром HTMLDialogElement.');
-        }
+	/**
+	 * @param {Object} params - Параметры для создания контроллера диалога.
+	 * @param {HTMLDialogElement} element - Элемент диалогового окна.
+	 * @param {HTMLElement|null} contentInstance - Контент внутри диалога (форма или карточка).
+	 */
+	constructor(element, contentInstance = null) {
+		if (!(element instanceof HTMLDialogElement)) {
+			throw new Error(
+				"Переданный элемент должен быть экземпляром HTMLDialogElement."
+			);
+		}
 
-        this.#element = element;
-        this.#contentInstance = contentInstance;
+		this.#element = element;
+		this.#contentInstance = contentInstance;
 
-        this.#addEventListeners();
-    }
+		this.#addEventListeners();
+	}
 
-    #addEventListeners() {      
-        const closeButton = this.#element.querySelector('.dialog__close');
-        if (closeButton) {
-            closeButton.addEventListener('click', () => this.closeDialog());
-        }
-       
-        this.#element.addEventListener('click', (event) => {
-            if (event.target === this.#element) {                
-                this.closeDialog();
-            }
-        });
+	#addEventListeners() {
+		const closeButton = this.#element.querySelector(".dialog__close");
+		if (closeButton) {
+			closeButton.addEventListener("click", () => this.closeDialog());
+		}
 
-        this.#element.addEventListener('click', (event) => {
-            const target = event.target;
+		this.#element.addEventListener("click", (event) => {
+			if (event.target === this.#element) {
+				this.closeDialog();
+			}
+		});
 
-            if (target.classList.contains('btn__dialog--cancel')) {
-                console.log('Кнопка "Отмена" нажата из карточки.');
-                this.closeDialog();
-            }
+		this.#element.addEventListener("click", (event) => {
+			const target = event.target;
 
-            if (target.classList.contains('btn__dialog--edit')) {
-                console.log('Кнопка "Редактировать" нажата из карточки.');
-            }
-        });
+			if (target.classList.contains("btn__dialog--cancel")) {
+				console.log('Кнопка "Отмена" нажата из карточки.');
+				this.closeDialog();
+			}
 
-        if (this.#contentInstance instanceof HTMLFormElement) {
-            this.#addFormEventListeners();
-        }
-    }
+			if (target.classList.contains("btn__dialog--edit")) {
+				console.log('Кнопка "Редактировать" нажата из карточки.');
+			}
+		});
 
-    #addFormEventListeners() {
-        const form = this.#contentInstance;
-        form.addEventListener('submit', async (event) => {
-                event.preventDefault();
+		if (this.#contentInstance instanceof HTMLFormElement) {
+			this.#addFormEventListeners();
+		}
+	}
 
-                try {
-                    const apiMovie = new MovieRecords.getInstance();
+	#addFormEventListeners() {
+		const form = this.#contentInstance;
+		form.addEventListener("submit", async (event) => {
+			event.preventDefault();
 
-                    const formData = new FormData(form);
-                    const createMovie = await apiMovie.handleFormSave(formData);
-                    console.log('Фильм успешно создан:', formData.get('name'));
+			try {
+				const apiMovie = new MovieRecords.getInstance();
 
-                    const card = new Card(createMovie).getElement();
-                    document.getElementById('movies-list').appendChild(card);
-                                        
-                    this.closeDialog();
-                    form.reset();
-                } catch (error) {
-                    console.error('Ошибка при сохранении фильма:', error);
-                }
-            });
-            
-            const buttons = form.querySelectorAll('button');
-            buttons.forEach((button) => {
-                button.addEventListener('click', () => {
-                    console.log('Кнопка нажата:', button.textContent.trim());
-                    
-                    if (button.type === 'reset' && button.classList.contains('dialog__form--btn--cancel')) {                        
-                        this.closeDialog();
-                        form.reset();
-                    }
-                });
-            });
-        }
-    openDialog() {
-        if (!this.#element.open) {
-            this.#element.showModal();
-        }
-    }
+				const formData = new FormData(form);
+				const createMovie = await apiMovie.handleFormSave(formData);
+				console.log("Фильм успешно создан:", formData.get("name"));
 
-    closeDialog() {
-        if (this.#element.open) {
-            this.#element.close();
+				const card = new Card(createMovie).getElement();
+				document.getElementById("movies-list").appendChild(card);
 
-            // Сброс формы при закрытии диалога
-            if (this.#contentInstance instanceof HTMLFormElement) {
-                this.#contentInstance.reset();
-            }
-            console.log('Диалог закрыт.');
-        }
-    }
+				this.closeDialog();
+				form.reset();
+			} catch (error) {
+				console.error("Ошибка при сохранении фильма:", error);
+			}
+		});
 
-    updateDialogContent(newContent) {
-        if (!newContent || !(newContent instanceof HTMLElement)) {
-            throw new Error('Новый контент должен быть экземпляром HTMLElement.');
-        }
+		const buttons = form.querySelectorAll("button");
+		buttons.forEach((button) => {
+			button.addEventListener("click", () => {
+				console.log("Кнопка нажата:", button.textContent.trim());
 
-        const currentContent = this.#element.querySelector('.dialog__form') || this.#element.querySelector('.card');
+				if (
+					button.type === "reset" &&
+					button.classList.contains("dialog__form--btn--cancel")
+				) {
+					this.closeDialog();
+					form.reset();
+				}
+			});
+		});
+	}
+	openDialog() {
+		if (!this.#element.open) {
+			this.#element.showModal();
+		}
+	}
 
-        if (currentContent) {
-            this.#element.removeChild(currentContent);
-        }
+	closeDialog() {
+		if (this.#element.open) {
+			this.#element.close();
 
-        this.#element.appendChild(newContent.cloneNode(true));
-    }
+			// Сброс формы при закрытии диалога
+			if (this.#contentInstance instanceof HTMLFormElement) {
+				this.#contentInstance.reset();
+			}
+			console.log("Диалог закрыт.");
+		}
+	}
 
-    updateDialogTitle(newTitle) {
-        if (typeof newTitle !== 'string' || newTitle.trim() === '') {
-            throw new Error('Новый заголовок должен быть строкой.');
-        }
+	updateDialogContent(newContent) {
+		if (!newContent || !(newContent instanceof HTMLElement)) {
+			throw new Error(
+				"Новый контент должен быть экземпляром HTMLElement."
+			);
+		}
 
-        const dialogTitle = this.#element.querySelector('.dialog__title');
-        if (dialogTitle) {
-            dialogTitle.textContent = newTitle;
-        } else {
-            console.warn('Элемент с классом .dialog__title не был найден.');
-        }
-    }
+		const currentContent =
+			this.#element.querySelector(".dialog__form") ||
+			this.#element.querySelector(".card");
 
-    getElement() {
-        return this.#element;
-    }
+		if (currentContent) {
+			this.#element.removeChild(currentContent);
+		}
+
+		this.#element.appendChild(newContent.cloneNode(true));
+	}
+
+	updateDialogTitle(newTitle) {
+		if (typeof newTitle !== "string" || newTitle.trim() === "") {
+			throw new Error("Новый заголовок должен быть строкой.");
+		}
+
+		const dialogTitle = this.#element.querySelector(".dialog__title");
+		if (dialogTitle) {
+			dialogTitle.textContent = newTitle;
+		} else {
+			console.warn("Элемент с классом .dialog__title не был найден.");
+		}
+	}
+
+	getElement() {
+		return this.#element;
+	}
 }
 
 export default DialogController;

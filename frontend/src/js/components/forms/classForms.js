@@ -1,73 +1,82 @@
-import Input from "@/js/components/inputs/classInput.js";
-import Button from "@/js/components/buttons/buttonClass.js";
+import Block from "../../utils/Block";
+import FormField from "./formField";
+import Button from "../buttons/buttonClass";
+import eventBusT from "../../utils/EventBus";
 
+class Form extends Block {
+	#id;
+	#name;
+	#inputs;
+	#buttons;
 
-class Form {
-    #id;
-    #name;
-    #inputs;
-    #buttons;
-    #atributes;
-    #element;
+	/**
+	 * @param {Object} params - Параметры для создания формы.
+	 * @param {string} params.id - ID формы (обязательный параметр).
+	 * @param {string} [params.name=''] - Имя формы.
+	 * @param {Array<Object>} [params.inputs=[]] - Массив параметров для создания полей ввода.
+	 * @param {Array<Object>} [params.buttons=[]] - Массив параметров для создания кнопок.
+	 * @param {Object} [params.attributes={}] - Дополнительные атрибуты для <form>.
+	 */
+	constructor({
+		id = "",
+		name = "",
+		inputs = [],
+		buttons = [],
+		className = "",
+		attributes = {},
+		...props
+	} = {}) {
+		super({
+			tagName: "form",
+			className: `${className}`,
+			attributes: { id, name, ...attributes },
+			eventBus: eventBusT,
+		});
 
-    /**
-     * @param {string} id - ID формы (обязательный параметр).
-     * @param {string} [name=''] - Имя формы.
-     * @param {Array<Object>} [inputs=[]] - Массив параметров для создания полей ввода.
-     * @param {Array<Object>} [buttons=[]] - Массив параметров для создания кнопок.
-     * @param {Object} [attributes={}] - Дополнительные атрибуты для <form>.
-     */
-    constructor({
-        id = '',
-        name = '',
-        inputs = [],
-        buttons = [],
-        attributes = {}
-    }) {
-        this.#validateParams(id);
-        this.#id = id;
-        this.#name = name;
-        this.#inputs = inputs.map((inputProps) => new Input(inputProps));
-        this.#buttons = buttons.map((buttonProps) => new Button(buttonProps));
-        this.#atributes = attributes;
-        this.#element = this.#createForm();
-    }
+		this.#validateParams(id);
+		this.#id = id;
+		this.#name = name;
 
-    #validateParams(id) {
-        if (!id && typeof id !== 'string') {
-            throw new Error('ID формы должен быть непустой строкой');
-        }
-    }    
+		this.#inputs = inputs.map((inputProps) =>
+			new FormField(inputProps).render()
+		);
+		this.#buttons = buttons.map((buttonProps) =>
+			new Button(buttonProps).render()
+		);
 
-    #createForm() {
-        const form = document.createElement('form');        
-        form.id = this.#id;
-       
-        form.name = this.#name;
-        form.className = 'dialog__form';
-        Object.entries(this.#atributes).forEach(([key, value]) => {
-            form.setAttribute(key, value);
-        });
+		this.#setupForm();
+	}
 
-        for (const input of this.#inputs) {
-            form.appendChild(input.getElement());
-        }
+	#validateParams(id) {
+		if (!id && typeof id !== "string") {
+			throw new Error("ID формы должен быть непустой строкой");
+		}
+	}
 
-        // Добавляем контейнер для кнопок
-        const buttonContainer = document.createElement('div');
-        buttonContainer.className = 'dialog__form--container--btn';
+	#setupForm() {
+		const form = this.getElement();
 
-        for (const button of this.#buttons) {
-            buttonContainer.appendChild(button.getElement());
-        }
+		this.#inputs.forEach((input) => form.appendChild(input));
 
-        form.appendChild(buttonContainer);
-        return form;
-    } 
+		const buttonContainer = document.createElement("div");
+		buttonContainer.className = "dialog__form--container--btn";
 
-    getElement() {
-        return this.#element;
-    }
+		this.#buttons.forEach((button) => buttonContainer.appendChild(button));
+		form.appendChild(buttonContainer);
+
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+
+			eventBusT.emit(eventBusT.getEvents().SAVE_MOVIE, form);
+		});
+	}
+
+	reset() {
+		const formElement = this.getElement();
+		if (formElement instanceof HTMLFormElement) {
+			formElement.reset();
+		}
+	}
 }
 
 export default Form;

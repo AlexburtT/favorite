@@ -1,490 +1,258 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap");
 
-:root {
-  color-scheme: light dark;
-  --dark: #34343e;
-  --grey-light: #ededed;
-  --grey: #7a7d84;
-  --accent: #fba808;
-  --white: #fdfdfd;
-  --valid: #008300;
-  --invalid: #ff9494;
-
-  --color-text_footer: #1d1d1f;
-  --color-icon-search: #51545b;
-  --color-like: #ff4949;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
-
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  text-decoration: none;
-  border: none;
-  font-family: "Rubik", sans-serif;
-  line-height: 1.5;
-  outline: none;
-  scroll-behavior: smooth;
-}
-
-html {
-  font-size: 62.5%;
-  color: var(--dark);
-}
-
-body {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  justify-items: center;
-  height: 100dvh;
-  background: url("/league.png") center no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  position: relative;  
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--dark);
-  opacity: 0.5;
-  z-index: -1; 
-}
-
-.input {
-  background-color: var(--white);
-  border: 2px solid var(--dark);
-  border-radius: 1.6rem;
-  padding: 0.7rem 2rem 0.7rem 2.4rem;
-  color: var(--dark);
-  font-size: 1.8rem;
-  width: 100%;
-  transition: all 0.3s ease-in-out;
-}
-
-.input:focus {
-  border: 2px solid var(--accent);
-  outline: none;
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.input:invalid {
-  border: 2px solid var(--invalid);
-}
-
-.input:valid:not(.input--search):not([type="file"]) {
-  border: 2px solid var(--valid);
-}
-
-/* ШАПКА */
-.header {
-  width: 110rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  background-color: var(--dark);
-  padding: 4rem 6.5rem;
-  position: sticky;
-}
+@import "./_reset.css";
+@import "./_base.css";
+@import "./_variables.css";
+@import "./buttons.css";
+@import "./inputs.css";
+@import "./header.css";
+@import "./main.css";
+@import "./footer.css";
+@import "./dialog.css";
 
 /* ЛОГОТИП */
 .logo__conteiner {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
 }
 
 .logo__img {
-  display: flex;
-  align-items: center;
-  width: 3.12rem;
-  height: 3.12rem;
-  background-color: var(--white);
-  border-radius: 50%;
-  padding: 0.5rem;
+	display: flex;
+	align-items: center;
+	width: 3.12rem;
+	height: 3.12rem;
+	background-color: var(--white);
+	border-radius: 50%;
+	padding: 0.5rem;
 }
 
 .logo__title {
-  font-size: 2.4rem;
-  font-weight: 500;
-  color: var(--white);
-  text-transform: uppercase;
+	font-size: 2.4rem;
+	font-weight: 500;
+	color: var(--white);
+	text-transform: uppercase;
 }
 
 /* ПОИСК и КНОПКИ */
 .search__line {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  height: 4.2rem;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	height: 4.2rem;
 }
 
 .input__conteiner {
-  position: relative;
+	position: relative;
 }
 
 .input--search {
-  background-color: #4e4e59;
-    padding-left: 6.4rem;
-    border: none;
-    width: 46.9rem;
-    color: var(--grey-light);
-  }
-
-  .search-icon {
-    position: absolute;
-    top: 50%;
-    left: 2rem;
-    transform: translateY(-50%);
-    fill: var(--dark);
-    width: 20px;
-    height: 20px;
-	transition: all 0.5s ease-in-out;
-  }
-
-  .input--search:focus + .search-icon {
-	fill: var(--accent);
-  }
-
-.search:focus::placeholder {
-  color: var(--grey-light);
+	background-color: #4e4e59;
+	padding-left: 6.4rem;
+	border: none;
+	width: 46.9rem;
+	color: var(--grey-light);
 }
 
-.btn {
-  padding: 0.5rem 4rem;
-  font-weight: 700;
-  font-size: 1.8rem;
-  background-color: var(--accent);
-  color: var(--white);
-  border-radius: 1.6rem;
-  border: none;
-  cursor: pointer;
+.search-icon {
+	position: absolute;
+	top: 50%;
+	left: 2rem;
+	transform: translateY(-50%);
+	fill: var(--dark);
+	width: 20px;
+	height: 20px;
+	transition: all 0.5s ease-in-out;
+}
+
+.input--search:focus + .search-icon {
+	fill: var(--accent);
+}
+
+.search:focus::placeholder {
+	color: var(--grey-light);
 }
 
 .header__btn {
-  transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
 }
 
 .header__btn:hover {
-  background-color: var(--white);
-  color: var(--dark);
-}
-
-/* DIALOG MODAL */
-.dialog {
-  position: relative;
-  width: 53.9rem;
-  background-color: var(--white);
-  color: var(--dark);
-  margin: 10rem auto;
-  padding: 6.1rem;
-  border-radius: 1.6rem;
-
-  transition: display 0.3s allow-discrete, overlay 0.3s allow-discrete;
-
-  animation: close 0.3s forwards;
-  &[open] {
-    animation: open 0.3s forwards;
-  }
-}
-
-@keyframes open {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes close {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-.dialog::backdrop {
-  background-color: rgb(0 0 0 / 0.6);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-}
-
-.dialog__close {
-  position: absolute;
-  top: 0;
-  right: 2rem;
-  background: none;
-  border: none;
-  font-size: 3.4rem;
-  color: var(--dark);
-  cursor: pointer;
-  transition: color 0.5s ease;
-}
-
-.dialog__close:hover {
-  color: var(--accent); /* Изменение цвета при наведении */
-}
-
-.dialog__form {
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-
-.dialog__title {
-  font-size: 3.6rem;
-  font-weight: 500;
-  text-align: center;
-}
-
-.dialog__form--label {
-  font-size: 1.8rem;
-  font-weight: 500;
-}
-
-.dialog__input--poster {
-  padding-left: 6.4rem;
-  background: url("/clip_file.svg") no-repeat;
-  background-position: 2.5rem center;
-  background-size: 1.9rem;
-}
-
-.dialog__form--container--btn {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  gap: 3.1rem;
-  margin-top: 3rem;
-}
-
-.dialog__form--btn {
-  width: 100%;
-  height: 6rem;
-}
-
-/* МЭЙН */
-.main {
-  width: 110rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 3rem;
-  padding: 4rem 6.5rem;
-  background-color: var(--grey-light);
+	background-color: var(--white);
+	color: var(--dark);
 }
 
 /* КАРТОЧКИ */
 .card {
-  width: 47rem;
-  height: 50rem;
-  font-size: 1.8rem;
-  line-height: 2.8rem;
-  background-color: var(--white);
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
-  padding: 2.4rem;
+	width: 47rem;
+	height: 50rem;
+	font-size: 1.8rem;
+	line-height: 2.8rem;
+	background-color: var(--white);
+	border-radius: 1rem;
+	display: flex;
+	flex-direction: column;
+	padding: 2.4rem;
 
-  .card__title {
-    font-size: 2.4rem;
-    font-weight: 500;
-  }
+	.card__title {
+		font-size: 2.4rem;
+		font-weight: 500;
+	}
 
-  p {
-    color: var(--grey);
-  }
+	p {
+		color: var(--grey);
+	}
 }
 
 .card__img {
-  width: 41.8rem;
-  height: 21.3rem;
-  object-fit: cover;
-  border-radius: 1.6rem;
-  margin-bottom: 2rem;
-  object-position: 0 1px;
+	width: 41.8rem;
+	height: 21.3rem;
+	object-fit: cover;
+	border-radius: 1.6rem;
+	margin-bottom: 2rem;
+	object-position: 0 1px;
 
-  &.interstellar {
-    object-position: 0 -24rem;
-  }
+	&.interstellar {
+		object-position: 0 -24rem;
+	}
 }
 
 .card__text--genre {
-  margin-bottom: 1rem;
+	margin-bottom: 1rem;
 }
 
-.card__text--description { 
-  font-style: italic;
-  line-height: normal;
-  height: 6.3rem;  
-  margin-bottom: 3rem;
+.card__text--description {
+	font-style: italic;
+	line-height: normal;
+	margin-bottom: 3rem;
 }
 
 .is-line-clamp {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	text-overflow: ellipsis;
+	max-height: calc(3rem * 2);
 }
 
 .card__btns--container {
-  height: 4.6rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  font-weight: 700;
-  line-height: 3.2rem;
-  /* margin-top: 5rem; */
+	height: 4.6rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	font-weight: 700;
+	line-height: 3.2rem;
+	/* margin-top: 5rem; */
 }
 
 .btn__like--favorite {
-  width: 4.6rem;
-  height: 4.6rem;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  background-color: var(--white);
-  border: 2px solid var(--dark);  
-  transition: all 0.3s ease-in-out;
+	width: 4.6rem;
+	height: 4.6rem;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	background-color: var(--white);
+	border: 2px solid var(--dark);
+	transition: all 0.3s ease-in-out;
 
-  svg {    
-    transition: all 0.3s ease-in-out;
+	svg {
+		transition: all 0.3s ease-in-out;
 
-    path {
-      transition: all 0.3s ease-in-out;
-      stroke: var(--dark);
-    }
-  }
-
+		path {
+			transition: all 0.3s ease-in-out;
+			stroke: var(--dark);
+		}
+	}
 }
 
 .btn__like--favorite:hover {
-  background-color: var(--accent);
-  border: none;
+	background-color: var(--accent);
+	border: none;
 
-  svg {
-    fill: var(--color-like);
-    
-    path {
-      stroke: var(--color-like);
-    }
-  }
+	svg {
+		fill: var(--color-like);
+
+		path {
+			stroke: var(--color-like);
+		}
+	}
 }
 
 .is-favorite {
-  background-color: var(--white); 
-  border: none;
+	background-color: var(--white);
+	border: none;
 
-  svg {    
-    width: 3.7rem;
-    height: 3.7rem;
-    fill: var(--color-like);
+	svg {
+		width: 3.7rem;
+		height: 3.7rem;
+		fill: var(--color-like);
 
-    path {      
-      stroke: var(--color-like);
-    }
-  }
+		path {
+			stroke: var(--color-like);
+		}
+	}
 }
 
 .btn__card--viewed {
-  width: 33.1rem;
-  height: 4.6rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 3rem;
-  background-color: var(--white);
-  color: var(--dark);
-  border: 2px solid var(--dark);
-  transition: all 0.3s ease-in-out;
+	width: 33.1rem;
+	height: 4.6rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 3rem;
+	background-color: var(--white);
+	color: var(--dark);
+	border: 2px solid var(--dark);
+	transition: all 0.3s ease-in-out;
 }
 
 .is-viewed {
-  background-color: var(--dark);
-  color: var(--white);
-  transition: all 0.3s ease-in-out;
+	background-color: var(--dark);
+	color: var(--white);
+	transition: all 0.3s ease-in-out;
 }
 
 .btn__card--viewed.is-viewed:hover {
-  color: var(--dark);
-  background-color: var(--white);
-  border: 2px solid var(--dark);
+	color: var(--dark);
+	background-color: var(--white);
+	border: 2px solid var(--dark);
 }
 
 .btn__card--viewed:hover {
-  color: var(--white);
-  background-color: var(--dark);
-  border: none;
-}
-
-/* ФУТЕР */
-.footer {
-  width: 110rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  padding: 4rem 6.5rem;
-  background-color: var(--grey-light);
-  color: var(--color-text_footer);
-
-  .logo__title {
-    color: var(--dark);
-  }
-
-  .footer__copy {
-    font-size: 1.8rem;
-  }
+	color: var(--white);
+	background-color: var(--dark);
+	border: none;
 }
 
 /* КНОПКА ВВЕРХ */
 .btn__scroll-top {
-  position: fixed;
-  right: 2rem;
-  bottom: 2rem;
-  width: 4.6rem;
-  height: 4.6rem;
-  background-color: var(--dark);
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 0.2rem 0.5rem var(--dark);
-  transition: all 0.3s ease-in-out;
-  z-index: 1000;
+	position: fixed;
+	right: 2rem;
+	bottom: 2rem;
+	width: 4.6rem;
+	height: 4.6rem;
+	background-color: var(--dark);
+	border-radius: 50%;
+	cursor: pointer;
+	box-shadow: 0 0.2rem 0.5rem var(--dark);
+	transition: all 0.3s ease-in-out;
+	z-index: 1000;
 
-  path {
-    stroke: var(--white);
-  }
+	path {
+		stroke: var(--white);
+	}
 }
 
 .btn__scroll-top:hover {
-  background-color: var(--accent);
+	background-color: var(--accent);
 
-  path {
-    stroke: var(--dark);
-  }
+	path {
+		stroke: var(--dark);
+	}
 }

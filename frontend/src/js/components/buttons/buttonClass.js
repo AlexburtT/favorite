@@ -1,82 +1,80 @@
-class Button {
-    #title;
-    #type;
-    #className;
-    #attributes;    
-    #svgPath;
-    #element;
+import Block from "../../utils/Block";
+import EventBus from "../../utils/EventBus";
 
-    /**  
-     * @param {string} [title=''] - Текст кнопки.
-     * @param {string} [type='button'] - Тип кнопки ('button', 'submit', 'reset').
-     * @param {string} [className=''] - Дополнительные CSS-классы.
-     * @param {Object} [attributes={}] - Дополнительные атрибуты.
-     * @param {string|null} [svgPath=null] - Путь SVG-иконки.
-     */
-    constructor({
-        title = '',
-        type = 'button',
-        className = '',
-        attributes = {},
-        svgPath = null
-    }) {
-        this.#validateParams(type);
-        this.#title = title;
-        this.#type = type;
-        this.#className = className;
-        this.#attributes = attributes;
-        this.#svgPath = svgPath;
-        this.#element = this.#createButton();
-    }
+class Button extends Block {
+	/**
+	 * @param {string} [title=''] - Текст кнопки.
+	 * @param {string} [type='button'] - Тип кнопки ('button', 'submit', 'reset').
+	 * @param {string|null} [svgPath=null] - Путь SVG-иконки.
+	 * @param {string} [className=''] - Дополнительные CSS-классы.
+	 * @param {Function} [onClick=null] - Пользовательский обработчик клика.
+	 */
+	constructor({
+		title = "",
+		type = "button",
+		svgPath = null,
+		className = "",
+		onClick = null,
+		...props
+	} = {}) {
+		super({
+			tagName: "button",
+			className: `btn ${className}`,
+			attributes: { type },
+			eventBus: EventBus.getInstance(),
+			...props,
+		});
 
-    #validateParams(type) {
-        if (!['button', 'submit', 'reset'].includes(type)) {
-            throw new Error('Недопустимый тип кнопки! Допустимые значения: button, submit, reset.');
-        }
+		this.#setupContent(title, svgPath);
+		this.#validateParams(type);
 
-        if (this.#svgPath && typeof this.#svgPath !== 'string') {
-            throw new Error('Путь SVG-иконки должен быть строкой!');
-        }
-    }
+		if (typeof onClick === "function") {
+			this.on("click", onClick);
+		}
+	}
 
-    #createButton() {
-        const button = document.createElement('button');
-        button.textContent = this.#title;
-        button.type = this.#type;
-        button.className = `btn ${this.#className}`;        
+	#setupContent(title, svgPath) {
+		const element = this.getElement();
 
-        Object.entries(this.#attributes).forEach(([key, value]) => button.setAttribute(key, value));
+		if (svgPath) {
+			const svg = document.createElementNS(
+				"http://www.w3.org/2000/svg",
+				"svg"
+			);
+			svg.setAttribute("width", "24");
+			svg.setAttribute("height", "24");
+			svg.setAttribute("viewBox", "0 0 24 24");
+			svg.setAttribute("fill", "none");
 
-        if (this.#svgPath) {
-            const svg = this.#createSvgIcon(this.#svgPath);
-            button.appendChild(svg);
-        }
+			const path = document.createElementNS(
+				"http://www.w3.org/2000/svg",
+				"path"
+			);
+			path.setAttribute("d", svgPath);
+			path.setAttribute("stroke-width", "2");
+			path.setAttribute("stroke-linecap", "round");
+			path.setAttribute("stroke-linejoin", "round");
+			path.setAttribute("stroke", "currentColor");
 
-        return button;
-    }
+			svg.appendChild(path);
+			element.appendChild(svg);
+		} else if (title) {
+			element.textContent = title;
+		}
+	}
 
-    #createSvgIcon(pathData, width = 24, height = 24, color = 'currentColor') {
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('width', width);
-        svg.setAttribute('height', height);
-        svg.setAttribute('viewBox', '0 0 24 24');
-        svg.setAttribute('fill', color === 'currentColor' ? 'none' : color);
-        svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+	#validateParams(type) {
+		if (!["button", "submit", "reset"].includes(type)) {
+			throw new Error(
+				"Недопустимый тип кнопки! Допустимые значения: button, submit, reset."
+			);
+		}
+	}
 
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', pathData);
-        path.setAttribute('stroke-width', '2');
-        path.setAttribute('stroke-linecap', 'round');
-        path.setAttribute('stroke-linejoin', 'round');
-        path.setAttribute('stroke', color);
-
-        svg.appendChild(path);
-        return svg;
-    }
-
-    getElement() {
-        return this.#element;
-    }
+	render() {
+		super.render();
+		return this.getElement();
+	}
 }
 
 export default Button;

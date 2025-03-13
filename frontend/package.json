@@ -1,21 +1,33 @@
 {
-  "name": "diplom",
-  "version": "1.0.0",
-  "description": "JavaScript-разработчик. Дипломный проект",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite",
-    "build": "vite build"
-  },
-  "keywords": [],
-  "author": "Алексей Тюменцев",
-  "license": "ISC",
-  "dependencies": {
-    "concurrently": "9.1.0",
-    "json-server": "1.0.0-beta.3"
-  },
-  "devDependencies": {
-    "vite": "6.0.2"
-  }
+	"name": "diplom",
+	"version": "1.0.0",
+	"description": "JavaScript-разработчик. Дипломный проект",
+	"main": "index.js",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+		"format": "prettier --write .",
+		"test": "vitest",
+		"test:ui": "vitest --ui",
+		"test:coverage": "vitest run --coverage",
+		"prepare": "husky install"
+	},
+	"keywords": [],
+	"author": "Алексей Тюменцев",
+	"license": "ISC",
+	"devDependencies": {
+		"@eslint/js": "9.22.0",
+		"@vitest/ui": "3.0.8",
+		"eslint": "9.22.0",
+		"eslint-config-prettier": "^10.1.1",
+		"eslint-plugin-prettier": "^5.2.3",
+		"globals": "16.0.0",
+		"husky": "9.1.7",
+		"jsdom": "^26.0.0",
+		"lint-staged": "15.5.0",
+		"prettier": "3.5.3",
+		"vite": "6.2.1",
+		"vitest": "3.0.8"
+	}
 }

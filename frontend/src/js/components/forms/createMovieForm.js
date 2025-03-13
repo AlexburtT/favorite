@@ -1,14 +1,17 @@
-import { inputsArray, buttonsArray } from "../../constants/arrayConstantInputButton";
+import {
+	inputsArray,
+	buttonsArray,
+} from "../../constants/arrayConstantInputButton";
 import Form from "./classForms";
 
 export default class CreateMovieForm extends Form {
-    constructor() {
-        super({
-            id: 'dialog__form',
-            name: 'create--movie-form',
-            inputs: inputsArray,
-            buttons: buttonsArray,
-            attributes: { method: 'POST', action: '/submit' }
-        });
-    }
+	constructor() {
+		super({
+			id: "dialog__form",
+			name: "create--movie-form",
+			inputs: inputsArray,
+			buttons: buttonsArray,
+			className: "dialog__form",
+		});
+	}
 }

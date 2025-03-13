@@ -1,69 +1,83 @@
-import { dateYearFooter } from "./src/js/dateYearFooter.js";
 import Dialog from "./src/js/components/dialogs/classDialog.js";
+import EventBus from "./src/js/utils/EventBus.js";
+
+import { dateYearFooter } from "./src/js/dateYearFooter.js";
 import { scrollTop } from "./src/js/scrollTop.js";
-import { inputsArray, buttonsArray } from "./src/js/constants/arrayConstantInputButton.js";
-import Form from "./src/js/components/forms/classForms.js";
-import DialogController from "./src/js/controllers/classDialogController.js";
-import Card from "./src/js/components/cards/classCard.js";
-import MovieRecords from "./src/js/api/apiServer.js";
-import CardController from "./src/js/controllers/CardController.js";
-import normalizeMovieData from "./src/js/utils/normalizeMovieData.js";
-import CreateMovieForm from "./src/js/components/forms/createMovieForm.js";
-import EventHandlers from "./src/js/utils/eventHandlers.js";
 
+import { searchBtnConteinerHeader } from "./src/js/components/header/searchBtnBlock.js";
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
+	try {
+		const eventBus = EventBus.getInstance();
 
-  try {
-    dateYearFooter();
-    scrollTop();
+		dateYearFooter();
+		scrollTop();
+		searchBtnConteinerHeader();
 
-    const moviesList = document.getElementById('movies-list');
-    if (!moviesList) {
-      console.error('Элемент #movies-list не найден.');
-      return;
-    }   
+		const movieList = document.getElementById("movies-list");
+		// const movieRecords = await MovieRecords.getInstance().findAll();
 
-    const cardDialog = new Dialog({
-      title: 'Редактирование закладки',
-      className: 'update-movie-dialog'
-    });
+		// movieRecords.forEach((rawMovie) => {
+		//   const normalizeMovie = normalizeMovieData(rawMovie);
+		//   const card = new Card({ movie: normalizeMovie });
+		//   movieList.appendChild(card.getElement());
+		// });
 
-    const dialogController = new DialogController(cardDialog.getElement(), null);
-    const eventHandlers = new EventHandlers();
+		// const createMovieForm = new CreateMovieForm();
 
-    const moviesApi = MovieRecords.getInstance();
-    const rawMovies = await moviesApi.findAll(); 
-    const normolizeMovies = rawMovies.map(normalizeMovieData);
-    normolizeMovies.forEach((movie) => {
-      const card = new Card(movie).getElement();
-      moviesList.appendChild(card);
-      new CardController(card, movie, dialogController, eventHandlers);
-    });
+		const dialog = new Dialog({
+			title: "Создание закладки",
+			// contentInstance: createMovieForm,
+			attributes: { id: "create-movie" },
+		});
 
-    const createDialog = new Dialog({      
-      title: 'Создание закладки',
-      className: 'create--movie-dialog'
-    });      
+		document.body.append(dialog.getElement());
 
-    const addBtn = document.getElementById('add-btn');
-    if (!addBtn) {
-      console.error('Элемент #add-btn не найден.');
-      return;
-    }
+		eventBus.on(EventBus.EVENTS.OPEN_DIALOG_BTN, () => {
+			console.log('Открываем диалог "Создание фильма".');
+			dialog.open(); // Просто открываем диалог
+		});
 
-    // Открытие диалога по клику на кнопку "Добавить"
-    addBtn.addEventListener('click', () => {
-      dialogController.openDialog();
-      console.log("Кнопка 'Добавить' нажата, диалог открыт.");
-    });
+		// eventBusT.on(eventBusT.getEvents().SAVE_MOVIE, async (formElement) => {
+		//   try {
+		//     const createMovie = await formHandler.handleMovieForm(formElement);
+		//     console.log('Фильм создан:', createMovie);
 
-    // Добавление диалога в документ
-    document.body.appendChild(dialogElement);
+		//     const normalizeMovie = normalizeMovieData(createMovie);
+		//     const card = new Card(normalizeMovie);
+		//     if (movieList) {
+		//       movieList.appendChild(card.getElement());
+		//     }
 
+		//     eventBusT.emit(eventBusT.getEvents().CLOSE_DIALOG);
+		//   } catch (error) {
+		//     console.error('Ошибка при создании фильма:', error.message);
+		//   }
+		// });
 
-    
-  } catch (error) {
-    console.error('Ошибка при загрузке фильмов:', error.message);
-  }
+		// eventBusT.on(eventBusT.getEvents().CLOSE_DIALOG, () => {
+		//   console.log('Диалог закрыт, форма очищена');
+		//   dialog.close();
+		//   createMovieForm.reset();
+		// });
+
+		//  eventBusT.on(eventBusT.getEvents().TOGGLE_LIKE, async ({ id }) => {
+		//     try {
+		//       const movie = await MovieRecords.getInstance().findById(id);
+		//       movie.favorite = !movie.favorite;
+		//       await MovieRecords.getInstance().updateMovie(id, movie);
+
+		//       const card = movieList.querySelector(`[data-id="${id}"]`);
+		//       if (card) {
+		//         const cardButtons = new CardButtons({ movie });
+		//         card.querySelector('.card__btns--container').replaceWith(cardButtons.getElement());
+		//         cardButtons.updateFavoriteStatus(movie.favorite);
+		//       }
+		//     } catch (error) {
+		//       console.error('Ошибка при переключении лайка:', error.message);
+		//     }
+		//   });
+	} catch (error) {
+		console.error("Ошибка при загрузке фильмов:", error.message);
+	}
 });

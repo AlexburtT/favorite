@@ -1,48 +1,69 @@
-import DescriptionMovie from "./descriptionMovie";
-import GenreMovie from "./genreMovie";
 import MovieImage from "./imgPoster";
 import TitleMovie from "./titleMovie";
 import YearMovie from "./yearMovie";
-import { createCardButtons } from "../buttons/btnUttils";
+import GenreMovie from "./genreMovie";
+import DescriptionMovie from "./descriptionMovie";
+import Block from "../../utils/Block";
+import CardActions from "./cardActions";
 
-class Card {
-    #movie;
-    #element;
-    constructor(movie) {
-        this.#movie = movie;
-        this.#element = this.#creatCardElement();
-    }
+class Card extends Block {
+	#movie;
 
-    #creatCardElement() {
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.dataset.id = this.#movie.id;
+	constructor({ movie = {} } = {}) {
+		super({
+			tagName: "article",
+			className: "card",
+			attributes: {
+				"data-id": movie.id,
+			},
+		});
 
-        const img = new MovieImage(this.#movie).getElement();
-        card.appendChild(img);
+		this.#movie = movie;
+		this.setProps({ movie });
+		this.#setupCard();
+	}
 
-        const title = new TitleMovie(this.#movie).getElement();
-        card.appendChild(title);
+	#setupCard() {
+		const card = this.getElement();
 
-        const year = new YearMovie(this.#movie).getElement();
-        card.appendChild(year);
+		// Добавляем изображение
+		const img = new MovieImage(this.#movie).getElement();
+		card.appendChild(img);
 
-        const genre = new GenreMovie(this.#movie).getElement();
-        card.appendChild(genre);
+		// Добавляем название фильма
+		const title = new TitleMovie(this.#movie).getElement();
+		card.appendChild(title);
 
-        const description = new DescriptionMovie(this.#movie).getElement();
-        card.appendChild(description);
+		// Добавляем год выпуска
+		const year = new YearMovie(this.#movie).getElement();
+		card.appendChild(year);
 
-        const buttonsContainer = createCardButtons(this.#movie);   
-        card.appendChild(buttonsContainer);
+		// Добавляем жанры
+		const genre = new GenreMovie(this.#movie).getElement();
+		card.appendChild(genre);
 
-        this.cardElement = card;
+		// Добавляем описание
+		const description = new DescriptionMovie(this.#movie).getElement();
+		card.appendChild(description);
 
-        return this.cardElement;
-    }
-    getElement() {
-        return this.#element;
-    }
+		const btns = new CardActions({ movie: this.#movie }).getElement();
+		card.appendChild(btns);
+	}
+
+	componentDidUpdate(oldProps, newProps) {
+		if (!oldProps || !newProps) return false;
+
+		if (oldProps.movie.id !== newProps.movie.id) {
+			this.#movie = newProps.movie;
+			this.#rerenderCard();
+		}
+		return true;
+	}
+
+	#rerenderCard() {
+		this.getElement().innerHTML = "";
+		this.#setupCard();
+	}
 }
 
 export default Card;

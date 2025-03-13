@@ -1,0 +1,18 @@
+.footer {
+	width: 110rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2rem;
+	padding: 4rem 6.5rem;
+	background-color: var(--grey-light);
+	color: var(--color-text_footer);
+
+	.logo__title {
+		color: var(--dark);
+	}
+
+	.footer__copy {
+		font-size: 1.8rem;
+	}
+}

@@ -1,0 +1,9 @@
+.header {
+	width: 110rem;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	background-color: var(--dark);
+	padding: 4rem 6.5rem;
+	position: sticky;
+}

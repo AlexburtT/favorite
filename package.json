@@ -3,15 +3,15 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
-    "scripts": {        
+    "scripts": {
         "start:backend": "cd backend && npx node main.js",
         "start:frontend": "cd frontend && npx vite",
         "dev": "concurrently \"npm:start:*\""
     },
     "author": "A.A. Tyumentsev",
     "license": "ISC",
-    "dependencies": {},
     "devDependencies": {
-        "concurrently": "9.1.0"
+        "concurrently": "9.1.0",
+        "prettier": "3.5.3"
     }
 }
