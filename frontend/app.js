@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		const dialog = new Dialog({
 			title: "Создание закладки",
 			// contentInstance: createMovieForm,
-			attributes: { id: "create-movie" },
+			attributes: { id: "dialog" },
 		});
 
 		document.body.append(dialog.getElement());

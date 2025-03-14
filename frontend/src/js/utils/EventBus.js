@@ -26,7 +26,7 @@ class EventBus {
 	#events = new Map();
 
 	// Метод для подписки на событие
-	on(event, callback) {
+	on(event, callback, context = null) {
 		if (typeof callback !== "function") {
 			console.error(
 				`Ошибка: переданный обработчик не является функцией для события "${event}".`
@@ -34,13 +34,15 @@ class EventBus {
 			return;
 		}
 
+		const boundCallback = context ? callback.bind(context) : callback;
+
 		if (!this.#events.has(event)) {
 			this.#events.set(event, []);
 		}
 
 		const subscribers = this.#events.get(event);
-		if (!subscribers.includes(callback)) {
-			subscribers.push(callback);
+		if (!subscribers.includes(boundCallback)) {
+			subscribers.push(boundCallback);
 		}
 
 		console.log(
