@@ -131,29 +131,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 				console.error("Ошибка при создании фильма:", error.message);
 			}
 		});
-
-		// eventBusT.on(eventBusT.getEvents().SAVE_MOVIE, async (formElement) => {
-		//   try {
-		//     const createMovie = await formHandler.handleMovieForm(formElement);
-		//     console.log('Фильм создан:', createMovie);
-
-		//     const normalizeMovie = normalizeMovieData(createMovie);
-		//     const card = new Card(normalizeMovie);
-		//     if (movieList) {
-		//       movieList.appendChild(card.getElement());
-		//     }
-
-		//     eventBusT.emit(eventBusT.getEvents().CLOSE_DIALOG);
-		//   } catch (error) {
-		//     console.error('Ошибка при создании фильма:', error.message);
-		//   }
-		// });
-
-		// eventBusT.on(eventBusT.getEvents().CLOSE_DIALOG, () => {
-		//   console.log('Диалог закрыт, форма очищена');
-		//   dialog.close();
-		//   createMovieForm.reset();
-		// });
 	} catch (error) {
 		console.error("Ошибка при загрузке фильмов:", error.message);
 	}
