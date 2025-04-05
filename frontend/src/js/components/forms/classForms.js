@@ -1,81 +1,71 @@
 import Block from "../../utils/Block";
-import FormField from "./formField";
-import Button from "../buttons/buttonClass";
-import eventBusT from "../../utils/EventBus";
+import EventBus from "../../utils/EventBus";
 
 class Form extends Block {
-	#id;
-	#name;
-	#inputs;
-	#buttons;
-
-	/**
-	 * @param {Object} params - Параметры для создания формы.
-	 * @param {string} params.id - ID формы (обязательный параметр).
-	 * @param {string} [params.name=''] - Имя формы.
-	 * @param {Array<Object>} [params.inputs=[]] - Массив параметров для создания полей ввода.
-	 * @param {Array<Object>} [params.buttons=[]] - Массив параметров для создания кнопок.
-	 * @param {Object} [params.attributes={}] - Дополнительные атрибуты для <form>.
-	 */
-	constructor({
-		id = "",
-		name = "",
-		inputs = [],
-		buttons = [],
-		className = "",
-		attributes = {},
-		...props
-	} = {}) {
+	constructor(props) {
 		super({
 			tagName: "form",
-			className: `${className}`,
-			attributes: { id, name, ...attributes },
-			eventBus: eventBusT,
+			className: `${props.className}`,
+			attributes: {
+				id: props.id,
+				name: props.name,
+				"aria-label": props["aria-label"] || `Форма ${props.name}`,
+			},
+			...props,
 		});
 
-		this.#validateParams(id);
-		this.#id = id;
-		this.#name = name;
+		this.children = props.children;
 
-		this.#inputs = inputs.map((inputProps) =>
-			new FormField(inputProps).render()
-		);
-		this.#buttons = buttons.map((buttonProps) =>
-			new Button(buttonProps).render()
-		);
-
-		this.#setupForm();
+		this.element.addEventListener("submit", (event) => {
+			event.preventDefault();
+			console.log("submit", this.element);
+			EventBus.getInstance().emit(
+				EventBus.EVENTS.CREATE_MOVIE,
+				this.element
+			);
+		});
 	}
 
-	#validateParams(id) {
-		if (!id && typeof id !== "string") {
-			throw new Error("ID формы должен быть непустой строкой");
-		}
-	}
+	render() {
+		const form = this.element;
 
-	#setupForm() {
-		const form = this.getElement();
+		const { inputs, buttons } = this.props.children;
 
-		this.#inputs.forEach((input) => form.appendChild(input));
+		inputs.forEach((inputElement) => {
+			form.append(inputElement.getContent());
+		});
 
 		const buttonContainer = document.createElement("div");
 		buttonContainer.className = "dialog__form--container--btn";
 
-		this.#buttons.forEach((button) => buttonContainer.appendChild(button));
+		buttons.forEach((buttonElement) => {
+			buttonContainer.append(buttonElement.getContent());
+		});
 		form.appendChild(buttonContainer);
 
-		form.addEventListener("submit", (event) => {
-			event.preventDefault();
-
-			eventBusT.emit(eventBusT.getEvents().SAVE_MOVIE, form);
-		});
+		return super.render();
 	}
 
 	reset() {
-		const formElement = this.getElement();
+		const formElement = this.element;
 		if (formElement instanceof HTMLFormElement) {
 			formElement.reset();
 		}
+	}
+
+	destroy() {
+		console.log("Удаление дочернего контента из Формы", this.children);
+
+		this.reset();
+
+		const { inputs, buttons } = this.children;
+
+		[...inputs, ...buttons].forEach((child) => {
+			child.destroy();
+		});
+
+		this.children = [];
+		super.destroy();
 	}
 }
 

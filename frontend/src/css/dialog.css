@@ -1,12 +1,11 @@
 .dialog {
-	position: relative;
-	width: 53.9rem;
+	position: fixed;
+	max-width: 53.9rem;
+	height: fit-content;
 	background-color: var(--white);
 	color: var(--dark);
 	margin: 10rem auto;
-	padding: 6.1rem;
 	border-radius: 1.6rem;
-
 	transition:
 		display 0.3s allow-discrete,
 		overlay 0.3s allow-discrete;
@@ -14,6 +13,14 @@
 	animation: close 0.3s forwards;
 	&[open] {
 		animation: open 0.3s forwards;
+	}
+
+	&:not([open]) {
+		animation: close 0.3s forwards;
+	}
+
+	form {
+		margin: 4rem;
 	}
 }
 
@@ -68,6 +75,7 @@
 	font-size: 3.6rem;
 	font-weight: 500;
 	text-align: center;
+	margin-top: 5rem;
 }
 
 .dialog__input--poster {

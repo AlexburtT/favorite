@@ -1,43 +1,63 @@
-import EventBus from "../../utils/EventBus";
 import Button from "../buttons/buttonClass";
 import Input from "../inputs/inputClass";
+import EventBus from "../../utils/EventBus";
+import { createMovieForm } from "../forms/createMovieForm";
 
 export const searchBtnConteinerHeader = () => {
-	const event = EventBus.getInstance();
+	const eventBus = EventBus.getInstance();
+	eventBus.clearAllEvents();
 
 	const blockSearchBtn = document.querySelector(".search__line");
 	const inputBlock = document.querySelector(".input__conteiner");
 
 	const search = new Input({
+		className: "input input--search",
 		name: "search",
 		type: "search",
-		placeholder: "Type something here...",
-		className: "input--search",
+		placeholder: "Поиск",
+
+		events: {
+			input: (e) => {
+				console.log(e.target.value);
+			},
+		},
 	});
 
-	inputBlock.append(search.getElement());
+	inputBlock.append(search.getContent());
 
 	const buttons = [
 		new Button({
 			title: "Добавить",
-			className: "header__btn",
-			type: "button",
-			onClick: () => {
-				event.emit(EventBus.EVENTS.OPEN_DIALOG_BTN);
+			className: "btn header__btn",
+			events: {
+				click: () => {
+					const formDialog = createMovieForm();
+					eventBus.emit(EventBus.EVENTS.OPEN_DIALOG_BTN, {
+						title: "Добавить фильм",
+						children: formDialog,
+					});
+					eventBus.debugEvents();
+				},
 			},
 		}),
 
 		new Button({
 			title: "Что посмотреть?",
-			type: "button",
-			className: "header__btn",
-			onClick: () => {
-				console.log('Кнопка "Что посмотреть?" была нажата.');
+			className: "btn header__btn",
+			events: {
+				click: () => {
+					console.log("Что посмотреть - здесь будет сортировка");
+					//const sortForm = editMovieForm();
+					eventBus.emit(EventBus.EVENTS.OPEN_DIALOG_BTN, {
+						title: "Что посмотреть?",
+						//children: sortForm,
+					});
+				},
 			},
 		}),
 	];
 
 	buttons.forEach((button) => {
-		blockSearchBtn.append(button.getElement());
+		blockSearchBtn.append(button.getContent());
 	});
 };

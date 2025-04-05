@@ -1,69 +1,72 @@
-import MovieImage from "./imgPoster";
-import TitleMovie from "./titleMovie";
-import YearMovie from "./yearMovie";
-import GenreMovie from "./genreMovie";
-import DescriptionMovie from "./descriptionMovie";
 import Block from "../../utils/Block";
-import CardActions from "./cardActions";
 
 class Card extends Block {
-	#movie;
-
-	constructor({ movie = {} } = {}) {
+	constructor(props) {
 		super({
 			tagName: "article",
-			className: "card",
+			className: `${props.className || "card"}`,
 			attributes: {
-				"data-id": movie.id,
+				"data-id": props.movie?.id,
 			},
+			...props,
 		});
 
-		this.#movie = movie;
-		this.setProps({ movie });
-		this.#setupCard();
+		this.children = props.children;
 	}
 
-	#setupCard() {
-		const card = this.getElement();
+	render() {
+		const card = this.element;
 
-		// Добавляем изображение
-		const img = new MovieImage(this.#movie).getElement();
-		card.appendChild(img);
+		const { image, title, year, genre, description, buttons } =
+			this.props.children;
 
-		// Добавляем название фильма
-		const title = new TitleMovie(this.#movie).getElement();
-		card.appendChild(title);
+		if (image) card.append(image.getElement());
+		if (title) card.append(title.getElement());
+		if (year) card.append(year.getElement());
+		if (genre) card.append(genre.getElement());
+		if (description) card.append(description.getElement());
 
-		// Добавляем год выпуска
-		const year = new YearMovie(this.#movie).getElement();
-		card.appendChild(year);
+		const buttonContainer = document.createElement("div");
+		buttonContainer.className = "card__btn--container";
 
-		// Добавляем жанры
-		const genre = new GenreMovie(this.#movie).getElement();
-		card.appendChild(genre);
+		buttons.forEach((buttonElement) => {
+			buttonContainer.append(buttonElement.getContent());
+		});
+		card.appendChild(buttonContainer);
 
-		// Добавляем описание
-		const description = new DescriptionMovie(this.#movie).getElement();
-		card.appendChild(description);
-
-		const btns = new CardActions({ movie: this.#movie }).getElement();
-		card.appendChild(btns);
+		return super.render();
 	}
 
-	componentDidUpdate(oldProps, newProps) {
-		if (!oldProps || !newProps) return false;
+	destroy() {
+		console.log("Удаление дочернего контента из карточки", this.children);
 
-		if (oldProps.movie.id !== newProps.movie.id) {
-			this.#movie = newProps.movie;
-			this.#rerenderCard();
-		}
-		return true;
+		const { buttons } = this.children;
+
+		[...buttons].forEach((child) => {
+			child.destroy();
+		});
+
+		this.children = [];
+		super.destroy();
 	}
 
-	#rerenderCard() {
-		this.getElement().innerHTML = "";
-		this.#setupCard();
-	}
+	//componentDidUpdate(oldProps, newProps) {
+	//	console.log("ComponentDidUpdate: Old movie", oldProps?.movie);
+	//	console.log("ComponentDidUpdate: New movie", newProps?.movie);
+	//	if (!oldProps || !newProps) return false;
+
+	//	if (oldProps.movie.id !== newProps.movie.id) {
+	//		this.movie = newProps.movie;
+	//		this.#rerenderCard();
+	//	}
+	//	return true;
+	//}
+
+	//#rerenderCard() {
+	//	console.log("RerenderCard: Movie before rerender", this.movie);
+	//	this.getElement().innerHTML = "";
+	//	this.render();
+	//}
 }
 
 export default Card;

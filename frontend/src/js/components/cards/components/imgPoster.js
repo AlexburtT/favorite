@@ -1,44 +1,38 @@
 class MovieImage {
-	#movie;
-	#element;
-
 	constructor(movie) {
-		this.#movie = movie;
+		this.movie = movie;
 		this.#validateParams();
-		this.#element = this.#createImageElement();
+		this.element = this.#createImageElement();
 	}
 
 	#validateParams() {
 		if (
-			!this.#movie.poster ||
-			(!Array.isArray(this.#movie.poster) &&
-				typeof this.#movie.poster !== "string")
+			!this.movie.poster ||
+			(!Array.isArray(this.movie.poster) &&
+				typeof this.movie.poster !== "string")
 		) {
 			throw new Error("Постер должен быть строкой или массивом строк.");
 		}
 
 		if (
-			Array.isArray(this.#movie.poster) &&
-			this.#movie.poster.length === 0
+			Array.isArray(this.movie.poster) &&
+			this.movie.poster.length === 0
 		) {
 			throw new Error("Массив постеров пуст.");
 		}
 
-		if (!this.#movie.name || typeof this.#movie.name !== "string") {
+		if (!this.movie.name || typeof this.movie.name !== "string") {
 			throw new Error("Название фильма должно быть непустой строкой.");
 		}
 	}
 
 	#createImageElement() {
-		if (
-			Array.isArray(this.#movie.poster) &&
-			this.#movie.poster.length > 1
-		) {
-			return this.#createSlider(this.#movie.poster);
+		if (Array.isArray(this.movie.poster) && this.movie.poster.length > 1) {
+			return this.#createSlider(this.movie.poster);
 		} else {
-			const posterPath = Array.isArray(this.#movie.poster)
-				? this.#movie.poster[0]
-				: this.#movie.poster;
+			const posterPath = Array.isArray(this.movie.poster)
+				? this.movie.poster[0]
+				: this.movie.poster;
 			return this.#createSingleImage(posterPath);
 		}
 	}
@@ -47,7 +41,7 @@ class MovieImage {
 		const img = document.createElement("img");
 		img.src =
 			posterPath || "http://localhost:3000/posters/no_product_img.png";
-		img.alt = this.#movie.name || "Фильм";
+		img.alt = this.movie.name || "Фильм";
 		img.className = "card__img";
 
 		return img;
@@ -83,7 +77,7 @@ class MovieImage {
 	}
 
 	getElement() {
-		return this.#element;
+		return this.element;
 	}
 }
 

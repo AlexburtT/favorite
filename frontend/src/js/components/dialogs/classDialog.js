@@ -1,91 +1,101 @@
 import Block from "../../utils/Block";
 import EventBus from "../../utils/EventBus";
+import CloseDialogBtn from "./closeDialog";
+import TitleDialog from "./titleDialog";
 
 class Dialog extends Block {
-	#title;
-	#contentInstance;
 	/**
-	 * @param {string} [title='Элемент не передан!'] - Заголовок диалога.
-	 * @param {Object|null} [contentInstance=null] - Экземпляр контента (например, форма).
+	 * @param {Object} props - Параметры для создания диалога.
+	 * @param {string} [props.title='Элемент не передан!'] - Заголовок диалога.
+	 * @param {Array<Block>} [props.children=[]] - Дочерние компоненты (например, форма).
 	 */
-	constructor({
-		title = "Элемент не передан!",
-		contentInstance = null,
-		className = "",
-		attributes = {},
-		...props
-	} = {}) {
+	constructor(props) {
 		super({
 			tagName: "dialog",
-			className: `dialog ${className || ""}`,
-			attributes: { ...attributes },
-			eventBus: EventBus.getInstance(),
+			className: props.className || "dialog",
+			attributes: {
+				"data-id": props.id,
+				"aria-label": props.title || "Диалог",
+			},
 			...props,
 		});
 
-		this.#validateTitle(title);
-		this.#title = title;
-		this.#contentInstance = contentInstance?.getElement();
+		this.titleElement = new TitleDialog();
+		this.children = null;
 
-		this.#setupDialog();
-	}
-
-	#validateTitle(title) {
-		if (!title || typeof title !== "string") {
-			throw new Error("Заголовок должен быть указан!");
-		}
-	}
-
-	#setupDialog() {
-		const element = this.getElement();
-
-		const title = document.createElement("h2");
-		title.className = "dialog__title";
-		title.textContent = this.#title;
-
-		const closeButton = document.createElement("button");
-		closeButton.className = "dialog__close";
-		closeButton.textContent = "x";
-		closeButton.type = "button";
-		closeButton.addEventListener("click", () => {
-			console.log('Клик на кнопку "x".');
-			this.close();
-		});
-
-		this.on("click", (event) => {
-			if (event.target === element) {
+		this.element.addEventListener("click", (event) => {
+			if (event.target === this.element) {
 				console.log("Клик вне диалога.");
 				this.close();
 			}
 		});
 
-		element.append(title, closeButton);
+		const eventBus = EventBus.getInstance();
+		eventBus.on(
+			EventBus.EVENTS.OPEN_DIALOG_BTN,
+			this.open.bind(this),
+			this
+		);
 
-		if (this.#contentInstance) {
-			element.append(this.#contentInstance);
-		}
+		eventBus.on(EventBus.EVENTS.CLOSE_DIALOG, this.close.bind(this), this);
 	}
 
-	open() {
-		const element = this.getElement();
+	render() {
+		const element = this.element;
+		const btnClose = new CloseDialogBtn(() => {
+			console.log("Кнопка закрыть нажата, диалог закрыт");
+			this.close();
+		});
+
+		element.append(btnClose.element);
+
+		return super.render();
+	}
+
+	open({ title, children }) {
+		if (title) {
+			this.titleElement.setTitle(title);
+			this.element.append(this.titleElement.element);
+		}
+
+		if (children) {
+			this.children = children;
+			this.element.append(children.getContent());
+		}
+
+		const element = this.getContent();
 		if (!element.open) {
 			element.showModal();
-			this.emit(EventBus.EVENTS.DIALOG_OPENED, { dialog: this });
 		}
+		console.log("Диалог открыт.", this);
 	}
 
 	close() {
-		const element = this.getElement();
+		const element = this.getContent();
 		if (element.open) {
 			element.close();
-			this.emit(EventBus.EVENTS.CLOSE_DIALOG, { dialog: this });
+
+			this.clearContent();
+
+			EventBus.getInstance().emit(EventBus.EVENTS.CLOSE_DIALOG, {
+				dialog: this,
+			});
 		}
 	}
 
-	// Переопределение метода render для добавления специфичной логики
-	render() {
-		super.render();
-		return this.getElement();
+	clearContent() {
+		if (this.children) {
+			console.log(
+				"Удаление дочернего контента из Диалога",
+				this.children
+			);
+			this.children.destroy();
+			this.children = null;
+		}
+
+		if (this.titleElement) {
+			this.titleElement.innerHTML = "";
+		}
 	}
 }
 

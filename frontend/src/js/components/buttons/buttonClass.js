@@ -1,42 +1,36 @@
 import Block from "../../utils/Block";
-import EventBus from "../../utils/EventBus";
-
 class Button extends Block {
 	/**
-	 * @param {string} [title=''] - Текст кнопки.
-	 * @param {string} [type='button'] - Тип кнопки ('button', 'submit', 'reset').
-	 * @param {string|null} [svgPath=null] - Путь SVG-иконки.
-	 * @param {string} [className=''] - Дополнительные CSS-классы.
-	 * @param {Function} [onClick=null] - Пользовательский обработчик клика.
+	 * @param {Object} props - параметры для создания кнопки.
+	 * @param {string} [props.className] - класс кнопки.
+	 * @param {string} [props.type="button"] - тип кнопки.
+	 * @param {string} [props.id] - ID кнопки.
+	 * @param {string} [props.label] - метка кнопки.
+	 * @param {...Object} [props] - остальные параметры.
 	 */
-	constructor({
-		title = "",
-		type = "button",
-		svgPath = null,
-		className = "",
-		onClick = null,
-		...props
-	} = {}) {
+
+	constructor(props) {
 		super({
 			tagName: "button",
-			className: `btn ${className}`,
-			attributes: { type },
-			eventBus: EventBus.getInstance(),
+			className: props.className,
+			attributes: {
+				type: props.type || "button",
+				"aria-label": `Кнопка ${props["aria-label"] || props.title}`,
+			},
 			...props,
 		});
-
-		this.#setupContent(title, svgPath);
-		this.#validateParams(type);
-
-		if (typeof onClick === "function") {
-			this.on("click", onClick);
-		}
 	}
 
-	#setupContent(title, svgPath) {
-		const element = this.getElement();
+	/**
+	 * Renders the button element with optional SVG or text content.
+	 * If `svgPath` is provided in the properties, it appends an SVG element with a path.
+	 * If `title` is provided in the properties, it sets the button's text content.
+	 */
 
-		if (svgPath) {
+	render() {
+		const btn = this.element;
+
+		if (this.props.svgPath) {
 			const svg = document.createElementNS(
 				"http://www.w3.org/2000/svg",
 				"svg"
@@ -45,35 +39,27 @@ class Button extends Block {
 			svg.setAttribute("height", "24");
 			svg.setAttribute("viewBox", "0 0 24 24");
 			svg.setAttribute("fill", "none");
-
 			const path = document.createElementNS(
 				"http://www.w3.org/2000/svg",
 				"path"
 			);
-			path.setAttribute("d", svgPath);
+			path.setAttribute("d", this.props.svgPath);
 			path.setAttribute("stroke-width", "2");
 			path.setAttribute("stroke-linecap", "round");
 			path.setAttribute("stroke-linejoin", "round");
 			path.setAttribute("stroke", "currentColor");
-
 			svg.appendChild(path);
-			element.appendChild(svg);
-		} else if (title) {
-			element.textContent = title;
+			btn.append(svg);
+		} else if (this.props.title) {
+			btn.textContent = this.props.title;
 		}
+
+		return super.render();
 	}
 
-	#validateParams(type) {
-		if (!["button", "submit", "reset"].includes(type)) {
-			throw new Error(
-				"Недопустимый тип кнопки! Допустимые значения: button, submit, reset."
-			);
-		}
-	}
-
-	render() {
-		super.render();
-		return this.getElement();
+	destroy() {
+		console.log("Удаление кнопки", this);
+		super.destroy();
 	}
 }
 

@@ -14,9 +14,9 @@ class EventBus {
 		DIALOG_OPENED: "dialogOpened",
 		CLOSE_DIALOG: "closeDialog",
 		DIALOG_CLOSED: "dialogClosed",
-		UPDATE_DIALOG_CONTENT: "updateDialogContent",
-		UPDATE_DIALOG_TITLE: "updateDialogTitle",
-		SAVE_MOVIE: "saveMovie",
+		OPEN_DIALOG_CARD: "openDialogCard",
+		CREATE_MOVIE: "createMovie",
+		DELETE_MOVIE: "deleteMovie",
 		EDIT_MOVIE: "editMovie",
 		TOGGLE_LIKE: "toggleLike",
 		TOGGLE_WATCHED: "toggleWatched",
@@ -79,7 +79,7 @@ class EventBus {
 			return;
 		}
 
-		console.log(`Emit события "${event}" с аргументами:`, args);
+		//console.log(`Emit события "${event}" с аргументами:`, args);
 
 		subscribers.forEach((cb, index) => {
 			try {
