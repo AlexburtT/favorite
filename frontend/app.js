@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 				viewBtn.element.textContent = movie.viewed
 					? "Просмотрено"
 					: "Не просмотрено";
-				console.log("View in App", movie.viewed);
 			} catch (error) {
 				console.error(error);
 			}
@@ -76,27 +75,32 @@ document.addEventListener("DOMContentLoaded", async () => {
 		});
 
 		//Открытие формы редактирования
-		eventBus.on(EventBus.EVENTS.EDIT_MOVIE, async ({ movie }) => {
-			try {
-				console.log("movie in dialog", movie);
-				const editForm = createEditMovieForm(movie);
+		eventBus.on(
+			EventBus.EVENTS.OPEN_DIALOG_FORM_EDIT,
+			async ({ movie }) => {
+				try {
+					console.log("movie in dialog", movie);
+					const editForm = createEditMovieForm(movie);
 
-				dialog.clearContent();
+					dialog.clearContent();
 
-				dialog.open({
-					title: "Редактирование фильма",
-					children: editForm,
-				});
-			} catch (error) {
-				console.error(error);
+					dialog.open({
+						title: "Редактирование фильма",
+						children: editForm,
+					});
+				} catch (error) {
+					console.error(error);
+				}
 			}
-		});
+		);
 
 		//Удаление фильма из БД и карточки
-		eventBus.on(EventBus.EVENTS.DELETE_MOVIE, async ({ id }) => {
+		eventBus.on(EventBus.EVENTS.DELETE_MOVIE, async ({ id, poster }) => {
 			try {
-				console.log("Удаляеми фильм с id", id);
+				console.log("Удаляеми фильм с id", id, poster);
+				await MovieRecords.getInstance().deletePoster(poster[0]);
 				await MovieRecords.getInstance().deleteMovie(id);
+
 				const card = movieList.querySelector(`[data-id="${id}"]`);
 				card.remove();
 				dialog.close();
@@ -129,6 +133,27 @@ document.addEventListener("DOMContentLoaded", async () => {
 				}, 100);
 			} catch (error) {
 				console.error("Ошибка при создании фильма:", error.message);
+			}
+		});
+
+		// Сохранение измененного фильма
+		eventBus.on(EventBus.EVENTS.UPDATE_MOVIE, async (formElement) => {
+			try {
+				const movieId = formElement.id;
+				const updateMovie = await formHandler.handleMovieForm(
+					formElement,
+					movieId
+				);
+				console.log("Фильм обновлен:", updateMovie, movieId);
+				const normalizeMovie = normalizeMovieData(updateMovie);
+				const card = createCard(normalizeMovie);
+				const oldCard = movieList.querySelector(
+					`[data-id="${updateMovie.id}"]`
+				);
+				oldCard.replaceWith(card.getContent());
+				dialog.close();
+			} catch (error) {
+				console.error("Ошибка при обновлении фильма:", error.message);
 			}
 		});
 	} catch (error) {

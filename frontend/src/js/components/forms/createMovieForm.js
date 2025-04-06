@@ -27,50 +27,45 @@ const buttonsArray = [
 	},
 ];
 
-export const createMovieForm = () => {
-	const inputs = inputsArray.map((inputConfig) => new Input(inputConfig));
-	const buttons = buttonsArray.map(
-		(buttonConfig) => new Button(buttonConfig)
-	);
-
-	return new Form({
-		id: "dialog__form",
-		name: "create--movie-form",
-		className: "dialog__form",
-		children: { inputs, buttons },
-	});
-};
-
 export const createEditMovieForm = (movie) => {
 	const inputs = inputsArray.map((inputConfig) => {
-		console.log("Проверяю", inputConfig.name, movie[inputConfig.name]);
 		return new Input({
 			...inputConfig,
-			value: movie[inputConfig.name] || "",
+			value: movie ? movie[inputConfig.name] : "",
 		});
 	});
 	const buttons = buttonsArray.map(
 		(buttonConfig) => new Button(buttonConfig)
 	);
-	buttons.push(
-		new Button({
-			title: "Удалить",
-			type: "button",
-			className: "btn dialog__form--btn--delete dialog__form--btn",
-			events: {
-				click: () => {
-					EventBus.getInstance().emit(EventBus.EVENTS.DELETE_MOVIE, {
-						id: movie.id,
-					});
+
+	if (movie) {
+		buttons.push(
+			new Button({
+				title: "Удалить",
+				type: "button",
+				className: "btn dialog__form--btn--delete dialog__form--btn",
+				events: {
+					click: () => {
+						EventBus.getInstance().emit(
+							EventBus.EVENTS.DELETE_MOVIE,
+							{
+								id: movie.id,
+								poster: movie.poster,
+							}
+						);
+					},
 				},
-			},
-		})
-	);
+			})
+		);
+	}
 
 	return new Form({
-		id: "dialog__form",
+		id: movie ? movie.id : "dialog__form",
 		name: "edit--movie-form",
 		className: "dialog__form",
 		children: { inputs, buttons },
+		eventAction: movie
+			? EventBus.EVENTS.UPDATE_MOVIE
+			: EventBus.EVENTS.CREATE_MOVIE,
 	});
 };

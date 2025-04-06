@@ -1,7 +1,7 @@
 import Button from "../buttons/buttonClass";
 import Input from "../inputs/inputClass";
 import EventBus from "../../utils/EventBus";
-import { createMovieForm } from "../forms/createMovieForm";
+import { createEditMovieForm } from "../forms/createMovieForm";
 
 export const searchBtnConteinerHeader = () => {
 	const eventBus = EventBus.getInstance();
@@ -31,7 +31,7 @@ export const searchBtnConteinerHeader = () => {
 			className: "btn header__btn",
 			events: {
 				click: () => {
-					const formDialog = createMovieForm();
+					const formDialog = createEditMovieForm();
 					eventBus.emit(EventBus.EVENTS.OPEN_DIALOG_BTN, {
 						title: "Добавить фильм",
 						children: formDialog,

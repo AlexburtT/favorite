@@ -15,9 +15,10 @@ class EventBus {
 		CLOSE_DIALOG: "closeDialog",
 		DIALOG_CLOSED: "dialogClosed",
 		OPEN_DIALOG_CARD: "openDialogCard",
+		OPEN_DIALOG_FORM_EDIT: "openDialogFormEdit",
 		CREATE_MOVIE: "createMovie",
 		DELETE_MOVIE: "deleteMovie",
-		EDIT_MOVIE: "editMovie",
+		UPDATE_MOVIE: "editMovie",
 		TOGGLE_LIKE: "toggleLike",
 		TOGGLE_WATCHED: "toggleWatched",
 	};

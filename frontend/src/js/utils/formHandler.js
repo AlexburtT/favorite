@@ -18,10 +18,10 @@ class FormHandler {
 			const formData = new FormData(form);
 
 			// Если есть файл постера, загружаем его
-			if (formData.get("poster") instanceof File) {
-				const posterPath = await this.#uploadPoster(
-					formData.get("poster")
-				);
+			const posterFile = formData.get("poster");
+			console.log("posterFile", posterFile);
+			if (posterFile instanceof File && posterFile.size > 0) {
+				const posterPath = await this.#uploadPoster(posterFile);
 				formData.set("poster", posterPath); // Устанавливаем путь к постеру в форму
 			}
 
@@ -51,6 +51,20 @@ class FormHandler {
 			return await this.#movieApi.uploadPoster(file);
 		} catch (error) {
 			console.error("Ошибка при загрузке постера:", error.message);
+			throw error;
+		}
+	}
+
+	/**
+	 * Удаляет постер с сервера.
+	 * @param {string} posterPath - Путь к постеру.
+	 * @returns {Promise<void>}
+	 */
+	async deletePoster(posterPath) {
+		try {
+			await this.#movieApi.deletePoster(posterPath);
+		} catch (error) {
+			console.error("Ошибка при удалении постера:", error.message);
 			throw error;
 		}
 	}

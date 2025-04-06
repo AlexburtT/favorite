@@ -15,14 +15,13 @@ class Form extends Block {
 		});
 
 		this.children = props.children;
+		this.eventAction = props.eventAction;
+		console.log("eventAction", this.eventAction);
 
 		this.element.addEventListener("submit", (event) => {
 			event.preventDefault();
 			console.log("submit", this.element);
-			EventBus.getInstance().emit(
-				EventBus.EVENTS.CREATE_MOVIE,
-				this.element
-			);
+			EventBus.getInstance().emit(props.eventAction, this.element);
 		});
 	}
 

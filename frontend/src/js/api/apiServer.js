@@ -94,12 +94,17 @@ class MovieRecords {
 			movieData.releaseYear = parseInt(releaseYear, 10);
 		}
 
-		if (poster && !Array.isArray(poster)) {
+		console.log("posterData", poster);
+		if (poster && !Array.isArray(poster) && poster.length > 0) {
 			movieData.poster = [poster];
+		} else {
+			movieData.poster = [];
 		}
 
-		movieData.viewed = Boolean(viewed);
-		movieData.favorite = Boolean(favorite);
+		if (viewed && favorite) {
+			movieData.viewed = Boolean(viewed);
+			movieData.favorite = Boolean(favorite);
+		}
 
 		const requestOptions = {
 			method,
@@ -146,6 +151,10 @@ class MovieRecords {
 	 * @returns {Promise<string>} - URL загруженного постера
 	 */
 	async uploadPoster(file) {
+		if (!file || !(file instanceof File)) {
+			return;
+		}
+
 		const formData = new FormData();
 		formData.append("poster", file);
 
@@ -162,9 +171,38 @@ class MovieRecords {
 			}
 
 			const result = await response.json();
-			return `${BASE_API_URL}${result.path}`;
+			return result.path ? `${BASE_API_URL}${result.path}` : undefined;
 		} catch (error) {
 			console.error("Ошибка при загрузке постера:", error);
+			throw error;
+		}
+	}
+
+	/**
+	 * Удаляем постер с сервера.
+	 * @param {string} posterPath - Путь к постеру.
+	 * @returns {Promise<void>}
+	 */
+	async deletePoster(posterPath) {
+		let relativePath = posterPath;
+		if (posterPath.startsWith(BASE_API_URL)) {
+			relativePath = posterPath.substring(BASE_API_URL.length);
+		}
+		console.log("posterPath in deletePoster", relativePath);
+		const url = `${BASE_API_URL}/posters?path=${encodeURIComponent(relativePath)}`;
+		try {
+			const response = await fetch(url, { method: "DELETE" });
+			if (!response.ok) {
+				throw new Error(
+					`Ошибка HTTP ${response.status}: ${response.statusText}`
+				);
+			}
+			console.log("Постер успешно удален:", relativePath);
+		} catch (error) {
+			console.error(
+				"Ошибка при удалении постера:",
+				error.message || error
+			);
 			throw error;
 		}
 	}

@@ -32,8 +32,8 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ 
-    storage: storage, 
+const upload = multer({
+    storage: storage,
 });
 
 server.use(middleware);
@@ -46,6 +46,34 @@ server.post('/posters', upload.single('poster'), (req, res) => {
     }
     res.jsonp({
         path: `/posters/${req.file.filename}`
+    });
+});
+
+server.delete('/posters', (req, res) => {
+    const posterPath = req.query.path;
+
+    if (!posterPath) {
+        return res.status(400).jsonp({ error: 'Путь к постеру не указан' });
+    }
+
+    if (!posterPath.startsWith('/posters/')) {
+        return res.status(400).jsonp({ error: 'Неверный путь к постеру' });
+    }
+
+    const fullPath = path.join(__dirname, posterPath);
+    const fileName = path.basename(posterPath);
+
+    if (fileName === 'no_product_img.png') {
+        console.log('Попытка удаления файла no_product_img.png заблокирована.');
+        return res.status(204).send();
+    }
+
+    fs.unlink(fullPath, (err) => {
+        if (err) {
+            return res.status(500).jsonp({ error: 'Ошибка при удалении постера' });
+        }
+        console.log('Постер успешно удален:', fullPath);
+        return res.status(200).jsonp({ message: 'Постер успешно удален' });
     });
 });
 

@@ -51,7 +51,6 @@ export const createCard = (movie) => {
 		},
 		events: {
 			click: (e) => {
-				console.log("Клик", movie);
 				if (
 					likeBtn.element.contains(e.target) ||
 					viewBtn.element.contains(e.target)
@@ -82,14 +81,17 @@ export const createCardDialog = (movie) => {
 		},
 		{
 			title: "Редактировать",
-			type: "submit",
+			type: "button",
 			className: "btn dialog__form--btn--save dialog__form--btn",
 			events: {
 				click: () => {
 					console.log("Редактировать", movie);
-					EventBus.getInstance().emit(EventBus.EVENTS.EDIT_MOVIE, {
-						movie,
-					});
+					EventBus.getInstance().emit(
+						EventBus.EVENTS.OPEN_DIALOG_FORM_EDIT,
+						{
+							movie,
+						}
+					);
 				},
 			},
 		},
