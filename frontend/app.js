@@ -12,10 +12,11 @@ import {
 import { createEditMovieForm } from "./src/js/components/forms/createMovieForm.js";
 import FormHandler from "./src/js/utils/formHandler.js";
 import Button from "./src/js/components/buttons/buttonClass.js";
+import { createFilterBtns } from "./src/js/utils/sorted.js";
 
 let allMovies = [];
-const limitMovies = 8;
-let displayedMovies = 0;
+window.limitMovies = 8;
+window.displayedMovies = 0;
 
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
@@ -40,18 +41,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 		//Рендер фильмов
 		const cardInstanses = [];
 
-		const renderMovies = (movies) => {
-			const cards = movieList.querySelectorAll(".card");
-			cards.forEach((card) => {
-				const cardInstanse = cardInstanses[card.dataset.id];
+		const renderMovies = (movies, append = false) => {
+			if (!append) {
+				const cards = movieList.querySelectorAll(".card");
+				cards.forEach((card) => {
+					const cardInstanse = cardInstanses[card.dataset.id];
 
-				if (cardInstanse) {
-					cardInstanse.destroy();
-					delete cardInstanses[card.dataset.id];
-				}
-			});
+					if (cardInstanse) {
+						cardInstanse.destroy();
+						delete cardInstanses[card.dataset.id];
+					}
+				});
 
-			movieList.innerHTML = "";
+				movieList.innerHTML = "";
+			}
 
 			movies.forEach((rawMovie) => {
 				const normalizeMovie = normalizeMovieData(rawMovie);
@@ -61,6 +64,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 				cardInstanses[normalizeMovie.id] = card;
 			});
 		};
+
+		window.renderMovies = renderMovies;
 
 		const initMovies = allMovies.slice(0, limitMovies);
 		renderMovies(initMovies);
@@ -78,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 						displayedMovies,
 						displayedMovies + limitMovies
 					);
-					renderMovies(nextMovies);
+					renderMovies(nextMovies, true);
 					displayedMovies += nextMovies.length;
 
 					if (displayedMovies >= allMovies.length) {
@@ -89,6 +94,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 		});
 
 		mainConteiner.append(btnMore.getContent());
+
+		//Кнопки фильтрации фильмов Избранные и просмотренные
+		const { btnViewed, btnFavorite } = createFilterBtns(allMovies, btnMore);
+		const conteinerBtn = document.createElement("div");
+		conteinerBtn.className = "logo__conteiner--filter";
+		conteinerBtn.append(btnViewed.getContent(), btnFavorite.getContent());
+		const conteiner = document.querySelector(".logo__conteiner");
+		conteiner.append(conteinerBtn);
 
 		//Переключение избранного
 		eventBus.on(EventBus.EVENTS.TOGGLE_LIKE, async ({ id, likeBtn }) => {
@@ -219,8 +232,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 				console.log("Поиск фильма:", value);
 
 				if (!value.trim()) {
+					displayedMovies = 0;
 					const initMovies = allMovies.slice(0, limitMovies);
-					renderMovies(initMovies);
+					renderMovies(initMovies, false);
 					displayedMovies += initMovies.length;
 
 					if (!mainConteiner.contains(btnMore.element)) {
@@ -233,7 +247,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 				const filteredMovies = allMovies.filter((movie) =>
 					movie.name.toLowerCase().includes(queries)
 				);
-				renderMovies(filteredMovies);
+				renderMovies(filteredMovies, false);
 
 				if (mainConteiner.contains(btnMore.element)) {
 					btnMore.element.remove();

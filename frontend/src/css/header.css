@@ -7,3 +7,99 @@
 	padding: 4rem 6.5rem;
 	position: sticky;
 }
+
+/* ЛОГОТИП */
+.logo__conteiner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.logo__img {
+	display: flex;
+	align-items: center;
+	width: 4rem;
+	height: 4rem;
+	background-color: var(--white);
+	border-radius: 50%;
+	padding: 0.5rem;
+	gap: 2rem;
+	z-index: 1000;
+
+	svg {
+		flex-shrink: 0;
+		width: 100%;
+		height: auto;
+	}
+}
+
+.logo__title {
+	font-size: 3rem;
+	font-weight: 500;
+	color: var(--white);
+	text-transform: uppercase;
+}
+
+/* ПОИСК и КНОПКИ */
+.search__line {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	height: 4.2rem;
+}
+
+.input__conteiner {
+	position: relative;
+}
+
+.input--search {
+	background-color: #4e4e59;
+	padding-left: 6.4rem;
+	border: none;
+	width: 46.9rem;
+	color: var(--grey-light);
+}
+
+.search-icon {
+	position: absolute;
+	top: 50%;
+	left: 2rem;
+	transform: translateY(-50%);
+	fill: var(--dark);
+	width: 20px;
+	height: 20px;
+	transition: all 0.5s ease-in-out;
+}
+
+.input--search:focus + .search-icon {
+	fill: var(--accent);
+}
+
+.search:focus::placeholder {
+	color: var(--grey-light);
+}
+
+.logo__conteiner--filter {
+	display: flex;
+	gap: 2rem;
+}
+
+.btn__filter {
+	background-color: var(--dark);
+	color: var(--white);
+	border: 1px solid var(--grey);
+	padding: 1rem;
+	border-radius: 1.6rem;
+	transition: all 0.3s ease-in-out;
+
+	&:hover {
+		border: 1px solid var(--accent);
+	}
+}
+
+.is-active {
+	border: 1px solid var(--accent);
+	color: var(--accent);
+}
