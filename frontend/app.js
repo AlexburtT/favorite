@@ -67,10 +67,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 		window.renderMovies = renderMovies;
 
-		const initMovies = allMovies.slice(0, limitMovies);
+		const initMovies = allMovies.slice(0, window.limitMovies);
 		renderMovies(initMovies);
 
-		displayedMovies += initMovies.length;
+		window.displayedMovies += initMovies.length;
 
 		//Получение следующих фильмов
 		const btnMore = new Button({
@@ -80,13 +80,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 			events: {
 				click: async () => {
 					const nextMovies = allMovies.slice(
-						displayedMovies,
-						displayedMovies + limitMovies
+						window.displayedMovies,
+						window.displayedMovies + window.limitMovies
 					);
 					renderMovies(nextMovies, true);
-					displayedMovies += nextMovies.length;
+					window.displayedMovies += nextMovies.length;
 
-					if (displayedMovies >= allMovies.length) {
+					if (window.displayedMovies >= allMovies.length) {
 						btnMore.element.remove();
 					}
 				},
@@ -232,10 +232,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 				console.log("Поиск фильма:", value);
 
 				if (!value.trim()) {
-					displayedMovies = 0;
-					const initMovies = allMovies.slice(0, limitMovies);
+					window.displayedMovies = 0;
+					const initMovies = allMovies.slice(0, window.limitMovies);
 					renderMovies(initMovies, false);
-					displayedMovies += initMovies.length;
+					window.displayedMovies += initMovies.length;
 
 					if (!mainConteiner.contains(btnMore.element)) {
 						mainConteiner.append(btnMore.getContent());
