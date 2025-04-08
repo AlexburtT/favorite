@@ -17,3 +17,7 @@
 	background-color: var(--white);
 	color: var(--dark);
 }
+
+.btn-more {
+	margin-top: 3rem;
+}

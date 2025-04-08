@@ -436,10 +436,12 @@
         "комедия",
         "мелодрама"
       ],
-      "poster": [],
+      "poster": [
+        "http://localhost:3000/posters/K0GtxhnIkXd3DSzE2sFcr--i (18).webp"
+      ],
       "description": "фафафф",
       "viewed": false,
-      "favorite": false,
+      "favorite": true,
       "id": 42
     }
   ]

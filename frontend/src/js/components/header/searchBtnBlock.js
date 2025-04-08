@@ -18,7 +18,7 @@ export const searchBtnConteinerHeader = () => {
 
 		events: {
 			input: (e) => {
-				console.log(e.target.value);
+				eventBus.emit(EventBus.EVENTS.SEARCH, e.target.value);
 			},
 		},
 	});

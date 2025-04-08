@@ -21,6 +21,7 @@ class EventBus {
 		UPDATE_MOVIE: "editMovie",
 		TOGGLE_LIKE: "toggleLike",
 		TOGGLE_WATCHED: "toggleWatched",
+		SEARCH: "search",
 	};
 
 	// Приватное свойство для хранения событий и их подписчиков

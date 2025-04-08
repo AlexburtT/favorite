@@ -11,6 +11,11 @@ import {
 } from "./src/js/components/cards/createCard.js";
 import { createEditMovieForm } from "./src/js/components/forms/createMovieForm.js";
 import FormHandler from "./src/js/utils/formHandler.js";
+import Button from "./src/js/components/buttons/buttonClass.js";
+
+let allMovies = [];
+const limitMovies = 8;
+let displayedMovies = 0;
 
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
@@ -24,15 +29,48 @@ document.addEventListener("DOMContentLoaded", async () => {
 		const dialog = new Dialog({});
 		document.body.append(dialog.getContent());
 
+		const mainConteiner = document.querySelector(".main");
 		const movieList = document.getElementById("movies-list");
 
+		//Получение всех фильмов
 		const movieRecords = await MovieRecords.getInstance().findAll();
+		allMovies = movieRecords;
 
-		movieRecords.forEach((rawMovie) => {
-			const normalizeMovie = normalizeMovieData(rawMovie);
-			const card = createCard(normalizeMovie);
-			movieList.append(card.getContent());
+		const renderMovies = (movies) => {
+			movies.forEach((rawMovie) => {
+				const normalizeMovie = normalizeMovieData(rawMovie);
+				const card = createCard(normalizeMovie);
+				movieList.append(card.getContent());
+			});
+		};
+
+		const initMovies = allMovies.slice(0, limitMovies);
+		renderMovies(initMovies);
+
+		displayedMovies += initMovies.length;
+
+		//Получение следующих фильмов
+		const btnMore = new Button({
+			type: "button",
+			className: "btn btn-more",
+			title: "Показать еще",
+			events: {
+				click: async () => {
+					const nextMovies = allMovies.slice(
+						displayedMovies,
+						displayedMovies + limitMovies
+					);
+					renderMovies(nextMovies);
+					displayedMovies += nextMovies.length;
+
+					if (displayedMovies >= allMovies.length) {
+						btnMore.element.remove();
+					}
+				},
+			},
 		});
+
+		mainConteiner.append(btnMore.getContent());
 
 		//Переключение избранного
 		eventBus.on(EventBus.EVENTS.TOGGLE_LIKE, async ({ id, likeBtn }) => {
@@ -154,6 +192,37 @@ document.addEventListener("DOMContentLoaded", async () => {
 				dialog.close();
 			} catch (error) {
 				console.error("Ошибка при обновлении фильма:", error.message);
+			}
+		});
+
+		// Поиск фильма
+		eventBus.on(EventBus.EVENTS.SEARCH, async (value) => {
+			try {
+				console.log("Поиск фильма:", value);
+				movieList.innerHTML = "";
+
+				if (!value.trim()) {
+					const initMovies = allMovies.slice(0, limitMovies);
+					renderMovies(initMovies);
+					displayedMovies += initMovies.length;
+
+					if (!mainConteiner.contains(btnMore.element)) {
+						mainConteiner.append(btnMore.getContent());
+					}
+					return;
+				}
+
+				const queries = value.toLowerCase();
+				const filteredMovies = allMovies.filter((movie) =>
+					movie.name.toLowerCase().includes(queries)
+				);
+				renderMovies(filteredMovies);
+
+				if (mainConteiner.contains(btnMore.element)) {
+					btnMore.element.remove();
+				}
+			} catch (error) {
+				console.error("Ошибка при поиске фильмов:", error.message);
 			}
 		});
 	} catch (error) {
