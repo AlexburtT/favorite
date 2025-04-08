@@ -20,6 +20,7 @@ let displayedMovies = 0;
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
 		const eventBus = EventBus.getInstance();
+		eventBus.clearAllEvents();
 		const formHandler = new FormHandler();
 
 		dateYearFooter();
@@ -36,11 +37,28 @@ document.addEventListener("DOMContentLoaded", async () => {
 		const movieRecords = await MovieRecords.getInstance().findAll();
 		allMovies = movieRecords;
 
+		//Рендер фильмов
+		const cardInstanses = [];
+
 		const renderMovies = (movies) => {
+			const cards = movieList.querySelectorAll(".card");
+			cards.forEach((card) => {
+				const cardInstanse = cardInstanses[card.dataset.id];
+
+				if (cardInstanse) {
+					cardInstanse.destroy();
+					delete cardInstanses[card.dataset.id];
+				}
+			});
+
+			movieList.innerHTML = "";
+
 			movies.forEach((rawMovie) => {
 				const normalizeMovie = normalizeMovieData(rawMovie);
 				const card = createCard(normalizeMovie);
 				movieList.append(card.getContent());
+
+				cardInstanses[normalizeMovie.id] = card;
 			});
 		};
 
@@ -199,7 +217,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 		eventBus.on(EventBus.EVENTS.SEARCH, async (value) => {
 			try {
 				console.log("Поиск фильма:", value);
-				movieList.innerHTML = "";
 
 				if (!value.trim()) {
 					const initMovies = allMovies.slice(0, limitMovies);
