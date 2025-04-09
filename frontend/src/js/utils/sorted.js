@@ -86,3 +86,44 @@ function restoreBtnMore(btnMore) {
 		mainConteiner.append(btnMore.getContent());
 	}
 }
+
+//Получаем уникальные жанры
+export function getUniqueGenres(movies) {
+	const genres = movies.flatMap((movie) => movie.genres || []);
+	return [...new Set(genres)];
+}
+
+export const filterByGenre = (movies) => {
+	const selectedGenres = [];
+
+	document.querySelectorAll(".checkbox__input").forEach((checkbox) => {
+		if (checkbox.checked) {
+			selectedGenres.push(checkbox.name.replace("genre-", ""));
+		}
+	});
+
+	if (selectedGenres.length === 0) {
+		return movies;
+	}
+
+	return movies.filter((movie) =>
+		selectedGenres.every((genre) => movie.genres.includes(genre))
+	);
+};
+
+// Удаление жанра из формы и localStorage
+export const removeUnusedGenres = (movies) => {
+	const genresInMovies = new Set(movies.flatMap((movie) => movie.genres));
+	const checkboxes = document.querySelectorAll(".checkbox__input");
+
+	checkboxes.forEach((checkbox) => {
+		const genre = checkbox.name.replace("genre-", "");
+		if (!genresInMovies.has(genre)) {
+			// Удаляем чекбокс из DOM
+			checkbox.closest(".checkbox__container").remove();
+
+			// Удаляем жанр из localStorage
+			localStorage.removeItem(`genre-${genre}`);
+		}
+	});
+};

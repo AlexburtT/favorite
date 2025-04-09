@@ -22,6 +22,7 @@ class EventBus {
 		TOGGLE_LIKE: "toggleLike",
 		TOGGLE_WATCHED: "toggleWatched",
 		SEARCH: "search",
+		APPLY_GENRE_FILTER: "applyGenreFilter",
 	};
 
 	// Приватное свойство для хранения событий и их подписчиков

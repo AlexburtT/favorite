@@ -55,6 +55,8 @@ class Input extends Block {
 
 			const inputElement = this.element;
 
+			inputElement.checked = this.props.checked || false;
+
 			labelElement.append(span, inputElement);
 			this.setContent(labelElement);
 		}

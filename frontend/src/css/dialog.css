@@ -1,6 +1,6 @@
 .dialog {
 	position: fixed;
-	max-width: 53.9rem;
+	width: 53.9rem;
 	height: fit-content;
 	background-color: var(--white);
 	color: var(--dark);

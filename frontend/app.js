@@ -12,7 +12,11 @@ import {
 import { createEditMovieForm } from "./src/js/components/forms/createMovieForm.js";
 import FormHandler from "./src/js/utils/formHandler.js";
 import Button from "./src/js/components/buttons/buttonClass.js";
-import { createFilterBtns } from "./src/js/utils/sorted.js";
+import {
+	createFilterBtns,
+	filterByGenre,
+	removeUnusedGenres,
+} from "./src/js/utils/sorted.js";
 
 let allMovies = [];
 window.limitMovies = 8;
@@ -26,10 +30,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 		dateYearFooter();
 		scrollTop();
-		searchBtnConteinerHeader();
-
-		const dialog = new Dialog({});
-		document.body.append(dialog.getContent());
 
 		const mainConteiner = document.querySelector(".main");
 		const movieList = document.getElementById("movies-list");
@@ -37,6 +37,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 		//Получение всех фильмов
 		const movieRecords = await MovieRecords.getInstance().findAll();
 		allMovies = movieRecords;
+
+		const resetLocalStorage = () => {
+			localStorage.clear();
+		};
+		resetLocalStorage();
+
+		searchBtnConteinerHeader(allMovies);
+		const dialog = new Dialog({});
+		document.body.append(dialog.getContent());
 
 		//Рендер фильмов
 		const cardInstanses = [];
@@ -173,6 +182,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 				const card = movieList.querySelector(`[data-id="${id}"]`);
 				card.remove();
 				dialog.close();
+
+				const updateMovies = await MovieRecords.getInstance().findAll();
+				allMovies = updateMovies;
+				console.log("После удаления фильмов", allMovies);
+
+				removeUnusedGenres(allMovies);
+				const initMovies = allMovies.slice(0, window.limitMovies);
+				renderMovies(initMovies, false);
+				window.displayedMovies += initMovies.length;
+				if (!mainConteiner.contains(btnMore.element)) {
+					mainConteiner.append(btnMore.getContent());
+				}
 			} catch (error) {
 				console.error(error);
 			}
@@ -226,11 +247,40 @@ document.addEventListener("DOMContentLoaded", async () => {
 			}
 		});
 
+		//Сортировка по жанрам
+		eventBus.on(EventBus.EVENTS.APPLY_GENRE_FILTER, async () => {
+			try {
+				const hasActiveChecked = Array.from(
+					document.querySelectorAll(".checkbox__input")
+				).some((checkbox) => checkbox.checked);
+
+				if (!hasActiveChecked) {
+					window.displayedMovies = 0;
+					const initMovies = allMovies.slice(0, window.limitMovies);
+					renderMovies(initMovies, false);
+					window.displayedMovies += initMovies.length;
+
+					if (!mainConteiner.contains(btnMore.element)) {
+						mainConteiner.append(btnMore.getContent());
+					}
+					return;
+				}
+
+				const filteredMovies = filterByGenre(allMovies);
+				renderMovies(filteredMovies, false);
+				console.log("filteredMovies", filteredMovies);
+
+				if (mainConteiner.contains(btnMore.element)) {
+					btnMore.element.remove();
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		});
+
 		// Поиск фильма
 		eventBus.on(EventBus.EVENTS.SEARCH, async (value) => {
 			try {
-				console.log("Поиск фильма:", value);
-
 				if (!value.trim()) {
 					window.displayedMovies = 0;
 					const initMovies = allMovies.slice(0, window.limitMovies);
