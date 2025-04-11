@@ -2,12 +2,11 @@ import Button from "../buttons/buttonClass";
 import Input from "../inputs/inputClass";
 import EventBus from "../../utils/EventBus";
 import { createEditMovieForm } from "../forms/createMovieForm";
-import { getUniqueGenres } from "../../utils/sorted";
 import { createCheckbox } from "../inputs/createChekbox";
+import { getUniqueGenres } from "../../utils/sorted";
 
 export const searchBtnConteinerHeader = (allMovies) => {
 	const eventBus = EventBus.getInstance();
-	eventBus.clearAllEvents();
 
 	const blockSearchBtn = document.querySelector(".search__line");
 	const inputBlock = document.querySelector(".input__conteiner");
@@ -49,10 +48,6 @@ export const searchBtnConteinerHeader = (allMovies) => {
 			events: {
 				click: () => {
 					const uniqueGenres = getUniqueGenres(allMovies);
-					console.log(
-						"Все фильмы при открытии формы чекбоксов",
-						allMovies
-					);
 					const sortForm = createCheckbox(uniqueGenres);
 					eventBus.emit(EventBus.EVENTS.OPEN_DIALOG_BTN, {
 						title: "Что посмотреть?",

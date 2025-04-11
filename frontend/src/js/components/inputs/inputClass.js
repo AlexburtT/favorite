@@ -64,7 +64,6 @@ class Input extends Block {
 	}
 
 	destroy() {
-		console.log("Удаление input", this);
 		super.destroy();
 	}
 }

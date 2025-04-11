@@ -12,11 +12,7 @@ import {
 import { createEditMovieForm } from "./src/js/components/forms/createMovieForm.js";
 import FormHandler from "./src/js/utils/formHandler.js";
 import Button from "./src/js/components/buttons/buttonClass.js";
-import {
-	createFilterBtns,
-	filterByGenre,
-	removeUnusedGenres,
-} from "./src/js/utils/sorted.js";
+import { createFilterBtns, filterByGenre } from "./src/js/utils/sorted.js";
 
 let allMovies = [];
 window.limitMovies = 8;
@@ -43,9 +39,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 		};
 		resetLocalStorage();
 
-		searchBtnConteinerHeader(allMovies);
 		const dialog = new Dialog({});
 		document.body.append(dialog.getContent());
+
+		const allMoviesProxy = new Proxy(allMovies, {
+			set(target, prop, value, receiver) {
+				Reflect.set(target, prop, value, receiver);
+
+				console.log("Масив после изменения allMovies", allMovies);
+				return true;
+			},
+		});
+
+		allMovies = allMoviesProxy;
+		console.log("allMovies при инициализации", allMovies);
+
+		searchBtnConteinerHeader(allMovies);
 
 		//Рендер фильмов
 		const cardInstanses = [];
@@ -67,10 +76,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 			movies.forEach((rawMovie) => {
 				const normalizeMovie = normalizeMovieData(rawMovie);
-				const card = createCard(normalizeMovie);
-				movieList.append(card.getContent());
+				const existCard = movieList.querySelector(
+					`[data-id="${normalizeMovie.id}"]`
+				);
 
-				cardInstanses[normalizeMovie.id] = card;
+				if (!existCard) {
+					const card = createCard(normalizeMovie);
+					movieList.append(card.getContent());
+					cardInstanses[normalizeMovie.id] = card;
+				}
 			});
 		};
 
@@ -88,10 +102,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 			title: "Показать еще",
 			events: {
 				click: async () => {
+					console.log(
+						"window.displayedMovies",
+						window.displayedMovies
+					);
+					console.log(
+						"allMovies при нажатии кнопки показать еще",
+						allMovies
+					);
 					const nextMovies = allMovies.slice(
 						window.displayedMovies,
 						window.displayedMovies + window.limitMovies
 					);
+
+					console.log("nextMovies", nextMovies);
 					renderMovies(nextMovies, true);
 					window.displayedMovies += nextMovies.length;
 
@@ -157,7 +181,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 			EventBus.EVENTS.OPEN_DIALOG_FORM_EDIT,
 			async ({ movie }) => {
 				try {
-					console.log("movie in dialog", movie);
 					const editForm = createEditMovieForm(movie);
 
 					dialog.clearContent();
@@ -172,6 +195,32 @@ document.addEventListener("DOMContentLoaded", async () => {
 			}
 		);
 
+		// Сохранение созданного фильма
+		eventBus.on(EventBus.EVENTS.CREATE_MOVIE, async (formElement) => {
+			try {
+				const createMovie =
+					await formHandler.handleMovieForm(formElement);
+
+				console.log("createMovie in save", createMovie);
+
+				const normalizeMovie = normalizeMovieData(createMovie);
+				console.log("normalizeMovie in save", normalizeMovie);
+				const card = createCard(normalizeMovie);
+				movieList.insertAdjacentElement(
+					"afterbegin",
+					card.getContent()
+				);
+
+				allMovies.splice(0, 0, normalizeMovie);
+
+				dialog.close();
+
+				console.log("Фильм сохранен", allMovies);
+			} catch (error) {
+				console.error("Ошибка при создании фильма:", error.message);
+			}
+		});
+
 		//Удаление фильма из БД и карточки
 		eventBus.on(EventBus.EVENTS.DELETE_MOVIE, async ({ id, poster }) => {
 			try {
@@ -181,48 +230,31 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 				const card = movieList.querySelector(`[data-id="${id}"]`);
 				card.remove();
-				dialog.close();
 
-				const updateMovies = await MovieRecords.getInstance().findAll();
-				allMovies = updateMovies;
-				console.log("После удаления фильмов", allMovies);
-
-				removeUnusedGenres(allMovies);
-				const initMovies = allMovies.slice(0, window.limitMovies);
-				renderMovies(initMovies, false);
-				window.displayedMovies += initMovies.length;
-				if (!mainConteiner.contains(btnMore.element)) {
-					mainConteiner.append(btnMore.getContent());
+				const index = allMovies.findIndex((movie) => movie.id === id);
+				console.log("index", index);
+				if (index !== -1) {
+					allMovies.splice(index, 1);
 				}
+
+				window.displayedMovies = Math.min(
+					allMovies.length,
+					window.limitMovies
+				);
+
+				if (movieList.children.length === 0) {
+					const initMovies = allMovies.slice(0, window.limitMovies);
+					renderMovies(initMovies, false);
+
+					if (allMovies.length > window.limitMovies) {
+						mainConteiner.append(btnMore.getContent());
+					}
+				}
+				console.log("allMovies после удаления", allMovies, id);
+
+				dialog.close();
 			} catch (error) {
 				console.error(error);
-			}
-		});
-
-		// Сохранение созданного фильма
-		eventBus.on(EventBus.EVENTS.CREATE_MOVIE, async (formElement) => {
-			try {
-				const createMovie =
-					await formHandler.handleMovieForm(formElement);
-
-				console.log("Фильм создан:", createMovie);
-				const normalizeMovie = normalizeMovieData(createMovie);
-				const card = createCard(normalizeMovie);
-				movieList.append(card.getContent());
-				dialog.close();
-				setTimeout(() => {
-					const newCard = movieList.querySelector(
-						`[data-id="${createMovie.id}"]`
-					);
-					if (newCard) {
-						newCard.scrollIntoView({
-							block: "center",
-							behavior: "smooth",
-						});
-					}
-				}, 100);
-			} catch (error) {
-				console.error("Ошибка при создании фильма:", error.message);
 			}
 		});
 

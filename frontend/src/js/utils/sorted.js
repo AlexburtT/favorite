@@ -110,20 +110,3 @@ export const filterByGenre = (movies) => {
 		selectedGenres.every((genre) => movie.genres.includes(genre))
 	);
 };
-
-// Удаление жанра из формы и localStorage
-export const removeUnusedGenres = (movies) => {
-	const genresInMovies = new Set(movies.flatMap((movie) => movie.genres));
-	const checkboxes = document.querySelectorAll(".checkbox__input");
-
-	checkboxes.forEach((checkbox) => {
-		const genre = checkbox.name.replace("genre-", "");
-		if (!genresInMovies.has(genre)) {
-			// Удаляем чекбокс из DOM
-			checkbox.closest(".checkbox__container").remove();
-
-			// Удаляем жанр из localStorage
-			localStorage.removeItem(`genre-${genre}`);
-		}
-	});
-};

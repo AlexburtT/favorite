@@ -19,7 +19,7 @@ class FormHandler {
 
 			// Если есть файл постера, загружаем его
 			const posterFile = formData.get("poster");
-			console.log("posterFile", posterFile);
+
 			if (posterFile instanceof File && posterFile.size > 0) {
 				const posterPath = await this.#uploadPoster(posterFile);
 				formData.set("poster", posterPath); // Устанавливаем путь к постеру в форму

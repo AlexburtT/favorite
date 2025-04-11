@@ -382,9 +382,7 @@
         "комедия",
         "мелодрама"
       ],
-      "poster": [
-        "http://localhost:3000/posters/K0GtxhnIkXd3DSzE2sFcr--i (18).webp"
-      ],
+      "poster": [],
       "description": "фафафф",
       "viewed": false,
       "favorite": true,
