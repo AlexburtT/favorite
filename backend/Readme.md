@@ -86,62 +86,54 @@
     Тело запроса : Форма с полем poster (файл).
 
 Пример запроса с использованием curl:
-```bash
-curl -X POST http://localhost:3000/posters \
- -F "poster=@path/to/your/image.jpg"
+
+    ```bash
+    curl -X POST http://localhost:3000/posters \
+    -F "poster=@path/to/your/image.jpg"
+    ```
 
 Ответ:
-`json
-    {
-        "path": "/posters/<unique-id>--image.jpg"
-    }
-    ` 3. Удаление постера
-Метод : DELETE
-URL : /posters
-Параметры : path — путь к файлу постера (например, /posters/<unique-id>--image.jpg).
+
+    ```json
+        {
+            "path": "/posters/<unique-id>--image.jpg"
+        }
+    ```
+
+## Удаление постера
+
+    Метод : DELETE
+    URL : /posters
+    Параметры : path — путь к файлу постера (например, /posters/<unique-id>--image.jpg).
 
 Пример запроса:
 
-bash
-Копировать
-1
-curl -X DELETE "http://localhost:3000/posters?path=/posters/<unique-id>--image.jpg"
+    ```bash
+    curl -X DELETE "http://localhost:3000/posters?path=/posters/<unique-id>--image.jpg"
+    ```
+
 Ответ:
 
-json
-Копировать
-1
-2
-3
-⌄
-{
-"message": "Постер успешно удален"
-} 4. Получение постера
+    ```json
+    {
+    "message": "Постер успешно удален"
+    }
+    ```
+
+## Получение постера
+
 Загруженные постеры доступны по URL:
-
-Копировать
-1
 http://localhost:3000/posters/<filename>
+
 Например:
-
-Копировать
-1
 http://localhost:3000/posters/<unique-id>--image.jpg
-Конфигурация
-Порт : Сервер работает на порту 3000. Если нужно изменить порт, отредактируйте файл main.js:
-javascript
-Копировать
-1
-2
-3
-⌄
-server.listen(3000, () => {
-console.info('JSON Server запущен на http://localhost:3000');
-});
-Папка для постеров : По умолчанию постеры сохраняются в папке posters. Если нужно изменить путь, отредактируйте параметр destination в конфигурации multer.
-Лицензия
-Проект распространяется под лицензией ISC. Подробности см. в файле LICENSE .
 
-Автор
-Автор проекта: A.A. Tyumentsev
-Контакты: email@example.com
+## Конфигурация
+
+Порт : Сервер работает на порту 3000. Если нужно изменить порт, отредактируйте файл main.js:
+`javascript
+        server.listen(3000, () => {
+        console.info('JSON Server запущен на http://localhost:3000');
+        });
+    `
+Папка для постеров : По умолчанию постеры сохраняются в папке posters. Если нужно изменить путь, отредактируйте параметр destination в конфигурации multer.
