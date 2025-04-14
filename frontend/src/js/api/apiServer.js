@@ -188,7 +188,6 @@ class MovieRecords {
 		if (posterPath.startsWith(BASE_API_URL)) {
 			relativePath = posterPath.substring(BASE_API_URL.length);
 		}
-		console.log("posterPath in deletePoster", relativePath);
 		const url = `${BASE_API_URL}/posters?path=${encodeURIComponent(relativePath)}`;
 		try {
 			const response = await fetch(url, { method: "DELETE" });
@@ -197,7 +196,6 @@ class MovieRecords {
 					`Ошибка HTTP ${response.status}: ${response.statusText}`
 				);
 			}
-			console.log("Постер успешно удален:", relativePath);
 		} catch (error) {
 			console.error(
 				"Ошибка при удалении постера:",

@@ -46,13 +46,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 			set(target, prop, value, receiver) {
 				Reflect.set(target, prop, value, receiver);
 
-				console.log("Масив после изменения allMovies", allMovies);
+				//console.log("Масив после изменения allMovies", allMovies);
 				return true;
 			},
 		});
 
 		allMovies = allMoviesProxy;
-		console.log("allMovies при инициализации", allMovies);
+		//console.log("allMovies при инициализации", allMovies);
 
 		searchBtnConteinerHeader(allMovies);
 
@@ -102,20 +102,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 			title: "Показать еще",
 			events: {
 				click: async () => {
-					console.log(
-						"window.displayedMovies",
-						window.displayedMovies
-					);
-					console.log(
-						"allMovies при нажатии кнопки показать еще",
-						allMovies
-					);
 					const nextMovies = allMovies.slice(
 						window.displayedMovies,
 						window.displayedMovies + window.limitMovies
 					);
-
-					console.log("nextMovies", nextMovies);
 					renderMovies(nextMovies, true);
 					window.displayedMovies += nextMovies.length;
 
@@ -170,7 +160,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 					title: movie.name,
 					children: createCardDialog(movie),
 				});
-				console.log("movie", movie);
 			} catch (error) {
 				console.error(error);
 			}
@@ -232,7 +221,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 				card.remove();
 
 				const index = allMovies.findIndex((movie) => movie.id === id);
-				console.log("index", index);
 				if (index !== -1) {
 					allMovies.splice(index, 1);
 				}
@@ -250,7 +238,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 						mainConteiner.append(btnMore.getContent());
 					}
 				}
-				console.log("allMovies после удаления", allMovies, id);
 
 				dialog.close();
 			} catch (error) {
@@ -300,7 +287,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 				const filteredMovies = filterByGenre(allMovies);
 				renderMovies(filteredMovies, false);
-				console.log("filteredMovies", filteredMovies);
 
 				if (mainConteiner.contains(btnMore.element)) {
 					btnMore.element.remove();

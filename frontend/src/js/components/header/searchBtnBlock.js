@@ -37,7 +37,7 @@ export const searchBtnConteinerHeader = (allMovies) => {
 						title: "Добавить фильм",
 						children: formDialog,
 					});
-					eventBus.debugEvents();
+					//eventBus.debugEvents();
 				},
 			},
 		}),

@@ -48,9 +48,9 @@ class EventBus {
 			subscribers.push(boundCallback);
 		}
 
-		console.log(
-			`Подписан на событие "${event}". Текущее количество подписчиков: ${subscribers.length}`
-		);
+		//console.log(
+		//	`Подписан на событие "${event}". Текущее количество подписчиков: ${subscribers.length}`
+		//);
 	}
 
 	// Метод для отмены подписки на событие
@@ -68,9 +68,9 @@ class EventBus {
 			this.#events.set(event, remainingSubscribers);
 		}
 
-		console.log(
-			`Отменена подписка на событие "${event}". Оставшиеся подписчики: ${remainingSubscribers.length}`
-		);
+		//console.log(
+		//	`Отменена подписка на событие "${event}". Оставшиеся подписчики: ${remainingSubscribers.length}`
+		//);
 	}
 
 	// Метод для испускания события

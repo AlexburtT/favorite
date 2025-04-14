@@ -16,7 +16,6 @@ class Form extends Block {
 
 		this.children = props.children;
 		this.eventAction = props.eventAction;
-		console.log("eventAction", this.eventAction);
 
 		this.element.addEventListener("submit", (event) => {
 			event.preventDefault();
@@ -53,7 +52,7 @@ class Form extends Block {
 	}
 
 	destroy() {
-		console.log("Удаление дочернего контента из Формы", this.children);
+		//console.log("Удаление дочернего контента из Формы", this.children);
 
 		this.reset();
 

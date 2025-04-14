@@ -61,7 +61,7 @@
 1. Клонируйте репозиторий:
 
     ```bash
-    git clone https://github.com/your-repo-url.git
+    git clone https://gitlab.slurm.io/frontend_developer_s072188/review.git
     cd favorite
     ```
 

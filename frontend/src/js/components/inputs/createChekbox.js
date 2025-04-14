@@ -34,20 +34,18 @@ class CheckBoxConteiner extends Block {
 
 			this.element.append(checkbox.getContent());
 			this.children.push(checkbox);
-			console.log("this.children checkbox", this.children);
-			console.trace("this.children checkbox trace", this.children);
 		});
 	}
 
 	destroy() {
-		console.log("Удаление дочернего контента из CheckBox", this.children);
+		//console.log("Удаление дочернего контента из CheckBox", this.children);
 
 		this.children.forEach((child) => {
 			child.destroy();
 		});
 
 		this.children = [];
-		console.log("чекбокс уничтожен, его дети", this.children);
+		//console.log("чекбокс уничтожен, его дети", this.children);
 		super.destroy();
 	}
 }

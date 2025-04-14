@@ -58,7 +58,7 @@ class Button extends Block {
 	}
 
 	destroy() {
-		console.log("Удаление кнопки", this);
+		//console.log("Удаление кнопки", this);
 		super.destroy();
 	}
 }

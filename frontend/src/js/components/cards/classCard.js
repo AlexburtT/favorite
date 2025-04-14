@@ -38,7 +38,7 @@ class Card extends Block {
 	}
 
 	destroy() {
-		console.log("Удаление дочернего контента из карточки", this.children);
+		//console.log("Удаление дочернего контента из карточки", this.children);
 
 		const { buttons } = this.children;
 
@@ -49,24 +49,6 @@ class Card extends Block {
 		this.children = [];
 		super.destroy();
 	}
-
-	//componentDidUpdate(oldProps, newProps) {
-	//	console.log("ComponentDidUpdate: Old movie", oldProps?.movie);
-	//	console.log("ComponentDidUpdate: New movie", newProps?.movie);
-	//	if (!oldProps || !newProps) return false;
-
-	//	if (oldProps.movie.id !== newProps.movie.id) {
-	//		this.movie = newProps.movie;
-	//		this.#rerenderCard();
-	//	}
-	//	return true;
-	//}
-
-	//#rerenderCard() {
-	//	console.log("RerenderCard: Movie before rerender", this.movie);
-	//	this.getElement().innerHTML = "";
-	//	this.render();
-	//}
 }
 
 export default Card;

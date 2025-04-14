@@ -25,7 +25,6 @@ class Dialog extends Block {
 
 		this.element.addEventListener("click", (event) => {
 			if (event.target === this.element) {
-				console.log("Клик вне диалога.");
 				this.close();
 			}
 		});
@@ -43,7 +42,6 @@ class Dialog extends Block {
 	render() {
 		const element = this.element;
 		const btnClose = new CloseDialogBtn(() => {
-			console.log("Кнопка закрыть нажата, диалог закрыт");
 			this.close();
 		});
 
@@ -67,7 +65,6 @@ class Dialog extends Block {
 		if (!element.open) {
 			element.showModal();
 		}
-		console.log("Диалог открыт.", this);
 	}
 
 	close() {
@@ -85,10 +82,10 @@ class Dialog extends Block {
 
 	clearContent() {
 		if (this.children) {
-			console.log(
-				"Удаление дочернего контента из Диалога",
-				this.children
-			);
+			//console.log(
+			//	"Удаление дочернего контента из Диалога",
+			//	this.children
+			//);
 			this.children.destroy();
 			this.children = null;
 		}
