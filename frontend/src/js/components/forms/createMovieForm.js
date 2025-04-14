@@ -8,7 +8,7 @@ const buttonsArray = [
 	{
 		title: "Отменить",
 		type: "reset",
-		className: "btn dialog__form--btn--cancel dialog__form--btn",
+		className: "btn dialog__form--btn",
 		events: {
 			click: () => {
 				EventBus.getInstance().emit(EventBus.EVENTS.CLOSE_DIALOG);
@@ -18,7 +18,7 @@ const buttonsArray = [
 	{
 		title: "Сохранить",
 		type: "submit",
-		className: "btn dialog__form--btn--save dialog__form--btn",
+		className: "btn dialog__form--btn",
 		events: {
 			click: () => {
 				console.log("save");
@@ -43,7 +43,7 @@ export const createEditMovieForm = (movie) => {
 			new Button({
 				title: "Удалить",
 				type: "button",
-				className: "btn dialog__form--btn--delete dialog__form--btn",
+				className: "btn dialog__form--btn",
 				events: {
 					click: () => {
 						EventBus.getInstance().emit(

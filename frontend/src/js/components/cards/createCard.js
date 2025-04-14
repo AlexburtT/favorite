@@ -71,10 +71,9 @@ export const createCardDialog = (movie) => {
 		{
 			title: "Отмена",
 			type: "button",
-			className: "btn dialog__form--btn--save dialog__form--btn",
+			className: "btn dialog__form--btn cancel",
 			events: {
 				click: () => {
-					console.log("Отмена", movie);
 					EventBus.getInstance().emit(EventBus.EVENTS.CLOSE_DIALOG);
 				},
 			},
@@ -82,10 +81,9 @@ export const createCardDialog = (movie) => {
 		{
 			title: "Редактировать",
 			type: "button",
-			className: "btn dialog__form--btn--save dialog__form--btn",
+			className: "btn dialog__form--btn edit",
 			events: {
 				click: () => {
-					console.log("Редактировать", movie);
 					EventBus.getInstance().emit(
 						EventBus.EVENTS.OPEN_DIALOG_FORM_EDIT,
 						{

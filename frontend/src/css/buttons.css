@@ -21,3 +21,21 @@
 .btn-more {
 	margin-top: 3rem;
 }
+
+.dialog__form--btn {
+	height: 5rem;
+	width: auto;
+	padding: 0.5rem 2rem;
+	transition: all 0.5s ease-in-out;
+}
+
+.dialog__form--btn:hover {
+	background-color: var(--white);
+	color: var(--dark);
+	border: 1px solid var(--dark);
+}
+
+.dialog__form--btn.cancel,
+.dialog__form--btn.edit {
+	width: 50%;
+}

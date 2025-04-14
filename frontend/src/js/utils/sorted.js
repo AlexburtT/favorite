@@ -7,7 +7,7 @@ export const createFilterBtns = (movies, btnMore) => {
 	const countFavorite = movies.filter((movie) => movie.favorite).length;
 
 	const btnViewed = new Button({
-		title: "Не просмотрено — " + countViewed,
+		title: `Не просмотрено — ${countViewed}`,
 		type: "button",
 		className: "btn__filter",
 		events: {
