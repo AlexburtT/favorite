@@ -1,0 +1,160 @@
+.card {
+	width: 47rem;
+	height: 50rem;
+	font-size: 1.8rem;
+	line-height: 2.8rem;
+	background-color: var(--white);
+	border-radius: 1rem;
+	display: grid;
+	/*flex-direction: column;*/
+	padding: 2.4rem;
+
+	.card__title {
+		font-size: 2.4rem;
+		font-weight: 500;
+	}
+
+	p {
+		color: var(--grey);
+	}
+}
+
+.is-dialog {
+	width: auto;
+	height: auto;
+	padding: 0;
+	margin: 4rem;
+}
+
+.card:not(.is-dialog):hover {
+	box-shadow: 0 0.1rem 0.5rem var(--grey);
+}
+
+.card__img {
+	width: 41.8rem;
+	height: 21.3rem;
+	object-fit: cover;
+	border-radius: 1.6rem;
+	margin: 0 auto 2.4rem auto;
+	object-position: 0 1px;
+}
+
+.card__text--genre {
+	margin-bottom: 1rem;
+}
+
+.card__text--description {
+	font-style: italic;
+	line-height: normal;
+	margin-bottom: 3rem;
+}
+
+.is-line-clamp {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	text-overflow: ellipsis;
+	max-height: calc(3rem * 2);
+}
+
+.card__btn--container {
+	height: 4.6rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	font-weight: 700;
+	line-height: 3.2rem;
+}
+
+.btn__like--favorite {
+	width: 4.6rem;
+	height: 4.6rem;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	background-color: var(--white);
+	border: 2px solid var(--dark);
+	transition: all 0.3s ease-in-out;
+
+	svg {
+		transition: all 0.3s ease-in-out;
+
+		path {
+			transition: all 0.3s ease-in-out;
+			stroke: var(--dark);
+		}
+	}
+}
+
+.btn__like--favorite:hover {
+	background-color: var(--accent);
+	border: none;
+
+	svg {
+		fill: var(--color-like);
+
+		path {
+			stroke: var(--color-like);
+		}
+	}
+}
+
+.is-favorite {
+	background-color: var(--white);
+	border: none;
+
+	svg {
+		width: 3.7rem;
+		height: 3.7rem;
+		fill: var(--color-like);
+
+		path {
+			stroke: var(--color-like);
+		}
+	}
+}
+
+.btn__card--viewed {
+	width: 33.1rem;
+	height: 4.6rem;
+	background-color: var(--white);
+	color: var(--dark);
+	border: 2px solid var(--dark);
+	transition: all 0.3s ease-in-out;
+	position: relative;
+}
+
+.is-viewed {
+	background-color: var(--dark);
+	color: var(--white);
+	transition: all 0.3s ease-in-out;
+}
+
+.btn__card--viewed.is-viewed::before {
+	content: "\2714"; /* Символ галочки */
+	position: absolute;
+	left: 24rem; /* Отступ слева */
+	font-size: 1.8rem; /* Размер галочки */
+	color: var(--white); /* Цвет галочки */
+}
+
+.btn__card--viewed.is-viewed:hover {
+	color: var(--dark);
+	background-color: var(--white);
+	border: 2px solid var(--dark);
+}
+
+.btn__card--viewed.is-viewed:hover::before {
+	color: var(--dark); /* Меняем цвет галочки при наведении */
+}
+
+.btn__card--viewed:hover {
+	color: var(--white);
+	background-color: var(--dark);
+	border: none;
+}

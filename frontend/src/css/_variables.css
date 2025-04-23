@@ -1,0 +1,23 @@
+:root {
+	color-scheme: light dark;
+	--dark: #34343e;
+	--grey-light: #ededed;
+	--grey: #7a7d84;
+	--accent: #fba808;
+	--white: #fdfdfd;
+	--valid: #008300;
+	--invalid: #ff9494;
+
+	--color-text_footer: #1d1d1f;
+	--color-icon-search: #51545b;
+	--color-like: #ff4949;
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+
+	--transition-base: all 0.3s ease-in-out;
+	--transition-fast: all 0.1s ease-in-out;
+}

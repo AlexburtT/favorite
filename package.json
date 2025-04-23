@@ -1,0 +1,16 @@
+{
+	"name": "favorite",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start:backend": "cd backend && npx node main.js",
+		"start:frontend": "cd frontend && npx vite",
+		"dev": "concurrently \"npm:start:*\""
+	},
+	"author": "A.A. Tyumentsev",
+	"license": "ISC",
+	"devDependencies": {
+		"concurrently": "9.1.0"
+	}
+}
