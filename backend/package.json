@@ -12,7 +12,7 @@
   "author": "A.A. Tyumentsev",
   "license": "ISC",
   "dependencies": {
-    "express": "4.21.2",
+    "express": "4.22.1",
     "json-server": "0.17.4",
     "multer": "1.4.5-lts.1",
     "nanoid": "5.0.9"
